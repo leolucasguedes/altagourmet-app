@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "Buy Farma",
+    "slug": "buy-farma",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.nativadigital"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+      "expo-font",
+      {
+        "fonts": ["./assets/fonts/Poppins-Regular.ttf", "./assets/fonts/Poppins-SemiBold.ttf", "./assets/fonts/Poppins-Bold.ttf", "./assets/fonts/Poppins-Medium.ttf", 
+        "./assets/fonts/Poppins-ExtraBold.ttf", "./assets/fonts/Poppins-Black.ttf"]
+      }
+    ],
+
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/notification-icon.png",
+          "color": "#FF6602",
+          "defaultChannel": "default",
+          "sounds": [
+            "./local/assets/notification-sound.wav",
+            "./local/assets/notification-sound-other.wav"
+          ]
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "aef5f9c6-e68f-40ec-817b-f308ad1cf970"
+      }
+    },
+    "owner": "mateusgotardi"
+  }
+}
