@@ -4,11 +4,11 @@
     "slug": "buy-farma",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./src/assets/images/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "br.com.buyfarma"
@@ -30,14 +30,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       [
       "expo-font",
       {
-        "fonts": ["./src/assets/fonts/Poppins-Regular.ttf", "./src/assets/fonts/Poppins-SemiBold.ttf", "./src/assets/fonts/Poppins-Bold.ttf", "./assets/fonts/Poppins-Medium.ttf", 
-        "./src/assets/fonts/Poppins-ExtraBold.ttf", "./src/assets/fonts/Poppins-Black.ttf"]
+        "fonts": ["./assets/fonts/Poppins-Regular.ttf", "./assets/fonts/Poppins-SemiBold.ttf", "./assets/fonts/Poppins-Bold.ttf", "./assets/fonts/Poppins-Medium.ttf", 
+        "./assets/fonts/Poppins-ExtraBold.ttf", "./assets/fonts/Poppins-Black.ttf"]
       }
     ],
 
