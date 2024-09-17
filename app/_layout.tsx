@@ -27,8 +27,8 @@ export default function Layout() {
   }
 
   return (
-    <StyledSafeAreaView className="flex-1 min-h-screen bg-body font-poppins pt-10">
-      <StatusBar style="light" backgroundColor={'#252C32'} />
+    <StyledSafeAreaView className="flex-1 min-h-screen bg-body font-poppins">
+      <StatusBar style="light" translucent />
       <StyledView className="flex-1">
         <Stack screenOptions={{ header: () => <></> }} />
       </StyledView>
