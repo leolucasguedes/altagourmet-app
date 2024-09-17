@@ -1,9 +1,10 @@
 // app/index.tsx
 import React from 'react';
-import { StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
+import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
+import LogoIcon from '@/components/icons/logo';
 
 export default function HomeScreen() {
     return (
@@ -14,13 +15,23 @@ export default function HomeScreen() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledView className='w-full h-[60vh] rounded-b-full overflow-hidden'>
+                <StyledView className='w-full h-[60vh] rounded-b-full overflow-hidden flex items-center justify-center'>
                     <LinearGradient
                         colors={['#238878', '#5ECD81', '#238878']}
                         style={styles.background}
                     />
+                    <LogoIcon />
+                    <StyledText className='text-white mt-4 text-center text-3xl'>Simplifique suas{"\n"}
+                        <StyledText className='font-bold'>compras</StyledText>, potencialize{"\n"}
+                        <StyledText className='font-bold'>resultados</StyledText>!
+                    </StyledText>
                 </StyledView>
-                <StyledView>
+                <StyledView className='flex flex-col items-center'>
+                    <StyledImage source={require('../assets/images/home-img.png')} className='-mt-32 w-[255px] h-[255px]' />
+                    <StyledText className='text-center my-2'>Conheça a Buy Farma, a solução{"\n"}
+                        definitiva para otimizar a compra{"\n"}
+                        e gestão de medicamento.
+                    </StyledText>
                     <Link href="/login" className="w-full bg-light-green h-full flex justify-center items-center text-3xl text-white px-6 py-2 mt-3 rounded">
                         Comece Agora
                     </Link>
