@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StyledPressable, StyledView } from "../styleds/components";
 import { HomeIcon, OrdersIcon, ProfileIcon, SearchIcon } from "./icons";
 import { StyleSheet } from 'react-native';
-import { usePathname, useRouter } from "expo-router";
+import { Href, usePathname, useRouter } from "expo-router";
 
 export default function Footer() {
     const items = [
@@ -29,7 +29,7 @@ export default function Footer() {
     ]
     const router = useRouter()
     const gotoLink = (link: string) => {
-        router.push(link)
+        router.push(link as Href)
     }
     const pathName = usePathname()
     const notShowPages = ['/login', '/signup']
