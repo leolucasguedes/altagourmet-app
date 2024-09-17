@@ -11,7 +11,7 @@ export default function HomeScreen() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText className='text-black'>HOME</StyledText>
+                <StyledText className='text-white'>HOME</StyledText>
             </StyledScrollView >
         </>
     );

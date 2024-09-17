@@ -1,13 +1,10 @@
 import React from 'react';
-import { Text, View, Image, Dimensions, ScrollView, Pressable } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 
 
-const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
-const StyledPressable = styled(Pressable);
 const StyledText = styled(Text);
-const StyledImage = styled(Image);
 
 export default function HelpScreen() {
     return (
