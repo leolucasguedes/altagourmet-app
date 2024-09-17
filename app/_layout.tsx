@@ -6,6 +6,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import Footer from '@/components/footer';
 
 const StyledView = styled(View);
 const StyledSafeAreaView = styled(SafeAreaView);
@@ -31,6 +32,7 @@ export default function Layout() {
       <StyledView className="flex-1">
         <Stack screenOptions={{ header: () => <></> }} />
       </StyledView>
+      <Footer />
     </StyledSafeAreaView>
   );
 }

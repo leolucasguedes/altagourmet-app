@@ -1,21 +1,24 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, View, Image, Dimensions, ScrollView, Pressable } from 'react-native';
 import { styled } from 'nativewind';
 
 
+const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
+const StyledPressable = styled(Pressable);
 const StyledText = styled(Text);
+const StyledImage = styled(Image);
 
-export default function HelpScreen() {
+export default function SecurityScreen() {
     return (
         <>
-            <StyledScrollView className="min-h-screen bg-body" contentContainerStyle={{
+            <StyledScrollView className="min-h-screen" contentContainerStyle={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText>Help</StyledText>
+                <StyledText>Security</StyledText>
             </StyledScrollView>
         </>
     );

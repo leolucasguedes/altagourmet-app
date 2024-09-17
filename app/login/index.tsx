@@ -9,16 +9,16 @@ const StyledPressable = styled(Pressable);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-export default function SecurityScreen() {
+export default function LoginScreen() {
     return (
         <>
-            <StyledScrollView className="min-h-screen bg-body" contentContainerStyle={{
+            <StyledScrollView className="min-h-screen" contentContainerStyle={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText>Security</StyledText>
+                <StyledText>Login screen - should not show footer</StyledText>
             </StyledScrollView>
         </>
     );
