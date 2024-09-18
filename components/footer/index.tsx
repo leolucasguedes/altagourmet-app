@@ -8,7 +8,7 @@ export default function Footer() {
     const items = [
         {
             name: 'Home',
-            link: '/',
+            link: '/home',
             Icon: <HomeIcon />,
         },
         {

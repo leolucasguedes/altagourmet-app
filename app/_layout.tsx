@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { styled } from 'nativewind';
-import { Stack } from 'expo-router';
+import { Stack, usePathname  } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,10 +11,13 @@ import Footer from '@/components/footer';
 const StyledView = styled(View);
 const StyledSafeAreaView = styled(SafeAreaView);
 SplashScreen.preventAutoHideAsync();
+
 export default function Layout() {
   const [loaded, error] = useFonts({
     'Poppins': require('../assets/fonts/Poppins-Regular.ttf'),
   });
+  const pathname = usePathname();
+  const hideFooter = ['/login', '/register', '/'].includes(pathname);
 
   useEffect(() => {
     if (loaded || error) {
@@ -32,7 +35,7 @@ export default function Layout() {
       <StyledView className="flex-1">
         <Stack screenOptions={{ header: () => <></> }} />
       </StyledView>
-      <Footer />
+      {!hideFooter && <Footer />}
     </StyledSafeAreaView>
   );
 }
