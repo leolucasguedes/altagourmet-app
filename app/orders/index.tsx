@@ -10,7 +10,7 @@ export default function OrdersPage() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText>Pedidos</StyledText>
+                <StyledText className='text-3xl'>Pedidos</StyledText>
             </StyledScrollView>
         </>
     );

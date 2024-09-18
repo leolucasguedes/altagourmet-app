@@ -10,7 +10,7 @@ export default function ProfileScreen() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText>Perfil</StyledText>
+                <StyledText className='text-3xl'>Perfil</StyledText>
             </StyledScrollView>
         </>
     );

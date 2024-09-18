@@ -10,7 +10,7 @@ export default function SearchScreen() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <StyledText>Pesquisa</StyledText>
+                <StyledText className='text-3xl'>Pesquisa</StyledText>
             </StyledScrollView>
         </>
     );

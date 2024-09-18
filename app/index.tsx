@@ -5,12 +5,14 @@ import {
   StyledText,
   StyledView,
 } from "@/components/styleds/components";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import LogoIcon from "@/components/icons/logo";
 
 export default function InitialPageScreen() {
+  const router = useRouter();
+
   return (
     <>
       <StyledScrollView
@@ -20,15 +22,16 @@ export default function InitialPageScreen() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
+          padding: 0,
         }}
       >
-        <StyledView className="w-full h-[60vh] rounded-b-full overflow-hidden flex items-center justify-center">
+        <StyledView className="w-full max-w-[345px] h-[60vh] rounded-b-full overflow-hidden flex items-center justify-center">
           <LinearGradient
             colors={["#238878", "#5ECD81", "#238878"]}
             style={styles.background}
           />
-          <LogoIcon />
-          <StyledText className="text-white mt-4 text-center text-3xl">
+          <LogoIcon fillColor="#FFFFFF" />
+          <StyledText className="text-white mt-4 text-center text-3xl font-normal">
             Simplifique suas{"\n"}
             <StyledText className="font-bold">compras</StyledText>, potencialize
             {"\n"}
@@ -38,18 +41,18 @@ export default function InitialPageScreen() {
         <StyledView className="flex flex-col items-center">
           <StyledImage
             source={require("../assets/images/home-img.png")}
-            className="-mt-32 w-[255px] h-[255px]"
+            className="-mt-20 w-[255px] h-[255px]"
           />
-          <StyledText className="text-center my-2">
+          <StyledText className="text-center mt-4 mb-2">
             Conheça a Buy Farma, a solução{"\n"}
             definitiva para otimizar a compra{"\n"}e gestão de medicamento.
           </StyledText>
-          <Link
-            href="/home"
-            className="w-full bg-light-green h-full flex justify-center items-center text-3xl text-white px-6 py-2 mt-3 rounded"
+          <TouchableOpacity
+            onPress={() => router.push("/login")}
+            style={styles.button}
           >
-            Comece Agora
-          </Link>
+            <StyledText className="text-white text-md">Comece Agora</StyledText>
+          </TouchableOpacity>
         </StyledView>
       </StyledScrollView>
     </>
@@ -62,5 +65,17 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  button: {
+    backgroundColor: "#5ECD81",
+    height: 42,
+    width: "100%",
+    maxWidth: 345,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    marginTop: 12,
+    marginBottom: 60,
+    paddingHorizontal: 80,
   },
 });
