@@ -6,13 +6,14 @@ import {
   StyledPressable,
   StyledTextInput,
 } from "@/components/styleds/components";
-import { useRouter } from "expo-router";
+import { Href, Link, useRouter } from "expo-router";
 import useAuthStore from "@/store/authStore";
 import PasswordInput from "@/components/passwordInput";
 import Popup from "@/components/popup";
 import Loading from "@/components/loading";
 import LogoIcon from "@/components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import api from "@/utils/api";
 
 export default function LoginScreen() {
   const { login, isAuthenticated } = useAuthStore();
@@ -32,6 +33,10 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const sendRequest = async () => {
+    if (!email || !password) {
+      setErrorTitle("Preencha todos os campos");
+      return
+    }
     setLoading(true);
     const logged = await login(email, password);
     if (logged.statusCode !== 200) {
@@ -86,7 +91,7 @@ export default function LoginScreen() {
         Faça seu <StyledText className="font-bold">login</StyledText>!
       </StyledText>
       <StyledView className="w-full px-4">
-        <StyledText className="text-xs font-bold mb-3">E-Mail</StyledText>
+        <StyledText className="text-xs font-bold mb-3">E-Mail ou telefone {errorTitle === 'Preencha todos os campos' && email === '' && <StyledText className="text-dark-green text-xs">Preencha todos os campos</StyledText>}</StyledText>
         <StyledView className="border border-gray-300 rounded-lg px-4 py-2 mb-5 flex-row items-center">
           <Icon name="email" size={18} color="#A3A3A3" />
           <StyledTextInput
@@ -98,7 +103,8 @@ export default function LoginScreen() {
             className="ml-2 flex-1"
           />
         </StyledView>
-        <StyledText className="text-xs font-bold mb-3">Senha</StyledText>
+        <StyledText className="text-xs font-bold mb-3">Senha {errorTitle === 'Preencha todos os campos' && password === '' && <StyledText className="text-dark-green text-xs">Preencha todos os campos</StyledText>}
+        </StyledText>
         <PasswordInput
           password={password}
           setPassword={setPassword}
@@ -111,6 +117,7 @@ export default function LoginScreen() {
         </StyledPressable>
         <StyledPressable
           onPress={sendRequest}
+          disabled={loading}
           className="bg-[#5ECD81] rounded-md py-4 my-7"
         >
           <StyledText className="text-center text-white">Entrar</StyledText>
@@ -118,11 +125,11 @@ export default function LoginScreen() {
       </StyledView>
       <StyledText className="text-[#A3A3A3] text-xs">
         Ainda não tem uma conta?{" "}
-        <StyledPressable onPress={() => router.push("/register")}>
-          <StyledText className="font-semibold mt-0.5">
+        <Link href={"/register" as Href}>
+          <StyledText className="font-semibold mt-0.5 text-black">
             Crie agora mesmo!
           </StyledText>
-        </StyledPressable>
+        </Link>
       </StyledText>
     </StyledScrollView>
   );

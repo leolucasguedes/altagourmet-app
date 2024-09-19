@@ -25,7 +25,7 @@ export default function InitialPageScreen() {
           padding: 0,
         }}
       >
-        <StyledView className="w-full max-w-[345px] h-[60vh] rounded-b-full overflow-hidden flex items-center justify-center">
+        <StyledView className="w-full h-[50vh] rounded-b-full overflow-hidden flex items-center justify-center">
           <LinearGradient
             colors={["#238878", "#5ECD81", "#238878"]}
             style={styles.background}
