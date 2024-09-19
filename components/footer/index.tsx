@@ -8,22 +8,22 @@ export default function Footer() {
     const items = [
         {
             name: 'Home',
-            link: '/home',
+            link: '/app/home',
             Icon: <HomeIcon />,
         },
         {
             name: 'Search',
-            link: '/search',
+            link: '/app/search',
             Icon: <SearchIcon />,
         },
         {
             name: 'Orders',
-            link: '/orders',
+            link: '/app/orders',
             Icon: <OrdersIcon />,
         },
         {
             name: 'Profile',
-            link: '/profile',
+            link: '/app/profile',
             Icon: <ProfileIcon />,
         }
     ]
@@ -32,7 +32,7 @@ export default function Footer() {
         router.push(link as Href)
     }
     const pathName = usePathname()
-    const notShowPages = ['/login', '/signup']
+    const notShowPages = ['/login', '/register']
     if (notShowPages.includes(pathName)) return null
     return (
         <StyledView className="flex flex-row items-center justify-center gap-1 h-[72px]">

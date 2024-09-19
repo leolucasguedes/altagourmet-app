@@ -22,7 +22,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <StyledView className="border border-gray-300 rounded-lg px-4 py-2 flex-row items-center mb-5">
+    <StyledView className="border border-[#D4D4D4] rounded-lg px-3 py-2 flex-row items-center mb-4">
       {withIcon && <Icon name="key" size={18} color="#A3A3A3" />}
       <StyledTextInput
         value={password}

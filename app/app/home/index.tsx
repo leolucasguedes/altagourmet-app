@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
+import { StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
@@ -26,7 +26,6 @@ export default function HomeScreen() {
                     </StyledText>
                 </StyledView>
                 <StyledView className='flex flex-col items-center'>
-                    <StyledImage source={require('../../assets/images/home-img.png')} className='-mt-32 w-[255px] h-[255px]' />
                     <StyledText className='text-center my-2'>Conheça a Buy Farma, a solução{"\n"}
                         definitiva para otimizar a compra{"\n"}
                         e gestão de medicamento.

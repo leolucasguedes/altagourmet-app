@@ -1,4 +1,3 @@
-// app/_layout.tsx
 import React, { useEffect } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { styled } from 'nativewind';
@@ -7,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import Footer from '@/components/footer';
+import { hide } from '@/utils/hideFooter';
 
 const StyledView = styled(View);
 const StyledSafeAreaView = styled(SafeAreaView);
@@ -17,7 +17,7 @@ export default function Layout() {
     'Poppins': require('../assets/fonts/Poppins-Regular.ttf'),
   });
   const pathname = usePathname();
-  const hideFooter = ['/login', '/register', '/'].includes(pathname);
+  const hideFooter = hide.includes(pathname);
 
   useEffect(() => {
     if (loaded || error) {
@@ -30,7 +30,7 @@ export default function Layout() {
   }
 
   return (
-    <StyledSafeAreaView className="flex-1 min-h-screen bg-body font-poppins" style={{ padding: 0 }}>
+    <StyledSafeAreaView className="flex-1 min-h-screen bg-body" style={{ padding: 0 }}>
       <StatusBar style="light" translucent />
       <StyledView className="flex-1">
         <Stack screenOptions={{ header: () => <></> }} />
