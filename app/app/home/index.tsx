@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
 import LogoIcon from '@/components/icons/logo';
 
-export default function HomeScreen() {
+export default function HomePage() {
     return (
         <>
             <StyledScrollView className="min-h-screen bg-white mb-20" contentContainerStyle={{

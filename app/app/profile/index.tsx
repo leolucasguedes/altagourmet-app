@@ -14,7 +14,7 @@ import IconM from "react-native-vector-icons/MaterialCommunityIcons";
 import IconE from "react-native-vector-icons/Entypo";
 import IconI from "react-native-vector-icons/MaterialIcons";
 
-export default function ProfileScreen() {
+export default function ProfilePage() {
   const { logout, user } = useAuthStore();
   const [logoutdialog, setLogoutDialog] = useState(false);
   const router = useRouter();
@@ -75,7 +75,7 @@ export default function ProfileScreen() {
           </StyledPressable>
 
           <StyledPressable
-            onPress={() => router.push("/")}
+            onPress={() => router.push("/app/favorites")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2"
           >
             <StyledView className="flex flex-row items-center justify-start">
@@ -88,7 +88,7 @@ export default function ProfileScreen() {
           </StyledPressable>
 
           <StyledPressable
-            onPress={() => router.push("/")}
+            onPress={() => router.push("/app/chat")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2"
           >
             <StyledView className="flex flex-row items-center justify-start">
@@ -112,7 +112,7 @@ export default function ProfileScreen() {
           </StyledPressable>
 
           <StyledPressable
-            onPress={() => router.push("/")}
+            onPress={() => router.push("/app/security")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2"
           >
             <StyledView className="flex flex-row items-center justify-start">
@@ -123,7 +123,7 @@ export default function ProfileScreen() {
           </StyledPressable>
 
           <StyledPressable
-            onPress={() => router.push("/")}
+            onPress={() => router.push("/app/terms")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2"
           >
             <StyledView className="flex flex-row items-center justify-start">

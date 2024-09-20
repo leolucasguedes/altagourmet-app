@@ -19,7 +19,7 @@ import IconM from "react-native-vector-icons/MaterialCommunityIcons";
 import { obterUrlBase } from "@/utils/textFormat";
 import * as ImagePicker from "expo-image-picker";
 
-export default function EditProfileScreen() {
+export default function EditProfilePage() {
   const { user, updateUser } = useAuthStore();
   const [imagemBase64, setImagemBase64] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);

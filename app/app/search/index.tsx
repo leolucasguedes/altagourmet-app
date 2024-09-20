@@ -13,7 +13,7 @@ import SearchInput from "@/components/searchInput";
 import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-export default function SearchScreen() {
+export default function SearchPage() {
   const { token } = useAuthStore();
   const {
     searchTerm,
