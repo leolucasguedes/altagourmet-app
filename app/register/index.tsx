@@ -107,7 +107,7 @@ export default function RegisterScreen() {
         <StyledText className="text-xs font-bold mb-1.5">
           Nome Completo
         </StyledText>
-        <StyledView className="border border-[#D4D4D4] rounded-lg px-3 py-2 mb-4 flex-row items-center">
+        <StyledView className="border border-[#D4D4D4] rounded-md px-3 py-2 mb-4 flex-row items-center">
           <Icon name="person-outline" size={18} color="#A3A3A3" />
           <StyledTextInput
             value={name}
@@ -118,7 +118,7 @@ export default function RegisterScreen() {
           />
         </StyledView>
         <StyledText className="text-xs font-bold mb-1.5">E-Mail</StyledText>
-        <StyledView className="border border-[#D4D4D4] rounded-lg px-3 py-2 mb-4 flex-row items-center">
+        <StyledView className="border border-[#D4D4D4] rounded-md px-3 py-2 mb-4 flex-row items-center">
           <Icon name="email" size={18} color="#A3A3A3" />
           <StyledTextInput
             value={email}

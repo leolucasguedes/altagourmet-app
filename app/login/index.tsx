@@ -13,7 +13,6 @@ import Popup from "@/components/popup";
 import Loading from "@/components/loading";
 import LogoIcon from "@/components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import api from "@/utils/api";
 
 export default function LoginScreen() {
   const { login, isAuthenticated } = useAuthStore();
@@ -92,7 +91,7 @@ export default function LoginScreen() {
       </StyledText>
       <StyledView className="w-full px-4">
         <StyledText className="text-xs font-bold mb-1.5">E-Mail</StyledText>
-        <StyledView className="border border-[#D4D4D4] rounded-lg px-3 py-2 mb-4 flex-row items-center">
+        <StyledView className="border border-[#D4D4D4] rounded-md px-3 py-2 mb-4 flex-row items-center">
           <Icon name="email" size={18} color="#A3A3A3" />
           <StyledTextInput
             value={email}
@@ -115,7 +114,7 @@ export default function LoginScreen() {
           </StyledText>
         </StyledPressable>
         <StyledPressable
-          onPress={sendRequest}
+          onPress={() => router.push("/app/home")}
           className="bg-[#5ECD81] rounded-md py-4 my-5"
         >
           <StyledText className="text-center text-white">Entrar</StyledText>
