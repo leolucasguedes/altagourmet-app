@@ -41,7 +41,7 @@ export default function InitialPageScreen() {
         <StyledView className="flex flex-col items-center">
           <StyledImage
             source={require("../assets/images/home-img.png")}
-            className="-mt-20 w-[255px] h-[255px]"
+            className="-mt-12 w-[255px] h-[255px]"
           />
           <StyledText className="text-center mt-4 mb-2">
             Conheça a Buy Farma, a solução{"\n"}
