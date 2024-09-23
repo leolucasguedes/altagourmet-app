@@ -49,13 +49,14 @@ export default function ProfilePage() {
       />
 
       <StyledView className="flex flex-col items-center justify-start w-full px-2">
-        <StyledView className="w-full flex flex-row items-center justify-start gap-x-3 px-2 pt-4">
-          <StyledPressable onPress={() => router.back()} className="min-w-16">
+        <StyledView className="w-full flex flex-row items-center justify-between gap-x-3 px-2 pt-4">
+          <StyledPressable onPress={() => router.back()} className="w-20" >
             <Icon name="arrow-back" size={25} color="#0A0A0A" />
           </StyledPressable>
-          <StyledText className="font-bold text-lg pl-20">
+          <StyledText className="font-bold text-lg">
             Meu Perfil
           </StyledText>
+          <StyledView className="w-20"></StyledView>
         </StyledView>
 
         <ProfileHead />

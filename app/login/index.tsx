@@ -19,6 +19,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(isAuthenticated)
     if (isAuthenticated) {
       router.push("/app/home" as Href);
     }
@@ -34,11 +35,12 @@ export default function LoginScreen() {
   const sendRequest = async () => {
     if (!email || !password) {
       setErrorTitle("Preencha todos os campos");
+      setError(true)
       return
     }
     setLoading(true);
     const logged = await login(email, password);
-    if (logged.statusCode !== 200) {
+    if (logged) {
       setError(true);
       setErrorTitle("Usuário ou senha incorretos");
       setErrorActions([
@@ -79,8 +81,8 @@ export default function LoginScreen() {
         actions={errorActions}
         Subtitle={() => (
           <StyledText className="text-xs">
-            <b>Revise seu e-mail e senha</b> e tente novamente ou{" "}
-            <b>redefina sua senha</b> para evitar o bloqueio da sua conta!
+            <StyledText className="font-bold">Revise seu e-mail e senha</StyledText> e tente novamente ou{" "}
+            <StyledText className="font-bold">redefina sua senha</StyledText> para evitar o bloqueio da sua conta!
           </StyledText>
         )}
         close={() => setError(false)}
@@ -114,7 +116,7 @@ export default function LoginScreen() {
           </StyledText>
         </StyledPressable>
         <StyledPressable
-          onPress={() => router.push("/app/home")}
+          onPress={sendRequest}
           className="bg-[#5ECD81] rounded-md py-4 my-5"
         >
           <StyledText className="text-center text-white">Entrar</StyledText>

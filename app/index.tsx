@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyledImage,
   StyledScrollView,
@@ -9,10 +9,20 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import LogoIcon from "@/components/icons/logo";
+import useAuthStore from "@/store/authStore";
 
 export default function InitialPageScreen() {
+  const [loaded, setLoaded] = useState(false)
   const router = useRouter();
-
+  const { isAuthenticated } = useAuthStore();
+  useEffect(() => {
+    if (loaded) {
+      if (isAuthenticated) router.push("/app/home")
+    }
+  }, [loaded])
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
   return (
     <>
       <StyledScrollView

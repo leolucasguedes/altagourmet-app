@@ -7,8 +7,9 @@ import { StatusBar } from "expo-status-bar";
 export default function Layout() {
   return (
     <>
+      <LoginValidator />
       <StatusBar style="light" translucent />
-      <StyledView className="flex-1">
+      <StyledView className="flex-1 py-8">
         <Stack screenOptions={{ header: () => <></> }} />
       </StyledView>
       <Footer />

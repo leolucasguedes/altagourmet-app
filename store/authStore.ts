@@ -1,6 +1,6 @@
 import api from "@/utils/api";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import zustandStorage from "@/utils/zustandStorage";
 
 interface User {
@@ -24,12 +24,6 @@ interface AuthState {
   register: (userInfo: any) => Promise<any>;
   logout: () => void;
   getMe: () => Promise<boolean>;
-  favorites: any[];
-  favsRef: any[];
-  getFavorites: () => Promise<void>;
-  removeFavorite: (id: any) => Promise<void>;
-  addFavorite: (id: any) => Promise<void>;
-  updateUser: (userInfo: any) => Promise<any>;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -41,17 +35,17 @@ const useAuthStore = create<AuthState>()(
       login: async (login, password) => {
         try {
           const loggedJSON = await api.post("/auth/login", { login, password });
-          console.log("res", loggedJSON);
-          if (loggedJSON.status === 200) {
+          if (loggedJSON.data.access_token) {
+            console.log(loggedJSON.data.access_token)
             set({ token: loggedJSON.data.access_token });
             set({ isAuthenticated: true });
             await get().getMe();
-            return { statusCode: 200 };
-          }
+            return true;
+          } else return false;
         } catch (err: any) {
           console.log("erro", err);
           set({ token: null, user: null, isAuthenticated: false });
-          return err;
+          return false;
         }
       },
       register: async (userInfo: any) => {
@@ -85,6 +79,7 @@ const useAuthStore = create<AuthState>()(
             headers: { Authorization: "Bearer " + get().token },
           });
           const user = userJSON.data;
+          console.log(user)
           set({
             user: {
               name: user.name,
@@ -103,89 +98,15 @@ const useAuthStore = create<AuthState>()(
           return false;
         }
       },
-      favorites: [],
-      favsRef: [],
-      removeFavorite: async (id) => {
-        try {
-          const favID = get().favsRef.find((f) => f.post_id === id);
-          const newFavs = get().favorites.filter((f) => f.id !== id);
-          set({ favorites: newFavs });
-          if (!favID) return;
-          if (favID.length === 0) return;
-          await api.delete(`/favorites/${favID.id}`, {
-            headers: { Authorization: "Bearer " + get().token },
-          });
-        } catch (error) {}
-      },
-      addFavorite: async (item) => {
-        try {
-          await api.post(
-            `/favorites`,
-            { post_id: item.id, user_id: get().user?.id || "" },
-            { headers: { Authorization: "Bearer " + get().token } }
-          );
-          const newFavs = [...get().favorites, item];
-          set({ favorites: newFavs });
-        } catch (error) {
-          console.error("Erro ao adicionar favorito:", error);
-        }
-      },
-      getFavorites: async () => {
-        try {
-          const favs = await api.get("/favorites", {
-            headers: { Authorization: "Bearer " + get().token },
-          });
-          if (favs.status === 200) {
-            set({ favsRef: [...favs.data] });
-            const ids = favs.data.map((i: any) => {
-              return i.post_id;
-            });
-            const favCars = await api.post(
-              `/post/list/1/50`,
-              { id: ids },
-              { headers: { Authorization: "Bearer " + get().token } }
-            );
-
-            set({ favorites: [...favCars.data] });
-          }
-        } catch (error) {
-          console.error("Erro ao buscar favoritos:", error);
-        }
-      },
-      updateUser: async (userInfo) => {
-        try {
-          const updatedUser = await api.put(
-            "/user",
-            { ...userInfo },
-            { headers: { Authorization: "Bearer " + get().token } }
-          );
-          if (updatedUser.status === 200) {
-            const user = updatedUser.data.user;
-            set({
-              user: {
-                name: user.name,
-                email: user.email,
-                avatar: user.profile_photo_path,
-                phone: user.phone,
-                address: user.address,
-                birth: user.birth,
-              },
-            });
-            return updatedUser;
-          }
-        } catch (err: any) {
-          return err.response;
-        }
-      },
     }),
     {
       name: "costumer-auth",
-      storage: zustandStorage,
-      partialize: (state) => ({
-        isAuthenticated: state.isAuthenticated,
-        user: state.user,
-        token: state.token,
-      }),
+      storage: createJSONStorage(() => zustandStorage),
+      // partialize: (state) => ({
+      //   isAuthenticated: state.isAuthenticated,
+      //   user: state.user,
+      //   token: state.token,
+      // }),
     }
   )
 );
