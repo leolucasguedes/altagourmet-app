@@ -130,7 +130,7 @@ export default function EditProfilePage() {
           <StyledPressable onPress={() => router.back()} className="min-w-16">
             <Icon name="arrow-back" size={25} color="#0A0A0A" />
           </StyledPressable>
-          <StyledText className="font-bold text-lg pl-20">
+          <StyledText className="font-semibold text-lg pl-20">
             Editar Perfil
           </StyledText>
         </StyledView>
@@ -167,7 +167,7 @@ export default function EditProfilePage() {
       </StyledView>
 
       <StyledView className="w-full px-4">
-        <StyledText className="text-xs font-bold mb-2">
+        <StyledText className="text-xs font-semibold mb-2">
           Nome Completo
         </StyledText>
         <StyledTextInput
@@ -178,7 +178,7 @@ export default function EditProfilePage() {
           className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
         />
 
-        <StyledText className="text-xs font-bold mb-2">Endereço</StyledText>
+        <StyledText className="text-xs font-semibold mb-2">Endereço</StyledText>
         <StyledTextInput
           value={address}
           onChangeText={(text) => setAddress(text)}
@@ -187,7 +187,7 @@ export default function EditProfilePage() {
           className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
         />
 
-        <StyledText className="text-xs font-bold mb-2">E-Mail</StyledText>
+        <StyledText className="text-xs font-semibold mb-2">E-Mail</StyledText>
         <StyledTextInput
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -197,7 +197,7 @@ export default function EditProfilePage() {
           className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
         />
 
-        <StyledText className="text-xs font-bold mb-2">Telefone</StyledText>
+        <StyledText className="text-xs font-semibold mb-2">Telefone</StyledText>
         <StyledTextInput
           value={telefone}
           onChangeText={handleTelefoneChange}
@@ -207,7 +207,7 @@ export default function EditProfilePage() {
           className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
         />
 
-        <StyledText className="text-xs font-bold mb-2">
+        <StyledText className="text-xs font-semibold mb-2">
           Data de Nascimento
         </StyledText>
         <StyledTextInput

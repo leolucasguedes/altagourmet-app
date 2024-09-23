@@ -46,7 +46,7 @@ const Popup: React.FC<PopupProps> = ({
           />
 
           {/* Title */}
-          <StyledText className="font-normal text-2xl mb-3">{title}</StyledText>
+          <StyledText className="font-normal text-2xl mb-2">{title}</StyledText>
 
           {/* Subtitle */}
           {Subtitle && <Subtitle />}
@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     maxWidth: 345,
     width: "100%",
     borderRadius: 4,
+    marginTop: 25,
   },
   secondaryButton: {
     backgroundColor: "transparent",
