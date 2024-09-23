@@ -75,14 +75,14 @@ export default function SearchPage() {
 
           <StyledView className="flex flex-col items-center px-4 gap-2 mt-auto">
             <StyledPressable
-              className="bg-[#5ECD81] w-full px-32 py-3 rounded-md shadow font-light"
+              className="bg-[#5ECD81] w-full px-32 py-3 rounded-md boxShadow font-light"
               onPress={handleViewOffersClick}
             >
               <StyledText className="text-white">Pesquisar</StyledText>
             </StyledPressable>
 
             <StyledPressable
-              className="border border-[#238878] text-ascents w-full py-2.5 px-24 mb-14 rounded-md shadow flex flex-row items-center justify-center"
+              className="border border-[#238878] text-ascents w-full py-2.5 px-24 mb-14 rounded-md boxShadow flex flex-row items-center justify-center"
               onPress={() => setOpenFilters(true)}
             >
               <Icon name="tune" size={18} color="#A3A3A3" />

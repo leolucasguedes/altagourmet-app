@@ -4,8 +4,7 @@ import {
   StyledView,
   StyledTextInput,
   StyledText,
-  StyledPressable,
-  StyledTouchableOpacity,
+  StyledPressable
 } from "@/components/styleds/components";
 import useAuthStore from "@/store/authStore";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -26,12 +25,12 @@ export default function ChatPage() {
         </StyledView>
 
         <StyledView className="w-full rounded-md px-3 py-2 mb-4 flex-row items-center">
-          <StyledTouchableOpacity
+          <StyledPressable
             onPress={() => router.back()}
             className="absolute left-5 z-50"
           >
             <Icon name="search" size={24} color="#238878" />
-          </StyledTouchableOpacity>
+          </StyledPressable>
 
           <StyledTextInput
             value={""}

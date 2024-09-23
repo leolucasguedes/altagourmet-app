@@ -5,7 +5,7 @@ import {
   StyledText,
   StyledView,
 } from "@/components/styleds/components";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import LogoIcon from "@/components/icons/logo";
@@ -47,12 +47,12 @@ export default function InitialPageScreen() {
             Conheça a Buy Farma, a solução{"\n"}
             definitiva para otimizar a compra{"\n"}e gestão de medicamento.
           </StyledText>
-          <TouchableOpacity
+          <Pressable
             onPress={() => router.push("/login")}
             style={styles.button}
           >
             <StyledText className="text-white text-md">Comece Agora</StyledText>
-          </TouchableOpacity>
+          </Pressable>
         </StyledView>
       </StyledScrollView>
     </>

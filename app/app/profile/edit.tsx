@@ -6,9 +6,7 @@ import {
   StyledText,
   StyledTextInput,
   StyledImage,
-  StyledButton,
-  StyledTouchableOpacity,
-  StyledPressable,
+  StyledPressable
 } from "@/components/styleds/components";
 import Loading from "@/components/loading";
 import Popup from "@/components/popup";
@@ -160,12 +158,12 @@ export default function EditProfilePage() {
             )}
           </StyledView>
         </StyledView>
-        <StyledTouchableOpacity
+        <StyledPressable
           onPress={handleSelecionarArquivo}
           className="mt-[-40px] bg-[#238878] p-[9px] rounded-[3px] ml-28"
         >
           <IconM name="file-edit-outline" size={15} color="white" />
-        </StyledTouchableOpacity>
+        </StyledPressable>
       </StyledView>
 
       <StyledView className="w-full px-4">
