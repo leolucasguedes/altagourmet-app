@@ -43,7 +43,6 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-                <SearchBar />
                 <StyledImage source={require('@/assets/images/home-banner.png')} />
                 <FilterSelect />
                 <StyledText className='w-full text-start px-6 font-bold mb-2'>Categorias</StyledText>
