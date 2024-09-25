@@ -1,7 +1,6 @@
 import { usePathname } from "expo-router";
 import { StyledText, StyledTextInput, StyledView } from "../styleds/components";
-import { useCurrentPageStore } from "@/store/currentPageStore";
-import { useEffect } from "react";
+import useCurrentPageStore from "@/store/currentPageStore";
 import LocationPicker from "./location";
 import SearchIcon from "../icons/search";
 

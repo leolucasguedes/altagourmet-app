@@ -6,9 +6,11 @@ interface CurrentPageState {
     setCurrentPage: (value: string) => void
 }
 
-export const useCurrentPageStore = create<CurrentPageState>()((set) => ({
+const useCurrentPageStore = create<CurrentPageState>()((set) => ({
     currentPage: null,
 
     setCurrentPage: (value) => set({ currentPage: value }),
 
 }))
+
+export default useCurrentPageStore

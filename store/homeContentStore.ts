@@ -11,7 +11,7 @@ interface HomeContent {
     fetchHomeData: (token: string, quantity?: number) => void
 }
 
-export const useHomeContentStore = create<HomeContent>()((set, get) => ({
+const useHomeContentStore = create<HomeContent>()((set, get) => ({
     homeData: {
         bestSellers: [],
         bestDiscounts: [],
@@ -34,3 +34,5 @@ export const useHomeContentStore = create<HomeContent>()((set, get) => ({
 
     }
 }))
+
+export default useHomeContentStore
