@@ -3,7 +3,7 @@ import {
   StyledView,
   StyledText,
   StyledTextInput,
-  StyledTouchableOpacity,
+  StyledPressable
 } from "@/components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -26,9 +26,9 @@ export default function RangeValueSelector({
     <>
       <StyledView className="mt-7">
         <StyledView className="w-full flex flex-row items-center justify-start gap-4">
-          <StyledTouchableOpacity onPress={saveFilters} className="min-w-10">
+          <StyledPressable onPress={saveFilters} className="min-w-10">
             <Icon name="arrow-back" size={25} color="#0A0A0A" />
-          </StyledTouchableOpacity>
+          </StyledPressable>
 
           <StyledView className="flex items-start justify-start w-full">
             <StyledText className="font-extrabold text-lg">
@@ -36,9 +36,9 @@ export default function RangeValueSelector({
             </StyledText>
           </StyledView>
 
-          <StyledTouchableOpacity className="min-w-10">
+          <StyledPressable className="min-w-10">
             <Icon name="search" size={18} color="#171717" />
-          </StyledTouchableOpacity>
+          </StyledPressable>
         </StyledView>
 
         <StyledView className="h-[1px] bg-gray-400 my-4" />

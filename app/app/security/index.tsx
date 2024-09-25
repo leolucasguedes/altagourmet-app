@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import {
   StyledView,
-  StyledTextInput,
   StyledText,
   StyledPressable,
-  StyledTouchableOpacity,
 } from "@/components/styleds/components";
 import useAuthStore from "@/store/authStore";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -20,24 +18,11 @@ export default function SecurityPage() {
           <StyledPressable onPress={() => router.back()} className="min-w-16">
             <Icon name="arrow-back" size={25} color="#0A0A0A" />
           </StyledPressable>
-          <StyledText className="font-bold text-lg pl-6">Segurança</StyledText>
+          <StyledText className="font-semibold text-lg pl-6">Segurança</StyledText>
         </StyledView>
 
         <StyledView className="w-full rounded-md px-3 py-2 mb-4 flex-row items-center">
-          <StyledTouchableOpacity
-            onPress={() => router.back()}
-            className="absolute left-5 z-50"
-          >
-            <Icon name="search" size={24} color="#238878" />
-          </StyledTouchableOpacity>
-
-          <StyledTextInput
-            value={""}
-            onChangeText={(text) => console.log(text)}
-            className="w-full pl-10 text-sm bg-[#F8F8F8] border border-[#D4D4D4] rounded-md py-4"
-            placeholder="O que você está procurando?"
-            placeholderTextColor="#A3A3A3"
-          />
+          
         </StyledView>
       </StyledView>
     </>

@@ -7,12 +7,14 @@ import {
   StyledTextInput,
 } from "@/components/styleds/components";
 import { Href, Link, useRouter } from "expo-router";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import useAuthStore from "@/store/authStore";
 import PasswordInput from "@/components/passwordInput";
 import Popup from "@/components/popup";
 import Loading from "@/components/loading";
 import LogoIcon from "@/components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import IconF from "react-native-vector-icons/Fontisto";
 
 export default function LoginScreen() {
   const { login, isAuthenticated } = useAuthStore();
@@ -34,6 +36,7 @@ export default function LoginScreen() {
 
   const sendRequest = async () => {
     if (!email || !password) {
+      setError(true);
       setErrorTitle("Preencha todos os campos");
       setError(true)
       return
@@ -53,13 +56,13 @@ export default function LoginScreen() {
           type: "primary",
         },
         {
-          action: () => router.push("/app/home" as Href),
+          action: () => router.push("/resetpassword"),
           label: "Redefinir senha",
           type: "secondary",
         },
       ]);
     } else {
-      router.push("/app/home" as Href);
+      router.push("/app/home");
     }
     setLoading(false);
   };

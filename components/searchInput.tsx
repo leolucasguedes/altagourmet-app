@@ -4,8 +4,7 @@ import {
   StyledView,
   StyledText,
   StyledPressable,
-  StyledTextInput,
-  StyledTouchableOpacity,
+  StyledTextInput
 } from "@/components/styleds/components";
 import api from "@/utils/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -63,9 +62,9 @@ export default function SearchInput({
     <StyledView>
       <StyledView className="w-full flex-row items-center justify-between rounded-md">
         {/* Ícone de busca */}
-        <StyledTouchableOpacity onPress={search} className="absolute left-2.5 z-50">
+        <StyledPressable onPress={search} className="absolute left-2.5 z-50">
           <Icon name="search" size={24} color="#238878" />
-        </StyledTouchableOpacity>
+        </StyledPressable>
 
         {/* Campo de entrada de texto */}
         <StyledTextInput

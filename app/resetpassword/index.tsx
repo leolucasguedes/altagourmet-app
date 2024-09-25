@@ -30,13 +30,12 @@ export default function ResetPassword() {
       setError(true);
       console.log(error);
     }
-    //request aqui
   };
 
   return (
     <StyledView className="flex flex-1 items-center px-10 pt-20">
       <LogoIcon fillColor="#238878" />
-      <StyledText className="text-2xl mt-5 mb-2 font-bold">
+      <StyledText className="text-2xl mt-5 mb-2">
         Recuperar <StyledText className="font-bold">senha</StyledText>
       </StyledText>
       <StyledText className="text-xs mb-8 text-center w-5/6 px-2">
@@ -55,7 +54,7 @@ export default function ResetPassword() {
       </StyledView>
       <StyledPressable
         className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
-        onPress={sendRequest}
+        onPress={() => router.push("/resetpassword/verify")}
       >
         <StyledText className="text-white">Continuar</StyledText>
       </StyledPressable>

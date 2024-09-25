@@ -6,7 +6,7 @@ import {
 import { useRouter } from "expo-router";
 import LogoIcon from "@/components/icons/logo";
 
-export default function RegisterSuccess() {
+export default function ResetPasswordSuccess() {
   const router = useRouter();
 
   return (

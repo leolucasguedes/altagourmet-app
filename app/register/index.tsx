@@ -7,7 +7,8 @@ import {
   StyledTextInput,
   StyledKeyboardAvoidingView,
 } from "@/components/styleds/components";
-import { useRouter } from "expo-router";
+import { Link, Href, useRouter } from "expo-router";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import useAuthStore from "@/store/authStore";
 import PasswordInput from "@/components/passwordInput";
 import Popup from "@/components/popup";
@@ -78,6 +79,7 @@ export default function RegisterScreen() {
     if (userCreated) {
       router.push("/register/success");
     } else {
+      setError(true);
       setErrorMessage("Já existe uma conta com este e-mail.");
       setErrorTitle("E-Mail não validado!");
       setErrorActions([

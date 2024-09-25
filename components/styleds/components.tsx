@@ -5,7 +5,7 @@ export const StyledSafeAreaView = styled(SafeAreaView);
 export const StyledView = styled(View);
 export const StyledScrollView = styled(ScrollView);
 export const StyledPressable = styled(Pressable);
-let PoppinsTxt = styled(Text);
+const PoppinsTxt = styled(Text);
 export const StyledText = ({ children, className, ...props }: { children: any, className?: string }) => {
     return (
         <PoppinsTxt className={className + ' font-[Poppins]'} {...props}>

@@ -3,8 +3,7 @@ import {
   StyledScrollView,
   StyledText,
   StyledPressable,
-  StyledView,
-  StyledTouchableOpacity,
+  StyledView
 } from "@/components/styleds/components";
 import ModalPage from "./modalPage";
 import RangeValueSelector from "./rangeValueSelector";
@@ -85,14 +84,14 @@ export default function FiltersModal({ close }: { close: () => void }) {
             Filtrar por
           </StyledText>
           {filterNames.map((filter, index) => (
-            <StyledTouchableOpacity
+            <StyledPressable
               key={index}
               onPress={() => setModal(filter)}
               className="flex flex-row justify-between py-3"
             >
               <StyledText>{filter}</StyledText>
               <Icon name="add" size={18} color="#A3A3A3" />
-            </StyledTouchableOpacity>
+            </StyledPressable>
           ))}
 
           <StyledView className="w-full flex flex-row justify-between mt-10">

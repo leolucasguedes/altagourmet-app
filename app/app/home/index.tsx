@@ -3,9 +3,9 @@ import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView 
 import { Href, Link } from 'expo-router';
 import FilterSelect from '@/components/filterSelect';
 import useAuthStore from '@/store/authStore';
-import CategoriesDisplay from '@/components/categories';
 import { RefreshControl } from 'react-native';
 import { useHomeContentStore } from '@/store/homeContentStore';
+import CategoriesDisplay from '@/components/categories';
 
 export default function HomePage() {
     const { homeData, fetchHomeData } = useHomeContentStore();
