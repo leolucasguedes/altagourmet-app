@@ -1,48 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import { Href, Link } from 'expo-router';
-import CategoriesDisplay from '@/components/Categories';
-import SearchBar from '@/components/searchBar';
 import FilterSelect from '@/components/filterSelect';
-import api from '@/utils/api';
 import useAuthStore from '@/store/authStore';
-interface IMainData {
-    bestSellers: any[],
-    bestDiscounts: any[],
-    mainShops: any[]
-}
+import CategoriesDisplay from '@/components/categories';
+import { RefreshControl } from 'react-native';
+import { useHomeContentStore } from '@/store/homeContentStore';
+
 export default function HomePage() {
-    const [homeData, setHomeData] = useState<IMainData>({
-        bestSellers: [],
-        bestDiscounts: [],
-        mainShops: []
-    });
+    const { homeData, fetchHomeData } = useHomeContentStore();
     const { token } = useAuthStore()
-    const fetchHomeData = async () => {
-        try {
-            const res = await api.get('/products/home/4', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            if (res.status === 200) {
-                setHomeData(res.data);
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
     useEffect(() => {
-        fetchHomeData();
-    }, [])
+        if (token) {
+            fetchHomeData(token);
+        }
+    }, [token])
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        if (token) {
+            fetchHomeData(token);
+        }
+        setRefreshing(false);
+    }, []);
+
     return (
         <>
-            <StyledScrollView className="min-h-screen bg-white mb-20" contentContainerStyle={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-            }}>
+            <StyledScrollView className="min-h-screen bg-white mb-20"
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                contentContainerStyle={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                }}>
                 <StyledImage source={require('@/assets/images/home-banner.png')} />
                 <FilterSelect />
                 <StyledText className='w-full text-start px-6 font-bold mb-2'>Categorias</StyledText>
@@ -97,7 +89,7 @@ export default function HomePage() {
                         </StyledView>
                     </StyledView>) : null}
                 </StyledView>
-                <StyledView className='mb-36'></StyledView>
+                <StyledView className='mb-64'></StyledView>
             </StyledScrollView >
         </>
     );

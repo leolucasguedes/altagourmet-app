@@ -15,7 +15,14 @@ interface User {
   birth?: string | null;
   id?: string | null;
 }
-
+interface RegisterDTO {
+  phone: string
+  name: string
+  email: string
+  document: string
+  address: string
+  password: string
+}
 interface AuthState {
   isAuthenticated: boolean;
   user: null | User;
@@ -35,6 +42,11 @@ const useAuthStore = create<AuthState>()(
       login: async (login, password) => {
         try {
           const loggedJSON = await api.post("/auth/login", { login, password });
+          // const loggedJSON = {
+          //   data: {
+          //     access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQzMjY3MDAsImV4cCI6MTY3NDAzMDAwMH0.0sQa0nNf1G2kTqoGq5k2XJnYJt5I7nU8vzrYz6BqDQ'
+          //   }
+          // }
           if (loggedJSON.data.access_token) {
             console.log(loggedJSON.data.access_token)
             set({ token: loggedJSON.data.access_token });
@@ -48,22 +60,25 @@ const useAuthStore = create<AuthState>()(
           return false;
         }
       },
-      register: async (userInfo: any) => {
+      register: async (userInfo: RegisterDTO) => {
         try {
-          const userJSON = await api.post("/auth/register", userInfo);
-          if (userJSON.status === 200) {
-            const user = userJSON.data;
-            if (user.data.token) {
-              set({ token: user.data.token });
+          const userJSON = await api.post('auth/register', { ...userInfo })
+          const user = userJSON.data
+          console.log(user)
+          if (userJSON.status === 201 || userJSON.status === 200) {
+            console.log(user)
+            if (user.access_token) {
+              set({ token: user.access_token });
               set({ isAuthenticated: true });
               get().getMe();
+              return true;
             } else {
-              get().login(userInfo.email, userInfo.password);
+              return false;
             }
           }
-          return userJSON;
         } catch (err: any) {
-          return { ...err.response };
+          console.log("erro", err);
+          return false;
         }
       },
       logout: () => {

@@ -24,7 +24,7 @@ export default function ProfilePage() {
       <Popup
         show={logoutdialog}
         status={"cancel"}
-        title={"Você está prestes a sair!"}
+        title="Você está prestes a sair!"
         actions={[
           {
             action: () => {

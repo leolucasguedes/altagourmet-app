@@ -1,10 +1,10 @@
 import React from "react";
 import {
   StyledView,
-  StyledText,
   StyledPressable,
+  StyledText,
 } from "@/components/styleds/components";
-import { Modal } from "react-native";
+import { Modal, Text } from "react-native";
 import { buttonCN, secButtonCN } from "./classnames";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -22,7 +22,6 @@ type PopupProps = {
   actions: Action[];
   close: () => void;
 };
-
 const Popup: React.FC<PopupProps> = ({
   show,
   status,
@@ -39,27 +38,27 @@ const Popup: React.FC<PopupProps> = ({
       onRequestClose={close}
     >
       <StyledView className="bg-primary bg-opacity-50 flex-1 justify-center items-center">
-        <StyledView className="w-4/5 bg-white rounded-lg p-5">
+        <StyledView className="w-4/5 bg-white flex flex-col items-center rounded-lg p-5">
           <StyledPressable onPress={close} className="py-2">
-            <StyledView className="bg-grey w-16 h-1 rounded-full" />
+            <StyledView className="bg-gray w-16 h-1 rounded-full" />
           </StyledPressable>
           <Icon
             name={status === "error" ? "error-outline" : "highlight-remove"}
-            size={18}
-            color="#525252"
+            size={60}
+            color="#DC2626"
           />
-          <StyledText className="text-lg font-bold">{title}</StyledText>
+          <StyledText className="text-lg font-bold text-[#DC2626] font-[Poppins]">{title}</StyledText>
           {Subtitle && <Subtitle />}
           {actions.map((action, index) => (
             <StyledPressable
               key={index}
               onPress={action.action}
-              className="w-full"
+              className="w-full my-2"
             >
               <StyledText
                 className={action.type === "primary" ? buttonCN : secButtonCN}
               >
-                {action.label}
+                {`${action.label}`}
               </StyledText>
             </StyledPressable>
           ))}

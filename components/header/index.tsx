@@ -14,7 +14,7 @@ export default function Header() {
             {currentPage !== null && <StyledText>{currentPage}</StyledText>}
             <LocationPicker />
             {showSearchPages.includes(pathname) &&
-                <StyledView className="w-full px-4 mt-2">
+                <StyledView className="w-full px-4 mt-4">
                     <StyledView className="w-full flex flex-row items-center justify-start gap-2 py-1 rounded-lg px-3 border-[1px] border-[#E8EDF2] ">
                         <SearchIcon />
                         <StyledTextInput className="w-full" placeholder="Buscar Produtos..." />

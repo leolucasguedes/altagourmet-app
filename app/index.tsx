@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import LogoIcon from "@/components/icons/logo";
 import useAuthStore from "@/store/authStore";
+import VersionShower from "@/components/versionShower";
 
 export default function InitialPageScreen() {
   const [loaded, setLoaded] = useState(false)
@@ -41,6 +42,7 @@ export default function InitialPageScreen() {
             style={styles.background}
           />
           <LogoIcon fillColor="#FFFFFF" />
+          <VersionShower />
           <StyledText className="text-white mt-4 text-center text-3xl font-normal">
             Simplifique suas{"\n"}
             <StyledText className="font-bold">compras</StyledText>, potencialize

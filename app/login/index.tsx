@@ -40,7 +40,7 @@ export default function LoginScreen() {
     }
     setLoading(true);
     const logged = await login(email, password);
-    if (logged) {
+    if (!logged) {
       setError(true);
       setErrorTitle("Usuário ou senha incorretos");
       setErrorActions([
