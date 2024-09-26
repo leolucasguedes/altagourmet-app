@@ -3,7 +3,7 @@ import {
   StyledSafeAreaView,
   StyledView,
 } from "@/components/styleds/components";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -33,7 +33,7 @@ export default function Layout() {
     >
       <StatusBar style="dark" translucent backgroundColor="transparent" />
       <StyledView className="flex-1">
-        <Stack screenOptions={{ header: () => <></> }} />
+        <Slot />
       </StyledView>
     </StyledSafeAreaView>
   );

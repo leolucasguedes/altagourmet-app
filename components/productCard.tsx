@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: any }) {
                     {product.images ?
                         <StyledImage className='w-20 h-20' src={product.images} alt={product.name} />
                         :
-                        <StyledImage className='w-20 h-20 object-contain' source={require('@/assets/images/medicine.png')} alt={product.name} />
+                        <StyledImage className='w-20 h-20 object-contain' source={require('@/assets/images/remedios.png')} alt={product.name} />
                     }
                 </StyledView>
                 <StyledText className="text-center font-bold">{product.name}</StyledText>

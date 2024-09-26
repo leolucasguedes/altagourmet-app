@@ -9,7 +9,6 @@ import ModalPage from "./modalPage";
 import RangeValueSelector from "./rangeValueSelector";
 import useSearchStore, { Filters } from "@/store/searchStore";
 import useAuthStore from "@/store/authStore";
-import { formatCurrency } from "@/utils/textFormat";
 import { useRouter, usePathname } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -41,11 +40,14 @@ export default function FiltersModal({ close }: { close: () => void }) {
 
   const closeModal = (value: any) => {
     setModal("");
+    if (modal === "Faixa de preço") {
+      setFilter("price", { start: faixaFrom, end: faixaTo });
+    }
   };
 
   const handleSearch = async () => {
     await searchForResults(token || "");
-    router.push("/");
+    router.push(`/app/search/${filters?.search}/${JSON.stringify(filters)}`);
     close();
   };
 
@@ -97,9 +99,9 @@ export default function FiltersModal({ close }: { close: () => void }) {
           <StyledView className="w-full flex flex-row justify-between mt-10">
             <StyledPressable
               onPress={() => clearFilters()}
-              className="bg-gray-300 py-3 px-5 rounded"
+              className="bg-[#D1D5DB] py-3 px-5 rounded"
             >
-              <StyledText className="text-gray-800">Limpar</StyledText>
+              <StyledText className="text-[#1F2937]">Limpar</StyledText>
             </StyledPressable>
             <StyledPressable
               onPress={handleSearch}

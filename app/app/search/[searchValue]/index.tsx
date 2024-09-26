@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   StyledView,
-  StyledPressable,
+  StyledText,
   StyledScrollView,
 } from "@/components/styleds/components";
 import SearchInput from "@/components/searchInput";
@@ -10,6 +10,10 @@ import Loading from "@/components/loading";
 import useSearchStore from "@/store/searchStore";
 import useAuthStore from "@/store/authStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ProductList from "@/components/productList";
+import FilterSelect from "@/components/filterSelect";
+import FiltersModal from "@/components/filtersModal";
+import ModalPage from "@/components/modalPage";
 
 export default function SearchTermPage() {
   const { isAuthenticated, token } = useAuthStore();
@@ -22,8 +26,10 @@ export default function SearchTermPage() {
     addHistory,
     removeHistory,
     clearHistory,
+    setSortingOrder,
   } = useSearchStore();
   const [loading, setLoading] = useState(false);
+  const [filtersModalVisible, setFiltersModalVisible] = useState(false);
   const router = useRouter();
   const params = useLocalSearchParams();
   const searchTermFromRoute = Array.isArray(params.pesquisa)
@@ -49,6 +55,14 @@ export default function SearchTermPage() {
     }
   }, [isAuthenticated, searchTermFromRoute]);
 
+  const openFilterModal = () => {
+    setFiltersModalVisible(true);
+  };
+
+  const handleSort = (order: string) => {
+    setSortingOrder(order);
+  };
+
   return (
     <StyledView className="min-h-screen flex flex-col justify-between p-10 w-full">
       {loading && <Loading />}
@@ -64,7 +78,23 @@ export default function SearchTermPage() {
         />
       </StyledView>
 
-      {"Produtos aqui"}
+      {/* Adiciona o componente de filtros e ordenação */}
+      <FilterSelect openFilterModal={openFilterModal} />
+
+      {results.length > 0 ? (
+        <ProductList products={results} />
+      ) : (
+        <StyledText className="text-center">
+          Nenhum resultado encontrado
+        </StyledText>
+      )}
+
+      {/* Modal de filtros */}
+      {filtersModalVisible && (
+        <ModalPage isOpen={filtersModalVisible} zIndex={20}>
+          <FiltersModal close={() => setFiltersModalVisible(false)} />
+        </ModalPage>
+      )}
     </StyledView>
   );
 }

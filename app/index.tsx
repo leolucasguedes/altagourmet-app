@@ -6,7 +6,7 @@ import {
   StyledPressable,
   StyledTextInput,
 } from "@/components/styleds/components";
-import { Href, Link, useRouter } from "expo-router";
+import { Href, Link, useRouter, useRootNavigationState } from "expo-router";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import useAuthStore from "@/store/authStore";
 import PasswordInput from "@/components/passwordInput";
@@ -26,16 +26,21 @@ interface FormValues {
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const navigationState = useRootNavigationState();
+  const [isInitialCheckDone, setIsInitialCheckDone] = useState(false);
 
   const [error, setError] = useState(false);
   const [errorTitle, setErrorTitle] = useState("");
   const [errorActions, setErrorActions] = useState<any[]>([]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/app/home" as Href);
+    if (!isInitialCheckDone && navigationState?.key) {
+      if (isAuthenticated) {
+        router.push("/app/home" as Href);
+      }
+      setIsInitialCheckDone(true);
     }
-  }, [isAuthenticated]);
+  }, [navigationState?.key, isAuthenticated, isInitialCheckDone, router]);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()

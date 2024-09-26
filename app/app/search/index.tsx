@@ -37,6 +37,7 @@ export default function SearchPage() {
 
     setRefreshing(false);
   }, []);
+
   useEffect(() => {
     if (token) {
       clearResults();
@@ -46,38 +47,34 @@ export default function SearchPage() {
 
   const handleSearch = async (e: any) => {
     e.preventDefault();
-    if (token) {
+    if (token && searchTerm) {
       await searchForResults(token, searchTerm);
       addHistory(searchTerm);
-      //router.push(`/app/search/${searchTerm}`);
-    }
-  };
-
-  const handleViewOffersClick = () => {
-    if (results.length > 0) {
-      //router.push(`/app/offers/filtered`);
-    } else {
-      //router.push("/app/offers/new");
+      router.push(`/app/search/${searchTerm}`);
     }
   };
 
   return (
-    <StyledScrollView className="min-h-screen bg-white mb-20"
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    <StyledScrollView
+      className="min-h-screen bg-white mb-20"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       contentContainerStyle={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}>
-      <StyledView className="min-h-screen flex flex-col justify-between items-center pb-14 w-full overflow-x-hidden mb-20">
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
+      <StyledView className="min-h-screen flex flex-col items-center pb-14 w-full overflow-x-hidden mb-20">
         {openFilters ? (
           <ModalPage isOpen={openFilters}>
             <FiltersModal close={() => setOpenFilters(false)} />
           </ModalPage>
         ) : (
           <>
-            <StyledView className="flex flex-col items-center justify-start w-full py-10 px-6">
+            <StyledView className="flex flex-col items-center justify-start w-full px-6">
               <SearchInput
                 search={handleSearch}
                 setSearchTerm={setSearchTerm}
@@ -89,21 +86,21 @@ export default function SearchPage() {
               />
             </StyledView>
 
-            <StyledView className="flex flex-col items-center px-4 gap-2 mt-auto">
+            <StyledView className="flex flex-col items-center px-4 gap-2 mt-auto mb-10">
               <StyledPressable
                 className="bg-[#5ECD81] w-full px-32 py-3 rounded-md shadow font-light"
-                onPress={handleViewOffersClick}
+                onPress={handleSearch}
               >
                 <StyledText className="text-white">Pesquisar</StyledText>
               </StyledPressable>
 
-              <StyledPressable
+              {/*<StyledPressable
                 className="border border-[#238878] text-ascents w-full py-2.5 px-24 mb-14 rounded-md shadow flex flex-row items-center justify-center"
                 onPress={() => setOpenFilters(true)}
               >
                 <Icon name="tune" size={18} color="#A3A3A3" />
                 <StyledText className="ml-2 mr-8">Filtrar</StyledText>
-              </StyledPressable>
+              </StyledPressable>*/}
             </StyledView>
           </>
         )}

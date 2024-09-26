@@ -20,7 +20,7 @@ export default function ModalPage({
   }
 
   return (
-    <Modal transparent={true} visible={isOpen} animationType="fade">
+    <Modal transparent={true} visible={isOpen} animationType="slide">
       <TouchableWithoutFeedback>
         <StyledView className="flex-1 justify-center items-center bg-black bg-opacity-50">
           <StyledView

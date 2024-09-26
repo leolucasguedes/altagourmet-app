@@ -50,7 +50,7 @@ export default function SearchInput({
   const searchByHistory = (value: string) => {
     setIsFocused(false);
     setSearchTerm(value);
-    //router.push(`/app/search/${value}`);
+    router.push(`/app/search/${value}`);
   };
 
   const handleClearSearch = () => {
@@ -80,14 +80,14 @@ export default function SearchInput({
         {/* Limpar pesquisa */}
         {searchTerm?.length > 1 && (
           <StyledPressable onPress={handleClearSearch}>
-            <StyledText className="text-ascents">x</StyledText>
+            <StyledText className="text-red absolute right-10 -top-2.5 z-50">X</StyledText>
           </StyledPressable>
         )}
 
         {/* Botão de envio */}
         {searchTerm?.length > 1 && (
           <StyledPressable onPress={search}>
-            <StyledText className="text-black">{">"}</StyledText>
+            <StyledText className="text-black absolute right-2.5 -top-2.5 z-50">{">"}</StyledText>
           </StyledPressable>
         )}
       </StyledView>
