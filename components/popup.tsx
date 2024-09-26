@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  StyledView,
-  StyledPressable,
-  StyledText,
-} from "@/components/styleds/components";
-import { Modal, Text } from "react-native";
-import { buttonCN, secButtonCN } from "./classnames";
+import { View, Text, Pressable, Modal, StyleSheet } from "react-native";
+import { StyledText } from "./styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 interface Action {
@@ -22,6 +17,7 @@ type PopupProps = {
   actions: Action[];
   close: () => void;
 };
+
 const Popup: React.FC<PopupProps> = ({
   show,
   status,
@@ -37,35 +33,103 @@ const Popup: React.FC<PopupProps> = ({
       animationType="slide"
       onRequestClose={close}
     >
-      <StyledView className="bg-primary bg-opacity-50 flex-1 justify-center items-center">
-        <StyledView className="w-4/5 bg-white flex flex-col items-center rounded-lg p-5">
-          <StyledPressable onPress={close} className="py-2">
-            <StyledView className="bg-gray w-16 h-1 rounded-full" />
-          </StyledPressable>
+      <View style={styles.overlay}>
+        <View style={styles.popupContainer}>
+          <Pressable onPress={close} style={styles.handleContainer}>
+            <View style={styles.handle} />
+          </Pressable>
           <Icon
             name={status === "error" ? "error-outline" : "highlight-remove"}
-            size={60}
-            color="#DC2626"
+            size={108}
+            color="#5ECD81"
+            style={styles.icon}
           />
-          <StyledText className="text-lg font-bold text-[#DC2626] font-[Poppins]">{title}</StyledText>
+
+          {/* Title */}
+          <StyledText className="font-normal text-2xl mb-2">{title}</StyledText>
+
+          {/* Subtitle */}
           {Subtitle && <Subtitle />}
+
+          {/* Actions */}
           {actions.map((action, index) => (
-            <StyledPressable
+            <Pressable
               key={index}
               onPress={action.action}
-              className="w-full my-2"
+              style={[
+                styles.actionButton,
+                action.type === "primary"
+                  ? styles.primaryButton
+                  : styles.secondaryButton,
+              ]}
             >
               <StyledText
-                className={action.type === "primary" ? buttonCN : secButtonCN}
+                className={`font-normal ${action.type === "primary" ? "text-white" : "text-[#5ECD81]"
+                  }`}
               >
-                {`${action.label}`}
+                {action.label}
               </StyledText>
-            </StyledPressable>
+            </Pressable>
           ))}
-        </StyledView>
-      </StyledView>
+        </View>
+      </View>
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  popupContainer: {
+    width: "100%",
+    height: 410,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: 20,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+  },
+  handleContainer: {
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  handle: {
+    width: 60,
+    height: 4,
+    backgroundColor: "#ccc",
+    borderRadius: 2,
+  },
+  icon: {
+    marginVertical: 10,
+  },
+  actionButton: {
+    width: "100%",
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 12,
+    alignItems: "center",
+  },
+  primaryButton: {
+    backgroundColor: "#5ECD81",
+    maxWidth: 345,
+    width: "100%",
+    borderRadius: 4,
+    marginTop: 25,
+  },
+  secondaryButton: {
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "#5ECD81",
+    maxWidth: 345,
+    width: "100%",
+    borderRadius: 4,
+  },
+});
 
 export default Popup;

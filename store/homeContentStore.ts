@@ -8,7 +8,7 @@ export interface IMainData {
 interface HomeContent {
     homeData: IMainData,
     setHomeData: (value: IMainData) => void,
-    fetchHomeData: (token: string, quantity?: number) => void
+    fetchHomeData: (token: string, quantity?: number) => Promise<boolean>
 }
 
 const useHomeContentStore = create<HomeContent>()((set, get) => ({
@@ -28,8 +28,10 @@ const useHomeContentStore = create<HomeContent>()((set, get) => ({
             if (res.status === 200) {
                 get().setHomeData(res.data);
             }
+            return true
         } catch (err) {
             console.log(err)
+            return false
         }
 
     }
