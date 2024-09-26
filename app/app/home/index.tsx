@@ -3,7 +3,7 @@ import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView 
 import { Href, Link, useRouter } from 'expo-router';
 import FilterSelect from '@/components/filterSelect';
 import useAuthStore from '@/store/authStore';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, TouchableOpacity } from 'react-native';
 import useHomeContentStore from '@/store/homeContentStore';
 import CategoriesDisplay from '@/components/categories';
 
@@ -102,7 +102,7 @@ export default function HomePage() {
                         </StyledView>
                     </StyledView>) : null}
                 </StyledView>
-                <StyledView className='mb-64'></StyledView>
+                <StyledView className='mb-72'></StyledView>
             </StyledScrollView >
         </>
     );

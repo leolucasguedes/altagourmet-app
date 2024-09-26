@@ -12,6 +12,7 @@ import useAuthStore from "@/store/authStore";
 import IconM from "react-native-vector-icons/MaterialCommunityIcons";
 import IconE from "react-native-vector-icons/Entypo";
 import IconI from "react-native-vector-icons/MaterialIcons";
+import VersionShower from "@/components/versionShower";
 
 export default function ProfilePage() {
   const { logout, user } = useAuthStore();
@@ -152,6 +153,9 @@ export default function ProfilePage() {
             </StyledView>
             <IconM name="chevron-right" size={20} color="#A3A3A3" />
           </StyledPressable>
+          <StyledView className="w-full flex items-center justify-center py-4">
+            <VersionShower />
+          </StyledView>
         </StyledView>
       </StyledScrollView>
     </>

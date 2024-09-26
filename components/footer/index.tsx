@@ -1,10 +1,20 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { StyledPressable, StyledView } from "../styleds/components";
+import { StyledPressable, StyledText, StyledView } from "../styleds/components";
 import { HomeIcon, OrdersIcon, ProfileIcon, SearchIcon } from "./icons";
-import { StyleSheet } from "react-native";
-import { Href, useRouter } from "expo-router";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Href, usePathname, useRouter } from "expo-router";
+import useCartStore from "@/store/cartStore";
+import { useEffect } from "react";
+import useAuthStore from "@/store/authStore";
 
 export default function Footer() {
+  const { totalItems, fetchUserCart, totalValue } = useCartStore()
+  const { token } = useAuthStore()
+  useEffect(() => {
+    if (token) {
+      fetchUserCart(token)
+    }
+  }, [token])
   const items = [
     {
       name: "Home",
@@ -28,37 +38,61 @@ export default function Footer() {
     },
   ];
   const router = useRouter();
+  const pathName = usePathname();
   const gotoLink = (link: string) => {
+    if (pathName === link) return
     router.push(link as Href);
   };
 
   return (
-    <StyledView style={styles.footerContainer}>
-      <LinearGradient
-        colors={["#238878", "#5ECD81", "#238878"]}
-        style={styles.background}
-        start={[0, 1]}
-        end={[1, 0]}
-      />
-      {items.map((item, index) => (
-        <StyledPressable
-          onPress={() => gotoLink(item.link)}
-          key={index}
-          style={styles.pressableItem}
-        >
-          {item.Icon}
-        </StyledPressable>
-      ))}
-    </StyledView>
+    <StyledView style={styles.absoluteContainer}>
+      {totalItems > 0 && pathName === '/app/home' &&
+        <StyledView className='bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3'>
+          <StyledView className="w-1/2">
+            <StyledText className='text-center text-lg font-bold text-dark-green'>
+              <StyledText className='text-center text-xs text-gray'>Total sem a entrega</StyledText>{'\n'}
+              {`${(totalValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}<StyledText className="text-xs text-gray">/{totalItems} itens</StyledText>
+            </StyledText>
+          </StyledView>
+          <StyledView className="w-1/2">
+            <TouchableOpacity onPress={() => gotoLink('/app/orders')}>
+              <StyledText className='text-center bg-light-green rounded-lg px-4 py-3 text-white'>Ver Carrinho</StyledText>
+            </TouchableOpacity>
+          </StyledView>
+        </StyledView>
+      }
+      <StyledView style={styles.footerContainer}>
+        <LinearGradient
+          colors={["#238878", "#5ecd81", "#238878"]}
+          style={styles.background}
+          start={[0, 1]}
+          end={[1, 0]}
+        />
+        {items.map((item, index) => (
+          <StyledPressable
+            onPress={() => gotoLink(item.link)}
+            key={index}
+            style={styles.pressableItem}
+          >
+            <StyledView>
+              {item.name === 'Orders' && totalItems > 0 && <StyledView className="w-3 h-3 z-20 -top-2 -right-1 absolute opacity-70 bg-dark-green rounded-full"></StyledView>}
+              {item.Icon}
+            </StyledView>
+          </StyledPressable>
+        ))}
+      </StyledView>
+    </StyledView >
   );
 }
 
 const styles = StyleSheet.create({
-  footerContainer: {
+  absoluteContainer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  footerContainer: {
     height: 72,
     zIndex: 100,
     flexDirection: "row",

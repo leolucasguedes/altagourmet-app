@@ -1,8 +1,9 @@
 import BigText from '@/components/bigText';
 import Loading from '@/components/loading';
 import ProductCard from '@/components/productCard';
-import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
+import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import useAuthStore from '@/store/authStore';
+import useCartStore from '@/store/cartStore';
 import useHomeContentStore from '@/store/homeContentStore';
 import api from '@/utils/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -15,6 +16,7 @@ export default function ProductPage() {
     const [productDetails, setProductDetails] = useState<any>(null);
     const [refreshing, setRefreshing] = useState(false);
     const { token } = useAuthStore()
+    const { addToCart } = useCartStore()
     const [seeMore, setSeeMore] = useState<any>(null)
     const { homeData } = useHomeContentStore()
     const loadSeeMore = async () => {
@@ -78,19 +80,19 @@ export default function ProductPage() {
                         <StyledText className='font-bold text-light-green text-3xl'>{`R$${productDetails.price.replace('.', ',')}`}</StyledText>
                         {/*resolver o desconto aqui {productDetails.showDiscount && <StyledText className='text-red-600'>{`${productDetails.price}`}</StyledText>} */}
                     </StyledView>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => { addToCart(token || '', productDetails.id, 1) }}>
                         <StyledView className='bg-[#5ECD81] rounded-md py-4 mt-4 w-full flex justify-center items-center'>
                             <StyledText className='text-white'>Adicionar à Sacola</StyledText>
                         </StyledView>
                     </TouchableOpacity>
                     <StyledView className='flex flex-row items-center justify-between pt-3 gap-4'>
-                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { addToCart(token || '', productDetails.id, 2) }}>
                             <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+2</StyledText></StyledView>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { addToCart(token || '', productDetails.id, 5) }}>
                             <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+5</StyledText></StyledView>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { addToCart(token || '', productDetails.id, 10) }}>
                             <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+10</StyledText></StyledView>
                         </TouchableOpacity>
                     </StyledView>
