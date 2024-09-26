@@ -11,6 +11,7 @@ interface PasswordInputProps {
   setPassword: (value: string) => void;
   withIcon?: boolean;
   placeholder?: string;
+  onBlur?: (e: any) => void;
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({
@@ -18,6 +19,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   setPassword,
   withIcon,
   placeholder,
+  onBlur,
 }) => {
   const [showPass, setShowPass] = useState(false);
 
@@ -27,6 +29,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
       <StyledTextInput
         value={password}
         onChangeText={setPassword}
+        onBlur={onBlur}
         secureTextEntry={!showPass}
         placeholder={placeholder || "Digite sua senha"}
         placeholderTextColor="#A3A3A3"

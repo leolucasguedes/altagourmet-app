@@ -76,7 +76,7 @@ export default function ResetPasswordVerify() {
             Selecione a melhor forma de contato para receber o código e trocar
             sua senha.
           </StyledText>
-          <StyledView className="flex flex-col items-center justify-between w-full h-[250px] mx-5 mb-16">
+          <StyledView className="flex flex-col items-center justify-between w-full h-[220px] mx-5 mb-16 mt-2">
             <StyledPressable
               onPress={() => setChoose("phone")}
               className={`w-full p-2 flex flex-row rounded-[10px] items-center border ${
@@ -127,7 +127,7 @@ export default function ResetPasswordVerify() {
           </StyledPressable>
         </StyledView>
       ) : step === 2 ? (
-        <StyledView className="flex flex-1 items-center justify-center px-10">
+        <StyledView className="flex flex-1 items-center pt-16 px-10">
           <LogoIcon fillColor="#238878" />
           <StyledText className="text-2xl mt-5 mb-2">
             Verifique o <StyledText className="font-bold">código</StyledText>
@@ -157,14 +157,14 @@ export default function ResetPasswordVerify() {
           </StyledText>
 
           <StyledPressable
-            className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
+            className="bg-[#5ECD81] rounded-md py-3 mb-5 w-full flex justify-center items-center absolute bottom-10"
             onPress={() => handleInputChange}
           >
             <StyledText className="text-white">Continuar</StyledText>
           </StyledPressable>
         </StyledView>
       ) : step === 3 ? (
-        <StyledView className="flex flex-1 items-center justify-center px-10">
+        <StyledView className="flex flex-1 items-center pt-16 px-10">
           <LogoIcon fillColor="#238878" />
           <StyledText className="text-2xl mt-5 mb-2 font-bold">
             Verifique o <StyledText className="font-bold">código</StyledText>
@@ -177,7 +177,7 @@ export default function ResetPasswordVerify() {
               <StyledTextInput
                 key={index}
                 ref={(ref) => (inputRefs.current[index] = ref)}
-                className="w-[70px] h-[70px] rounded-[10px] text-[24px] text-white bg-[#E4E4E4]"
+                className="w-[70px] h-[70px] rounded-[10px] text-[24px] text-black font-bold bg-[#E4E4E4]"
                 value={digit}
                 onChangeText={(value) => handleInputChange(index, value)}
                 keyboardType="numeric"
@@ -194,20 +194,20 @@ export default function ResetPasswordVerify() {
           </StyledText>
 
           <StyledPressable
-            className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
+            className="bg-[#5ECD81] rounded-md py-3 mb-5 w-full flex justify-center items-center absolute bottom-10"
             onPress={() => handleInputChange}
           >
             <StyledText className="text-white">Continuar</StyledText>
           </StyledPressable>
         </StyledView>
       ) : step === 4 ? (
-        <StyledView className="flex flex-1 items-center justify-center px-10">
+        <StyledView className="flex flex-1 items-center pt-16 px-10">
           <LogoIcon fillColor="#238878" />
 
           <StyledText className="text-2xl mt-5 mb-2">
             Crie uma <StyledText className="font-bold">nova senha</StyledText>
           </StyledText>
-          <StyledView className="w-full mt-2">
+          <StyledView className="w-full mt-3">
             <StyledText className="text-xs font-bold mb-1.5">
               Nova Senha
             </StyledText>
@@ -227,7 +227,7 @@ export default function ResetPasswordVerify() {
             />
           </StyledView>
           <StyledPressable
-            className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
+            className="bg-[#5ECD81] rounded-md py-3 mb-5 w-full flex justify-center items-center absolute bottom-10"
             onPress={() => router.push("/resetpassword/success")}
           >
             <StyledText className="text-white">Continuar</StyledText>
@@ -237,8 +237,8 @@ export default function ResetPasswordVerify() {
         <StyledView className="flex flex-1 items-center justify-center">
           <StyledText className="text-[#DC2626]">Passo inválido</StyledText>
           <StyledPressable
-            className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
-            onPress={() => router.push("/login")}
+            className="bg-[#5ECD81] rounded-md py-3 mb-5 w-full flex justify-center items-center absolute bottom-10"
+            onPress={() => router.push("/")}
           >
             <StyledText className="text-white">Voltar ao login</StyledText>
           </StyledPressable>

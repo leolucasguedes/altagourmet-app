@@ -20,7 +20,7 @@ export default function ResetPasswordSuccess() {
         nossa Home. Boas compras!
       </StyledText>
       <StyledPressable
-        className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
+        className="bg-[#5ECD81] rounded-md py-3 mb-5 w-full flex justify-center items-center absolute bottom-10"
         onPress={() => router.push("/app/home")}
       >
         <StyledText className="text-white">Continuar</StyledText>

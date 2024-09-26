@@ -31,7 +31,7 @@ export default function Layout() {
       className="flex-1 min-h-screen bg-body"
       style={{ padding: 0 }}
     >
-      <StatusBar style="light" translucent />
+      <StatusBar style="dark" translucent backgroundColor="transparent" />
       <StyledView className="flex-1">
         <Stack screenOptions={{ header: () => <></> }} />
       </StyledView>
