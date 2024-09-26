@@ -1,6 +1,6 @@
 import api from "@/utils/api";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import zustandStorage from "@/utils/zustandStorage";
 
 export interface Filters {
@@ -113,6 +113,7 @@ const useSearchStore = create<SearchState>()(
     }),
     {
       name: "search",
+      storage: createJSONStorage(() => zustandStorage),
       partialize: (state) => {
         return { history: state.history };
       },

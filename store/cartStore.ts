@@ -12,7 +12,7 @@ interface CartState {
     emptyCart: () => void
 }
 
-export const useCartStore = create<CartState>()((set) => ({
+const useCartStore = create<CartState>()((set) => ({
     userCart: [],
     setUserCart: (value) => set({ userCart: value }),
     total: 0,
@@ -23,3 +23,5 @@ export const useCartStore = create<CartState>()((set) => ({
     removeFromCart: (value) => set((state) => ({ userCart: state.userCart.filter((item) => item.id !== value) })),
     emptyCart: () => set({ userCart: [], total: 0, totalItems: 0 }),
 }))
+
+export default useCartStore

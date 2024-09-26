@@ -5,6 +5,7 @@ import {
   StyledScrollView,
   StyledPressable,
   StyledTextInput,
+  StyledKeyboardAvoidingView,
 } from "@/components/styleds/components";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, Platform } from "react-native";
@@ -14,6 +15,8 @@ import Popup from "@/components/popup";
 import Loading from "@/components/loading";
 import LogoIcon from "@/components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import IconF from "react-native-vector-icons/Fontisto";
+import IconAnt from "react-native-vector-icons/AntDesign";
 import * as Yup from "yup";
 import { Formik, FormikHelpers } from "formik";
 

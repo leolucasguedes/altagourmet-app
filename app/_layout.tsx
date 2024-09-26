@@ -28,7 +28,7 @@ export default function Layout() {
 
   return (
     <StyledSafeAreaView
-      className="flex-1 min-h-screen bg-body"
+      className="flex-1 min-h-screen bg-white"
       style={{ padding: 0 }}
     >
       <StatusBar style="dark" translucent backgroundColor="transparent" />
