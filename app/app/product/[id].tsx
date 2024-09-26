@@ -1,4 +1,5 @@
 import BigText from '@/components/bigText';
+import Loading from '@/components/loading';
 import ProductCard from '@/components/productCard';
 import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import useAuthStore from '@/store/authStore';
@@ -6,7 +7,7 @@ import useHomeContentStore from '@/store/homeContentStore';
 import api from '@/utils/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
 import IconAnt from "react-native-vector-icons/AntDesign";
 
 export default function ProductPage() {
@@ -77,19 +78,29 @@ export default function ProductPage() {
                         <StyledText className='font-bold text-light-green text-3xl'>{`R$${productDetails.price.replace('.', ',')}`}</StyledText>
                         {/*resolver o desconto aqui {productDetails.showDiscount && <StyledText className='text-red-600'>{`${productDetails.price}`}</StyledText>} */}
                     </StyledView>
-                    <StyledPressable className='bg-[#5ECD81] rounded-md py-4 mt-4 w-full flex justify-center items-center' onPress={() => { }}>
-                        <StyledText className='text-white'>Adicionar à Sacola</StyledText>
-                    </StyledPressable>
+                    <TouchableOpacity onPress={() => { }}>
+                        <StyledView className='bg-[#5ECD81] rounded-md py-4 mt-4 w-full flex justify-center items-center'>
+                            <StyledText className='text-white'>Adicionar à Sacola</StyledText>
+                        </StyledView>
+                    </TouchableOpacity>
                     <StyledView className='flex flex-row items-center justify-between pt-3 gap-4'>
-                        <StyledPressable className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-1/4 flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+2</StyledText></StyledPressable>
-                        <StyledPressable className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-1/4 flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+5</StyledText></StyledPressable>
-                        <StyledPressable className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-1/4 flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+10</StyledText></StyledPressable>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                            <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+2</StyledText></StyledView>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                            <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+5</StyledText></StyledView>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: '26%' }} onPress={() => { }}>
+                            <StyledView className='border-[1px] border-[#8B8B93] rounded-md py-2 px-4 w-full flex items-center justify-center'><StyledText className='text-[#8B8B93]'>+10</StyledText></StyledView>
+                        </TouchableOpacity>
                     </StyledView>
                     <StyledText className='font-bold text-lg mb-3 mt-4'>Descrição do Produto</StyledText>
                     <BigText limit={180} text={productDetails.description} />
                 </StyledView>
                 :
-                <StyledView className='w-full h-screen fixed flex items-center justify-center bg-white'><StyledView className='rounded-full border-r-2 border-t-2 animate-spin w-20 h-20'></StyledView></StyledView>}
+                <StyledView className='w-full h-screen fixed flex items-center justify-center bg-white'>
+                    <ActivityIndicator size="large" color="#6c6c6c" />
+                </StyledView>}
             {seeMore && seeMore.length > 0 &&
                 <StyledView className='px-4 w-full pb-40'>
                     <StyledText className='my-4 w-full text-start font-bold text-lg'>Veja Mais</StyledText>
