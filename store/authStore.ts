@@ -42,13 +42,7 @@ const useAuthStore = create<AuthState>()(
       login: async (login, password) => {
         try {
           const loggedJSON = await api.post("/auth/login", { login, password });
-          // const loggedJSON = {
-          //   data: {
-          //     access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQzMjY3MDAsImV4cCI6MTY3NDAzMDAwMH0.0sQa0nNf1G2kTqoGq5k2XJnYJt5I7nU8vzrYz6BqDQ'
-          //   }
-          // }
           if (loggedJSON.data.access_token) {
-            console.log(loggedJSON.data.access_token)
             set({ token: loggedJSON.data.access_token });
             set({ isAuthenticated: true });
             await get().getMe();
@@ -64,9 +58,7 @@ const useAuthStore = create<AuthState>()(
         try {
           const userJSON = await api.post('auth/register', { ...userInfo })
           const user = userJSON.data
-          console.log(user)
           if (userJSON.status === 201 || userJSON.status === 200) {
-            console.log(user)
             if (user.access_token) {
               set({ token: user.access_token });
               set({ isAuthenticated: true });

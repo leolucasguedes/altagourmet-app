@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import api from "@/utils/api";
 import {
   StyledView,
   StyledText,
