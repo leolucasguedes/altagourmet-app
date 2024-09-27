@@ -27,7 +27,7 @@ export default function RangeValueSelector({
       <StyledView className="mt-7">
         <StyledView className="w-full flex flex-row items-center justify-start gap-4">
           <StyledPressable onPress={saveFilters} className="min-w-10">
-            <Icon name="arrow-back" size={25} color="#0A0A0A" />
+            <Icon name="arrow-back" size={25} color="#8B8B93" />
           </StyledPressable>
 
           <StyledView className="flex items-start justify-start w-full">

@@ -16,7 +16,7 @@ export default function TermsPage() {
       <StyledView className="flex flex-col items-center justify-start w-full p-2">
         <StyledView className="w-full flex flex-row items-center justify-start gap-x-3 px-2 pt-4 pb-2">
           <StyledPressable onPress={() => router.back()} className="min-w-16">
-            <Icon name="arrow-back" size={25} color="#0A0A0A" />
+            <Icon name="arrow-back" size={25} color="#8B8B93" />
           </StyledPressable>
           <StyledText className="font-semibold text-lg pl-4">Termos e Condições de Uso</StyledText>
         </StyledView>

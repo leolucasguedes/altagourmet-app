@@ -28,7 +28,6 @@ export default function SearchTermPage() {
     addHistory,
     removeHistory,
     clearHistory,
-    setSortingOrder,
   } = useSearchStore();
   const [loading, setLoading] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);

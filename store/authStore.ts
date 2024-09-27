@@ -11,6 +11,7 @@ interface User {
   email: string;
   verified_at?: string | null;
   phone?: string | null;
+  document?: string | null;
   avatar?: string | null;
   birth?: string | null;
   id?: string | null;

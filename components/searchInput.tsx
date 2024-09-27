@@ -8,6 +8,7 @@ import {
 } from "@/components/styleds/components";
 import api from "@/utils/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import useAuthStore from "@/store/authStore";
 
 interface SearchInputProps {
   search: (e: any) => void;
@@ -28,16 +29,21 @@ export default function SearchInput({
   clearHistory,
 }: SearchInputProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [trends, setTrends] = useState<string[]>([]);
+  const [trends, setTrends] = useState<any[]>([]);
   const router = useRouter();
   const pathname = usePathname();
   const isSearchPage = pathname === ("/app/search");
+  const { token } = useAuthStore();
 
   useEffect(() => {
     const fetchTrends = async () => {
       try {
-        //const response = await api.get("/trends");
-        //setTrends(response.data);
+        const response = await api.get("/products/categories",
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        setTrends(response.data);
       } catch (error) {
         console.error("Erro ao buscar as principais marcas:", error);
       }
@@ -45,7 +51,7 @@ export default function SearchInput({
 
     fetchTrends();
     setSearchTerm("");
-  }, [setSearchTerm]);
+  }, [setSearchTerm, token]);
 
   const searchByHistory = (value: string) => {
     setIsFocused(false);
@@ -135,14 +141,14 @@ export default function SearchInput({
           <StyledText className="text-base font-semibold my-4">
             Em Alta
           </StyledText>
-          <StyledView className="flex-row flex-wrap gap-4 mb-4">
+          <StyledView className="flex-row flex-wrap gap-3 mb-4">
             {trends.map((brand, index) => (
               <StyledPressable
                 key={index}
                 onPress={() => searchByHistory(brand)}
-                className="border border-gray-300 py-1 px-3.5 rounded-md"
+                className="border border-[#D4D4D4] py-1 px-3 rounded-md"
               >
-                <StyledText>{brand}</StyledText>
+                <StyledText>{brand.name}</StyledText>
               </StyledPressable>
             ))}
           </StyledView>
