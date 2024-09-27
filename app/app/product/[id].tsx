@@ -33,7 +33,6 @@ export default function ProductPage() {
     const fetchProduct = async () => {
         try {
             const prod = await api.get(`/products/details/${id}`, { headers: { Authorization: 'Bearer ' + token } });
-            console.log(prod.data)
             setProductDetails(prod.data);
         } catch (error) {
             console.log(error)

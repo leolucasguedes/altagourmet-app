@@ -57,7 +57,6 @@ const useShippingStore = create<ShippingState>()(
                         dropoff_address: get().selectedAddress,
                         shop_id: shopId
                     }, { headers: { Authorization: 'Bearer ' + token } })
-                    console.log(response.data)
                     if (response.data.kind === 'error') {
                         throw new Error(response.data.message)
                     }

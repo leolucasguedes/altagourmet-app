@@ -95,9 +95,9 @@ const useSearchStore = create<SearchState>()(
             searchPayload.subcategory = filters.subcategory;
             searchPayload.price = filters.price
               ? {
-                  start: filters.price.start || "0",
-                  end: filters.price.end || String(Number.MAX_SAFE_INTEGER),
-                }
+                start: filters.price.start || "0",
+                end: filters.price.end || String(Number.MAX_SAFE_INTEGER),
+              }
               : undefined;
             searchPayload.user_id = filters.user_id;
           }

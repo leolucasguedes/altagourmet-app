@@ -87,7 +87,6 @@ const useAuthStore = create<AuthState>()(
             headers: { Authorization: "Bearer " + get().token },
           });
           const user = userJSON.data;
-          console.log(user)
           set({
             user: {
               name: user.name,

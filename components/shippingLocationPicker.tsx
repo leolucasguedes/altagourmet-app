@@ -33,7 +33,6 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
             const response = await axios.get(
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${loc.coords.latitude},${loc.coords.longitude}&key=${GOOGLE_API_KEY}`
             );
-            console.log(response.data.results[0])
             const addr: IAddress = {
                 city: response.data.results[0].address_components[3].long_name,
                 state: response.data.results[0].address_components[4].short_name,
