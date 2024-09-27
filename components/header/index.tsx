@@ -19,7 +19,5 @@ export default function Header() {
                 </StyledView>
             }
         </StyledView>
-      )}
-    </>
-  );
+    );
 }
