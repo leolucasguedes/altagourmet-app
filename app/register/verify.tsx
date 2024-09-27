@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import api from "@/utils/api";
 import {
   StyledView,
   StyledText,
@@ -50,7 +49,7 @@ export default function RegisterVerify() {
           type: "primary",
         },
         {
-          action: () => router.push("/login"),
+          action: () => router.push("/"),
           label: "Voltar ao login",
           type: "secondary",
         },

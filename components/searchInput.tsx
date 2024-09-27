@@ -8,6 +8,7 @@ import {
 } from "@/components/styleds/components";
 import api from "@/utils/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import useAuthStore from "@/store/authStore";
 
 interface SearchInputProps {
   search: (e: any) => void;
@@ -28,16 +29,21 @@ export default function SearchInput({
   clearHistory,
 }: SearchInputProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [trends, setTrends] = useState<string[]>([]);
+  const [trends, setTrends] = useState<any[]>([]);
   const router = useRouter();
   const pathname = usePathname();
-  const isSearchPage = pathname.startsWith("/app/search");
+  const isSearchPage = pathname === ("/app/search");
+  const { token } = useAuthStore();
 
   useEffect(() => {
     const fetchTrends = async () => {
       try {
-        //const response = await api.get("/trends");
-        //setTrends(response.data);
+        const response = await api.get("/products/categories",
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        setTrends(response.data);
       } catch (error) {
         console.error("Erro ao buscar as principais marcas:", error);
       }
@@ -45,12 +51,12 @@ export default function SearchInput({
 
     fetchTrends();
     setSearchTerm("");
-  }, [setSearchTerm]);
+  }, [setSearchTerm, token]);
 
   const searchByHistory = (value: string) => {
     setIsFocused(false);
     setSearchTerm(value);
-    //router.push(`/app/search/${value}`);
+    router.push(`/app/search/${value}`);
   };
 
   const handleClearSearch = () => {
@@ -80,44 +86,44 @@ export default function SearchInput({
         {/* Limpar pesquisa */}
         {searchTerm?.length > 1 && (
           <StyledPressable onPress={handleClearSearch}>
-            <StyledText className="text-ascents">x</StyledText>
+            <StyledText className="text-red absolute right-10 -top-2.5 z-50">X</StyledText>
           </StyledPressable>
         )}
 
         {/* Botão de envio */}
         {searchTerm?.length > 1 && (
           <StyledPressable onPress={search}>
-            <StyledText className="text-black">{">"}</StyledText>
+            <StyledText className="text-black absolute right-2.5 -top-2.5 z-50">{">"}</StyledText>
           </StyledPressable>
         )}
       </StyledView>
 
       {/* Histórico de pesquisas recentes */}
       {history.length > 0 && isFocused && isSearchPage ? (
-        <StyledView className="w-full bg-white relative z-10 -mb-10">
-          <StyledView className="w-full flex-row items-center justify-between pb-2 mb-3 border-b border-gray-300">
-            <StyledText className="text-base font-semibold">
+        <StyledView className="w-full relative z-10 -mb-10">
+          <StyledView className="w-full flex-row items-center justify-between pb-2 mb-3 border-b border-[#D4D4D4]">
+            <StyledText className="text-sm font-semibold mt-2">
               Pesquisas Recentes
             </StyledText>
             <StyledPressable onPress={clearHistory}>
-              <StyledText className="text-sm text-ascents">Limpar</StyledText>
+              <StyledText className="text-sm text-ascents mt-2">Limpar</StyledText>
             </StyledPressable>
           </StyledView>
 
-          <StyledView className="w-full px-4">
+          <StyledView className="w-full px-4 mb-3">
             {history.map((item, index) => (
               <StyledView
                 key={index}
-                className="flex-row items-center justify-between"
+                className="flex-row items-center justify-between mb-2"
               >
                 <StyledPressable
                   onPress={() => searchByHistory(item)}
-                  className="text-sm text-darker-grey mb-4"
+                  className="mr-2"
                 >
-                  <StyledText>{item}</StyledText>
+                  <StyledText className="text-sm text-[#A3A3A3]">{item}</StyledText>
                 </StyledPressable>
                 <StyledPressable onPress={() => removeHistory(item)}>
-                  <Icon name="close" size={18} color="#171717" />
+                  <Icon name="close" size={18} color="#A3A3A3" />
                 </StyledPressable>
               </StyledView>
             ))}
@@ -135,14 +141,14 @@ export default function SearchInput({
           <StyledText className="text-base font-semibold my-4">
             Em Alta
           </StyledText>
-          <StyledView className="flex-row flex-wrap gap-4 mb-4">
+          <StyledView className="flex-row flex-wrap gap-3 mb-4">
             {trends.map((brand, index) => (
               <StyledPressable
                 key={index}
                 onPress={() => searchByHistory(brand)}
-                className="border border-gray-300 py-1 px-3.5 rounded-md"
+                className="border border-[#D4D4D4] py-1 px-3 rounded-md"
               >
-                <StyledText>{brand}</StyledText>
+                <StyledText>{brand.name}</StyledText>
               </StyledPressable>
             ))}
           </StyledView>

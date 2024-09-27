@@ -64,8 +64,9 @@ const Popup: React.FC<PopupProps> = ({
               ]}
             >
               <StyledText
-                className={`font-normal ${action.type === "primary" ? "text-white" : "text-[#5ECD81]"
-                  }`}
+                className={`font-normal ${
+                  action.type === "primary" ? "text-white" : "text-[#5ECD81]"
+                }`}
               >
                 {action.label}
               </StyledText>

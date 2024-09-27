@@ -6,7 +6,7 @@ import {
   StyledText,
   StyledTextInput,
   StyledImage,
-  StyledPressable
+  StyledPressable,
 } from "@/components/styleds/components";
 import Loading from "@/components/loading";
 import Popup from "@/components/popup";
@@ -18,7 +18,7 @@ import { obterUrlBase } from "@/utils/textFormat";
 import * as ImagePicker from "expo-image-picker";
 
 export default function EditProfilePage() {
-  const { user, updateUser } = useAuthStore();
+  const { user } = useAuthStore();
   const [imagemBase64, setImagemBase64] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -27,6 +27,7 @@ export default function EditProfilePage() {
   const [telefone, setTelefone] = useState("");
   const [nascimento, setNascimento] = useState("");
   const [address, setAddress] = useState("");
+  const [document, setDocument] = useState("");
 
   const router = useRouter();
 
@@ -85,14 +86,9 @@ export default function EditProfilePage() {
       phone: telefone !== "" ? telefone : user?.phone,
       birth: nascimento !== "" ? nascimento : user?.birth,
       address: address !== "" ? address : user?.address,
+      document: document !== "" ? document : user?.document,
       avatar: imagemBase64 ? imagemBase64 : user?.avatar,
     };
-
-    const updated = await updateUser(reqBody);
-
-    if (!updated || updated.status !== 200) {
-      setError(true);
-    }
     setLoading(false);
   };
 
@@ -128,7 +124,7 @@ export default function EditProfilePage() {
       <StyledView className="flex justify-start items-center mb-5">
         <StyledView className="w-full flex flex-row items-center justify-start gap-x-3 px-2 py-4">
           <StyledPressable onPress={() => router.back()} className="min-w-16">
-            <Icon name="arrow-back" size={25} color="#0A0A0A" />
+            <Icon name="arrow-back" size={25} color="#8B8B93" />
           </StyledPressable>
           <StyledText className="font-semibold text-lg pl-20">
             Editar Perfil
@@ -214,6 +210,17 @@ export default function EditProfilePage() {
           value={nascimento}
           onChangeText={(text) => setNascimento(text)}
           placeholder="DD/MM/YYYY"
+          placeholderTextColor="#A3A3A3"
+          className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
+        />
+
+        <StyledText className="text-xs font-semibold mb-2">
+          CPF
+        </StyledText>
+        <StyledTextInput
+          value={document}
+          onChangeText={(text) => setDocument(text)}
+          placeholder="XXX.XXX.XXX-XX"
           placeholderTextColor="#A3A3A3"
           className="border border-[#5ECD81] rounded-[4px] p-3 mb-4"
         />

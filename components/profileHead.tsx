@@ -8,7 +8,7 @@ const ProfileHead = () => {
 
   return (
     <>
-      <StyledView className="rounded-full bg-border-grey h-[135px]  w-[135px] flex items-center justify-center mt-5">
+      <StyledView className="rounded-full bg-border-grey h-[135px] w-[135px] flex items-center justify-center mt-5">
         <StyledView className="rounded-full bg-white h-[130px] w-[130px] flex items-center justify-center">
           {user?.avatar &&
             !user.avatar.startsWith("https://ui-avatars.com/") ? (
@@ -29,6 +29,7 @@ const ProfileHead = () => {
       </StyledView>
       <StyledView className="flex flex-col items-center justify-center p-3 w-full">
         <StyledText className="font-extrabold">{user?.name}</StyledText>
+        <StyledText className="font-normal text-[#8B8B93]">+ {user?.phone}</StyledText>
       </StyledView>
     </>
   );

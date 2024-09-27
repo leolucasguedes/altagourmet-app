@@ -6,14 +6,10 @@ import {
   StyledText,
   StyledPressable,
   StyledView,
-  StyledScrollView,
 } from "@/components/styleds/components";
-import FiltersModal from "@/components/filtersModal";
-import ModalPage from "@/components/modalPage";
 import SearchInput from "@/components/searchInput";
+import Loading from "@/components/loading";
 import { useRouter } from "expo-router";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { RefreshControl } from "react-native";
 
 export default function SearchPage() {
   const { token } = useAuthStore();
@@ -28,86 +24,76 @@ export default function SearchPage() {
     clearHistory,
     clearResults,
   } = useSearchStore();
-  const [openFilters, setOpenFilters] = useState(false);
   const router = useRouter();
-  const [refreshing, setRefreshing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-
-    setRefreshing(false);
-  }, []);
   useEffect(() => {
     if (token) {
       clearResults();
+      setMessage("");
+      setSearchTerm("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const handleSearch = async (e: any) => {
     e.preventDefault();
-    if (token) {
-      await searchForResults(token, searchTerm);
-      addHistory(searchTerm);
-      //router.push(`/app/search/${searchTerm}`);
-    }
-  };
+    setLoading(true);
+    setMessage("Pesquisando");
 
-  const handleViewOffersClick = () => {
-    if (results.length > 0) {
-      //router.push(`/app/offers/filtered`);
-    } else {
-      //router.push("/app/offers/new");
+    if (token && searchTerm) {
+      try {
+        addHistory(searchTerm);
+        const searched = await searchForResults(token, searchTerm);
+
+        if (searched) {
+          router.push(`/app/search/${searchTerm}`);
+        } else {
+          setMessage("Nenhum resultado encontrado");
+          setSearchTerm("");
+        }
+      } catch {
+        console.log("Erro ao buscar produtos");
+      }
     }
+    setLoading(false);
+    setMessage("");
   };
 
   return (
-    <StyledScrollView className="min-h-screen bg-white mb-20"
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      contentContainerStyle={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}>
-      <StyledView className="min-h-screen flex flex-col justify-between items-center pb-14 w-full overflow-x-hidden mb-20">
-        {openFilters ? (
-          <ModalPage isOpen={openFilters}>
-            <FiltersModal close={() => setOpenFilters(false)} />
-          </ModalPage>
-        ) : (
-          <>
-            <StyledView className="flex flex-col items-center justify-start w-full py-10 px-6">
-              <SearchInput
-                search={handleSearch}
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                history={history}
-                removeHistory={removeHistory}
-                clearHistory={clearHistory}
-                addHistory={addHistory}
-              />
-            </StyledView>
+    <StyledView className="flex flex-col items-center justify-between w-full flex-1 overflow-x-hidden mb-16">
+      {loading && <Loading />}
+      <StyledView className="flex flex-col items-center justify-start w-full px-6">
+        <SearchInput
+          search={handleSearch}
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          history={history}
+          removeHistory={removeHistory}
+          clearHistory={clearHistory}
+          addHistory={addHistory}
+        />
+      </StyledView>
 
-            <StyledView className="flex flex-col items-center px-4 gap-2 mt-auto">
-              <StyledPressable
-                className="bg-[#5ECD81] w-full px-32 py-3 rounded-md shadow font-light"
-                onPress={handleViewOffersClick}
-              >
-                <StyledText className="text-white">Pesquisar</StyledText>
-              </StyledPressable>
+      {message && <StyledText className="text-center">{message}</StyledText>}
 
-              <StyledPressable
+      <StyledView className="flex flex-col items-center px-4 gap-2 mt-auto">
+        <StyledPressable
+          className="bg-[#5ECD81] w-full px-32 py-3 rounded-md shadow font-light"
+          onPress={handleSearch}
+        >
+          <StyledText className="text-white">Pesquisar</StyledText>
+        </StyledPressable>
+
+        {/*<StyledPressable
                 className="border border-[#238878] text-ascents w-full py-2.5 px-24 mb-14 rounded-md shadow flex flex-row items-center justify-center"
                 onPress={() => setOpenFilters(true)}
               >
                 <Icon name="tune" size={18} color="#A3A3A3" />
                 <StyledText className="ml-2 mr-8">Filtrar</StyledText>
-              </StyledPressable>
-            </StyledView>
-          </>
-        )}
+              </StyledPressable>*/}
       </StyledView>
-    </StyledScrollView>
+    </StyledView>
   );
 }

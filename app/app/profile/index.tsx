@@ -49,14 +49,14 @@ export default function ProfilePage() {
       />
 
       <StyledScrollView
-        className="flex-1 bg-white p-4"
+        className="flex-1 bg-white px-4"
         contentContainerStyle={{
           alignItems: "center",
           justifyContent: "center",
           flexGrow: 1,
         }}
       >
-        <StyledView className="w-full flex flex-row items-center justify-center gap-x-3 px-2 pt-4">
+        <StyledView className="w-full flex flex-row items-center justify-center gap-x-3 px-2">
           <StyledText className="font-semibold text-lg">Meu Perfil</StyledText>
         </StyledView>
 
@@ -90,6 +90,19 @@ export default function ProfilePage() {
           </StyledPressable>
 
           <StyledPressable
+            onPress={() => router.push("/app/wallet")}
+            className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2.5"
+          >
+            <StyledView className="flex flex-row items-center justify-start">
+            <IconM name="piggy-bank-outline" size={27} color="#0A0A0A" />
+              <StyledText className="font-normal text-base ml-4">
+                Minha Carteira
+              </StyledText>
+            </StyledView>
+            <IconM name="chevron-right" size={20} color="#A3A3A3" />
+          </StyledPressable>
+
+          <StyledPressable
             onPress={() => router.push("/app/chat")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2.5"
           >
@@ -97,19 +110,6 @@ export default function ProfilePage() {
               <IconE name="chat" size={27} color="#0A0A0A" />
               <StyledText className="font-normal text-base ml-4">
                 Minhas conversas
-              </StyledText>
-            </StyledView>
-            <IconM name="chevron-right" size={20} color="#A3A3A3" />
-          </StyledPressable>
-
-          <StyledPressable
-            onPress={() => router.push("/")}
-            className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2.5"
-          >
-            <StyledView className="flex flex-row items-center justify-start">
-              <IconM name="piggy-bank-outline" size={27} color="#0A0A0A" />
-              <StyledText className="font-normal text-base ml-4">
-                Pagamentos
               </StyledText>
             </StyledView>
             <IconM name="chevron-right" size={20} color="#A3A3A3" />
