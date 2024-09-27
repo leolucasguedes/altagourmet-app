@@ -63,7 +63,7 @@ export default function Footer() {
           </StyledView>
         </StyledView>
       }
-      {pathName === '/app/orders' && <StyledView className="w-full bg-white">
+      {pathName.includes('/app/orders') && <StyledView className="w-full bg-white">
         <StyledView className='bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3 border-[1px] border-[#dddddd] rounded-t-xl'>
           <StyledView className="w-1/2">
             {shipping_fee > 0 ?
@@ -79,7 +79,7 @@ export default function Footer() {
             }
           </StyledView>
           <StyledView className="w-1/2">
-            {error_message === '' && <TouchableOpacity onPress={() => { }}>
+            {error_message === '' && <TouchableOpacity onPress={() => { router.push('/app/orders/checkout/review') }}>
               <StyledText className='text-center bg-light-green rounded-lg px-4 py-3 text-white'>Continuar</StyledText>
             </TouchableOpacity>}
           </StyledView>

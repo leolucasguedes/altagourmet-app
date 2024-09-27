@@ -80,16 +80,16 @@ export default function OrdersPage() {
                 minHeight: '100%',
             }}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <StyledView className='flex flex-col gap-5 px-4 w-full'>
+                <StyledView className='flex flex-col gap-y-2 px-4 w-full'>
                     <StyledView className='w-full pt-4 pb-2'>
-                        {homeData.mainShops[0] &&
+                        {homeData.mainShops.length > 0 &&
                             <StyledView className='flex flex-row items-center justify-start w-full gap-2'>
                                 <StyledView className='w-12 h-12 bg-light-green rounded-full'>
                                     <StyledImage className='w-full h-full' source={require('@/assets/images/icone-farmacia.png')} />
                                 </StyledView>
                                 <StyledView>
                                     <StyledText className='font-bold text-lg'>{homeData.mainShops[0].name}</StyledText>
-                                    <Link href={`/app/shop/${homeData.mainShops[0].id}`}><StyledText className='text-light-green pt-3'>Adicionar mais itens</StyledText></Link>
+                                    <Link href={`/app/shop/${homeData.mainShops[0]?.id}`}><StyledText className='text-light-green pt-3'>Adicionar mais itens</StyledText></Link>
                                 </StyledView>
                             </StyledView>
                         }
