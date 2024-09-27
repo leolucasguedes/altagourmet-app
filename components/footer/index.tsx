@@ -43,10 +43,10 @@ export default function Footer() {
     if (pathName === link) return
     router.push(link as Href);
   };
-
+  const showCartResumeScreens = ['/app/home', '/app/orders', '/app/product']
   return (
     <StyledView style={styles.absoluteContainer}>
-      {totalItems > 0 && pathName === '/app/home' &&
+      {totalItems > 0 && showCartResumeScreens.some((item) => pathName.includes(item)) &&
         <StyledView className='bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3'>
           <StyledView className="w-1/2">
             <StyledText className='text-center text-lg font-bold text-dark-green'>

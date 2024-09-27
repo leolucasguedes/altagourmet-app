@@ -1,5 +1,4 @@
 import BigText from '@/components/bigText';
-import Loading from '@/components/loading';
 import ProductCard from '@/components/productCard';
 import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import useAuthStore from '@/store/authStore';
