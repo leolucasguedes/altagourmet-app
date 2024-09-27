@@ -1,12 +1,14 @@
 import React from "react";
-import { Modal, TouchableWithoutFeedback } from "react-native";
+import { Modal, TouchableOpacity } from "react-native";
 import { StyledView } from "@/components/styleds/components";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export interface ModalPageProps {
   isOpen: boolean;
   zIndex?: number;
   children: React.ReactNode;
   cN?: string;
+  close: () => void;
 }
 
 export default function ModalPage({
@@ -14,6 +16,7 @@ export default function ModalPage({
   zIndex = 10,
   children,
   cN,
+  close,
 }: ModalPageProps) {
   if (!isOpen) {
     return null;
@@ -21,17 +24,22 @@ export default function ModalPage({
 
   return (
     <Modal transparent={true} visible={isOpen} animationType="slide">
-      <TouchableWithoutFeedback>
-        <StyledView className="flex-1 justify-center items-center bg-black bg-opacity-50">
-          <StyledView
-            className={`relative ${
-              cN ? cN : "z-10 w-11/12 max-w-lg bg-white rounded-lg p-4"
-            } ${zIndex ? "z-" + zIndex : ""}`}
-          >
-            {children}
-          </StyledView>
+      <StyledView className="flex-1 justify-end bg-[#D4D4D4] bg-opacity-50">
+        {/* Fechar modal */}
+        <TouchableOpacity
+          style={{ position: "absolute", top: 40, left: 20, zIndex: 999 }}
+          onPress={close}
+        >
+          <Icon name="close" size={30} color="#fff" />
+        </TouchableOpacity>
+
+        <StyledView
+          className={`relative z-${zIndex} w-full max-w-lg bg-white rounded-t-2xl p-6`}
+          style={{ height: "80%" }}
+        >
+          {children}
         </StyledView>
-      </TouchableWithoutFeedback>
+      </StyledView>
     </Modal>
   );
 }

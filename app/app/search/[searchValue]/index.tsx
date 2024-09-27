@@ -11,9 +11,11 @@ import useSearchStore from "@/store/searchStore";
 import useAuthStore from "@/store/authStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProductList from "@/components/productList";
-import FilterSelect from "@/components/filterSelect";
+import SortSelect from "@/components/sortSelect";
+import FilterButton from "@/components/filterButton";
 import FiltersModal from "@/components/filtersModal";
 import ModalPage from "@/components/modalPage";
+import { RefreshControl } from "react-native";
 
 export default function SearchTermPage() {
   const { isAuthenticated, token } = useAuthStore();
@@ -29,12 +31,19 @@ export default function SearchTermPage() {
     setSortingOrder,
   } = useSearchStore();
   const [loading, setLoading] = useState(false);
-  const [filtersModalVisible, setFiltersModalVisible] = useState(false);
+  const [openFilters, setOpenFilters] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   const params = useLocalSearchParams();
   const searchTermFromRoute = Array.isArray(params.pesquisa)
     ? params.pesquisa.join(" ")
     : params.pesquisa || "";
+
+  useEffect(() => {
+    if (!searchTerm && isAuthenticated) {
+      setSearchTerm(searchTermFromRoute);
+    }
+  }, [isAuthenticated, searchTermFromRoute]);
 
   const search = async () => {
     setLoading(true);
@@ -48,53 +57,67 @@ export default function SearchTermPage() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    setSearchTerm(searchTermFromRoute);
-    if (isAuthenticated) {
-      search();
-    }
-  }, [isAuthenticated, searchTermFromRoute]);
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+
+    setRefreshing(false);
+  }, []);
 
   const openFilterModal = () => {
-    setFiltersModalVisible(true);
+    setOpenFilters(true);
   };
 
-  const handleSort = (order: string) => {
-    setSortingOrder(order);
+  const closeFilterModal = () => {
+    setOpenFilters(false);
   };
 
   return (
-    <StyledView className="min-h-screen flex flex-col justify-between p-10 w-full">
-      {loading && <Loading />}
-      <StyledView className="flex flex-col items-center justify-start w-full">
-        <SearchInput
-          search={search}
-          setSearchTerm={setSearchTerm}
-          searchTerm={searchTermFromRoute}
-          history={history}
-          removeHistory={removeHistory}
-          clearHistory={clearHistory}
-          addHistory={addHistory}
-        />
-      </StyledView>
-
-      {/* Adiciona o componente de filtros e ordenação */}
-      <FilterSelect openFilterModal={openFilterModal} />
-
-      {results.length > 0 ? (
-        <ProductList products={results} />
-      ) : (
-        <StyledText className="text-center">
-          Nenhum resultado encontrado
-        </StyledText>
-      )}
-
-      {/* Modal de filtros */}
-      {filtersModalVisible && (
-        <ModalPage isOpen={filtersModalVisible} zIndex={20}>
-          <FiltersModal close={() => setFiltersModalVisible(false)} />
+    <StyledScrollView
+      className="min-h-screen bg-white mb-20"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      contentContainerStyle={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
+      {openFilters ? (
+        <ModalPage isOpen={openFilters} close={closeFilterModal}>
+          <FiltersModal close={() => setOpenFilters(false)} />
         </ModalPage>
+      ) : (
+        <StyledView className="min-h-screen flex flex-col justify-between px-4 w-full">
+          {loading && <Loading />}
+          <StyledView className="flex flex-col items-center justify-start w-full">
+            <SearchInput
+              search={search}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTermFromRoute}
+              history={history}
+              removeHistory={removeHistory}
+              clearHistory={clearHistory}
+              addHistory={addHistory}
+            />
+          </StyledView>
+
+          {/* Componente de filtros e ordenação */}
+          <StyledView className="flex flex-row justify-between w-full px-4 mt-4">
+            <SortSelect />
+            <FilterButton openFilterModal={openFilterModal} />
+          </StyledView>
+
+          {results.length > 0 ? (
+            <ProductList products={results} />
+          ) : (
+            <StyledText className="text-center">
+              Nenhum resultado encontrado
+            </StyledText>
+          )}
+        </StyledView>
       )}
-    </StyledView>
+    </StyledScrollView>
   );
 }

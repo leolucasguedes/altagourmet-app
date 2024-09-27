@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
 import { Href, Link } from 'expo-router';
-import FilterSelect from '@/components/filterSelect';
 import useAuthStore from '@/store/authStore';
 import { RefreshControl } from 'react-native';
 import useHomeContentStore from '@/store/homeContentStore';
@@ -36,8 +35,7 @@ export default function HomePage() {
                     justifyContent: 'flex-start',
                 }}>
                 <StyledImage source={require('@/assets/images/home-banner.png')} />
-                <FilterSelect />
-                <StyledText className='w-full text-start px-6 font-bold mb-2'>Categorias</StyledText>
+                <StyledText className='w-full text-start px-6 font-bold mt-4 mb-2'>Categorias</StyledText>
                 <CategoriesDisplay />
                 {homeData.mainShops.length > 0 && <StyledView className='w-full flex flex-row items-center justify-between px-6'>
                     <StyledText className='text-start font-bold'>Principais Farmácias</StyledText>

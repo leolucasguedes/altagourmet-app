@@ -77,6 +77,7 @@ const useSearchStore = create<SearchState>()(
       searchForResults: async (token, term?) => {
         set(() => ({ loading: true }));
         const filters = get().filters;
+        let hasResults = false;
 
         try {
           const searchPayload: {
@@ -101,22 +102,31 @@ const useSearchStore = create<SearchState>()(
             searchPayload.user_id = filters.user_id;
           }
 
-          const offersRes = await api.get(
+          const response: any = await api.get(
             `/products/search/${term || ""}/1/50`,
             {
               headers: { Authorization: `Bearer ${token}` },
               params: searchPayload,
             }
           );
+          console.log(response.data.products.length, "products");
 
-          if (offersRes.status === 200) {
-            set({ results: offersRes.data });
+          if (
+            response.data &&
+            response.data.products &&
+            response.data.products.length > 0
+          ) {
+            set({ results: response.data.products });
+            hasResults = true;
+          } else {
+            set({ results: [] });
           }
         } catch (err) {
           console.error("Erro ao buscar resultados:", err);
         }
 
         set(() => ({ loading: false }));
+        return hasResults;
       },
       clearResults: () => {
         set(() => ({ results: [] }));

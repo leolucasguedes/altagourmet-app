@@ -7,7 +7,6 @@ import {
 import ProductList from "@/components/productList";
 import useSearchStore from "@/store/searchStore";
 import { useLocalSearchParams } from "expo-router";
-import FilterSelect from "@/components/filterSelect";
 import FiltersModal from "@/components/filtersModal";
 import ModalPage from "@/components/modalPage";
 
@@ -38,8 +37,7 @@ export default function SearchFilterPage() {
       </StyledText>
 
       {/* Adiciona o componente de filtros e ordenação */}
-      <FilterSelect openFilterModal={openFilterModal} />
-
+     
       {results.length > 0 ? (
         <ProductList products={results} />
       ) : (

@@ -31,7 +31,7 @@ export default function SearchInput({
   const [trends, setTrends] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
-  const isSearchPage = pathname.startsWith("/app/search");
+  const isSearchPage = pathname === ("/app/search");
 
   useEffect(() => {
     const fetchTrends = async () => {
@@ -94,30 +94,30 @@ export default function SearchInput({
 
       {/* Histórico de pesquisas recentes */}
       {history.length > 0 && isFocused && isSearchPage ? (
-        <StyledView className="w-full bg-white relative z-10 -mb-10">
-          <StyledView className="w-full flex-row items-center justify-between pb-2 mb-3 border-b border-gray-300">
-            <StyledText className="text-base font-semibold">
+        <StyledView className="w-full relative z-10 -mb-10">
+          <StyledView className="w-full flex-row items-center justify-between pb-2 mb-3 border-b border-[#D4D4D4]">
+            <StyledText className="text-sm font-semibold mt-2">
               Pesquisas Recentes
             </StyledText>
             <StyledPressable onPress={clearHistory}>
-              <StyledText className="text-sm text-ascents">Limpar</StyledText>
+              <StyledText className="text-sm text-ascents mt-2">Limpar</StyledText>
             </StyledPressable>
           </StyledView>
 
-          <StyledView className="w-full px-4">
+          <StyledView className="w-full px-4 mb-3">
             {history.map((item, index) => (
               <StyledView
                 key={index}
-                className="flex-row items-center justify-between"
+                className="flex-row items-center justify-between mb-2"
               >
                 <StyledPressable
                   onPress={() => searchByHistory(item)}
-                  className="text-sm text-darker-grey mb-4"
+                  className="mr-2"
                 >
-                  <StyledText>{item}</StyledText>
+                  <StyledText className="text-sm text-[#A3A3A3]">{item}</StyledText>
                 </StyledPressable>
                 <StyledPressable onPress={() => removeHistory(item)}>
-                  <Icon name="close" size={18} color="#171717" />
+                  <Icon name="close" size={18} color="#A3A3A3" />
                 </StyledPressable>
               </StyledView>
             ))}

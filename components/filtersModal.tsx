@@ -52,7 +52,7 @@ export default function FiltersModal({ close }: { close: () => void }) {
   };
 
   useEffect(() => {
-    if (!pathname.startsWith("/app/offers/filtered")) {
+    if (!pathname.startsWith(`/app/search/${filters?.search}`)) {
       clearFilters();
     }
   }, [pathname]);
@@ -60,7 +60,7 @@ export default function FiltersModal({ close }: { close: () => void }) {
   return (
     <StyledScrollView className="flex-1">
       {modal !== "" ? (
-        <ModalPage isOpen={modal !== ""}>
+        <ModalPage isOpen={modal !== ""} close={close}>
           <StyledView className="w-full p-4">
             {modal === "Faixa de preço" && (
               <RangeValueSelector
@@ -99,13 +99,13 @@ export default function FiltersModal({ close }: { close: () => void }) {
           <StyledView className="w-full flex flex-row justify-between mt-10">
             <StyledPressable
               onPress={() => clearFilters()}
-              className="bg-[#D1D5DB] py-3 px-5 rounded"
+              className="bg-[#D1D5DB] py-3 px-8 rounded"
             >
               <StyledText className="text-[#1F2937]">Limpar</StyledText>
             </StyledPressable>
             <StyledPressable
               onPress={handleSearch}
-              className="bg-[#BF3320] py-3 px-5 rounded"
+              className="bg-[#5ECD81] py-3 px-6 rounded"
             >
               <StyledText className="text-white">Pesquisar</StyledText>
             </StyledPressable>

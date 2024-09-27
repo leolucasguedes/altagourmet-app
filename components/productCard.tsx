@@ -14,7 +14,7 @@ export default function ProductCard({ product }: { product: any }) {
                         <StyledImage className='w-20 h-20 object-contain' source={require('@/assets/images/remedios.png')} alt={product.name} />
                     }
                 </StyledView>
-                <StyledText className="text-center font-bold">{product.name}</StyledText>
+                <StyledText className="text-center font-semibold">{product.name}</StyledText>
                 <StyledText className="text-center text-xs">à partir de</StyledText>
                 <StyledText className="text-center font-bold text-light-green text-lg">R${product.price.replace('.', ',')}</StyledText>
             </StyledView>
