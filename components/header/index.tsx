@@ -1,17 +1,14 @@
 import { usePathname } from "expo-router";
-import { StyledText, StyledTextInput, StyledView } from "../styleds/components";
-import useCurrentPageStore from "@/store/currentPageStore";
+import { StyledTextInput, StyledView } from "../styleds/components";
 import LocationPicker from "./location";
 import SearchIcon from "../icons/search";
 
 export default function Header() {
     const pathname = usePathname()
-    const { currentPage } = useCurrentPageStore()
     const showSearchPages = ['/app/home']
     const doNotShowLocationPicker = ['/app/product/', '/app/orders']
     return (
         <StyledView className="w-full bg-white pt-3">
-            {currentPage !== null && <StyledText>{currentPage}</StyledText>}
             {!doNotShowLocationPicker.some((item) => pathname.includes(item)) && <LocationPicker />}
             {showSearchPages.includes(pathname) &&
                 <StyledView className="w-full px-4 mt-4">
