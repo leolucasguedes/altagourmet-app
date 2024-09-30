@@ -28,18 +28,21 @@ export default function SearchTermPage() {
     addHistory,
     removeHistory,
     clearHistory,
+    filters,
+    clearFilters,
   } = useSearchStore();
   const [loading, setLoading] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   const params = useLocalSearchParams();
-  const searchTermFromRoute = Array.isArray(params.pesquisa)
-    ? params.pesquisa.join(" ")
-    : params.pesquisa || "";
+  const searchTermFromRoute = params.searchValue
+    ? String(params.searchValue)
+    : "";
 
   useEffect(() => {
-    if (!searchTerm && isAuthenticated) {
+    if (isAuthenticated) {
+      clearFilters();
       setSearchTerm(searchTermFromRoute);
     }
   }, [isAuthenticated, searchTermFromRoute]);
@@ -81,14 +84,15 @@ export default function SearchTermPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
+        paddingBottom: 180,
       }}
     >
       {openFilters ? (
         <ModalPage isOpen={openFilters} close={closeFilterModal}>
-          <FiltersModal close={() => setOpenFilters(false)} />
+          <FiltersModal close={closeFilterModal} />
         </ModalPage>
       ) : (
-        <StyledView className="min-h-screen flex flex-col justify-between px-4 w-full">
+        <StyledView className="flex flex-col w-full px-4">
           {loading && <Loading />}
           <StyledView className="flex flex-col items-center justify-start w-full">
             <SearchInput
@@ -103,7 +107,7 @@ export default function SearchTermPage() {
           </StyledView>
 
           {/* Componente de filtros e ordenação */}
-          <StyledView className="flex flex-row justify-between w-full px-4 mt-4">
+          <StyledView className="flex flex-row justify-between w-full px-4 my-4">
             <SortSelect />
             <FilterButton openFilterModal={openFilterModal} />
           </StyledView>
@@ -111,7 +115,7 @@ export default function SearchTermPage() {
           {results.length > 0 ? (
             <ProductList products={results} />
           ) : (
-            <StyledText className="text-center">
+            <StyledText className="text-center mt-20">
               Nenhum resultado encontrado
             </StyledText>
           )}

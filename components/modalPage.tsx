@@ -18,6 +18,7 @@ export default function ModalPage({
   cN,
   close,
 }: ModalPageProps) {
+  
   if (!isOpen) {
     return null;
   }

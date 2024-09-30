@@ -3,7 +3,7 @@ import {
   StyledView,
   StyledText,
   StyledTextInput,
-  StyledPressable
+  StyledPressable,
 } from "@/components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 

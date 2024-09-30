@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyledScrollView,
   StyledText,
   StyledPressable,
   StyledView,
-  StyledTextInput,
 } from "@/components/styleds/components";
 import ModalPage from "./modalPage";
 import RangeValueSelector from "./rangeValueSelector";
+import FiltersChooser from "./filtersChooser";
 import useSearchStore, { Filters } from "@/store/searchStore";
-import useAuthStore from "@/store/authStore";
-import { useRouter, usePathname } from "expo-router";
+import { useRouter, usePathname, Href } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function FiltersModal({ close }: { close: () => void }) {
-  const { filters, setFilter, clearFilters, searchForResults } =
-    useSearchStore();
-  const { token } = useAuthStore();
+  const { filters, setFilter, clearFilters, searchTerm } = useSearchStore();
   const [faixaFrom, setFaixaFrom] = useState("");
   const [faixaTo, setFaixaTo] = useState("");
   const [modal, setModal] = useState<string>("");
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
-  const pathname = usePathname();
 
   const filterRefs: { [key: string]: keyof Filters } = {
     "Faixa de preço": "price",
@@ -49,21 +44,37 @@ export default function FiltersModal({ close }: { close: () => void }) {
       modal === "Categoria" ||
       modal === "Sub-Categoria"
     ) {
-      setFilter(filterRefs[modal], [inputValue]);
+      setFilter(filterRefs[modal], value);
     }
   };
 
   const handleSearch = async () => {
-    await searchForResults(token || "");
-    router.push(`/app/search/${filters?.search}/${JSON.stringify(filters)}`);
+    const appliedFilters: string[] = [];
+    if (filters?.brand?.length) {
+      appliedFilters.push(
+        `brand=${encodeURIComponent(filters.brand.join(","))}`
+      );
+    }
+    if (filters?.category?.length) {
+      appliedFilters.push(
+        `category=${encodeURIComponent(filters.category.join(","))}`
+      );
+    }
+    if (filters?.subcategory?.length) {
+      appliedFilters.push(
+        `subcategory=${encodeURIComponent(filters.subcategory.join(","))}`
+      );
+    }
+    if (filters?.price) {
+      appliedFilters.push(`price=${filters.price.start}-${filters.price.end}`);
+    }
+
+    const filterString = appliedFilters.join("&");
+    router.push(
+      `app/search/${encodeURIComponent(searchTerm)}/${filterString}` as Href
+    );
     close();
   };
-
-  useEffect(() => {
-    if (!pathname.startsWith(`/app/search/${filters?.search}`)) {
-      clearFilters();
-    }
-  }, [pathname]);
 
   return (
     <StyledScrollView className="flex-1">
@@ -73,38 +84,12 @@ export default function FiltersModal({ close }: { close: () => void }) {
             {(modal === "Marca" ||
               modal === "Categoria" ||
               modal === "Sub-Categoria") && (
-              <>
-                <StyledView className="mt-7">
-                  <StyledView className="w-full flex flex-row items-center justify-start gap-4">
-                    <StyledPressable
-                      onPress={() => setModal("")}
-                      className="min-w-10"
-                    >
-                      <Icon name="arrow-back" size={25} color="#8B8B93" />
-                    </StyledPressable>
-
-                    <StyledView className="flex items-start justify-start w-full">
-                      <StyledText className="font-extrabold text-lg">
-                        {modal}
-                      </StyledText>
-                    </StyledView>
-
-                    <StyledPressable className="min-w-10">
-                      <Icon name="search" size={18} color="#171717" />
-                    </StyledPressable>
-                  </StyledView>
-
-                  <StyledView className="h-[1px] bg-gray-400 my-4" />
-                </StyledView>
-
-                <StyledTextInput
-                  value={inputValue}
-                  onChangeText={setInputValue}
-                  className="w-full pl-5 text-sm bg-[#F8F8F8] border border-[#D4D4D4] rounded-md py-4"
-                  placeholder={`Digite o nome da ${modal}`}
-                  placeholderTextColor="#A3A3A3"
-                />
-              </>
+              <FiltersChooser
+                modalName={filterRefs[modal]}
+                name={modal}
+                close={() => setModal("")}
+                isFilter={(value) => closeModal(value)}
+              />
             )}
             {modal === "Faixa de preço" && (
               <RangeValueSelector

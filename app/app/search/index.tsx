@@ -16,13 +16,13 @@ export default function SearchPage() {
   const {
     searchTerm,
     setSearchTerm,
-    results,
     searchForResults,
     history,
     addHistory,
     removeHistory,
     clearHistory,
     clearResults,
+    clearFilters,
   } = useSearchStore();
   const router = useRouter();
   const [message, setMessage] = useState("");
@@ -30,6 +30,7 @@ export default function SearchPage() {
 
   useEffect(() => {
     if (token) {
+      clearFilters();
       clearResults();
       setMessage("");
       setSearchTerm("");

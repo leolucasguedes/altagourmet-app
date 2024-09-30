@@ -16,11 +16,14 @@ export interface Filters {
 interface SearchState {
   searchTerm: string;
   setSearchTerm: (termo: string) => void;
-  filters: Filters | null;
+  filters: Filters;
   results: any[];
   setFilter: (filter: string, value: any) => void;
   clearFilters: () => void;
   searchForResults: (token: string, term?: string) => Promise<any>;
+  searchByCategory: (token: string, category: string) => Promise<any>;
+  searchByBrand: (token: string, brand: string) => Promise<any>;
+  searchBySubcategory: (token: string, subcategory: string) => Promise<any>;
   clearResults: () => void;
   history: string[];
   addHistory: (item: string) => void;
@@ -41,7 +44,10 @@ const useSearchStore = create<SearchState>()(
       sortingOrder: "name",
       searchTerm: "",
       setSearchTerm: (term) => {
-        set(() => ({ searchTerm: term }));
+        set((state) => {
+          const newFilters = { ...state.filters, search: term };
+          return { searchTerm: term, filters: newFilters };
+        });
       },
       filters: {},
       results: [],
@@ -87,7 +93,7 @@ const useSearchStore = create<SearchState>()(
             subcategory?: string[];
             price?: { start: string; end: string };
             user_id?: string[];
-          } = { search: term || undefined };
+          } = { search: term || "" };
 
           if (filters) {
             searchPayload.brand = filters.brand;
@@ -95,9 +101,9 @@ const useSearchStore = create<SearchState>()(
             searchPayload.subcategory = filters.subcategory;
             searchPayload.price = filters.price
               ? {
-                start: filters.price.start || "0",
-                end: filters.price.end || String(Number.MAX_SAFE_INTEGER),
-              }
+                  start: filters.price.start || "0",
+                  end: filters.price.end || String(Number.MAX_SAFE_INTEGER),
+                }
               : undefined;
             searchPayload.user_id = filters.user_id;
           }
@@ -109,7 +115,6 @@ const useSearchStore = create<SearchState>()(
               params: searchPayload,
             }
           );
-          console.log(response.data.products.length, "products");
 
           if (
             response.data &&
@@ -127,6 +132,45 @@ const useSearchStore = create<SearchState>()(
 
         set(() => ({ loading: false }));
         return hasResults;
+      },
+      searchByCategory: async (token, category) => {
+        set(() => ({ loading: true }));
+        try {
+          const response = await api.get(`/products/categories`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: { category },
+          });
+          set({ results: response.data.products });
+        } catch (err) {
+          console.error("Erro ao buscar por categoria:", err);
+        }
+        set(() => ({ loading: false }));
+      },
+      searchByBrand: async (token, brand) => {
+        set(() => ({ loading: true }));
+        try {
+          const response = await api.get(`/products/brands`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: { brand },
+          });
+          set({ results: response.data.products });
+        } catch (err) {
+          console.error("Erro ao buscar por marca:", err);
+        }
+        set(() => ({ loading: false }));
+      },
+      searchBySubcategory: async (token, subcategory) => {
+        set(() => ({ loading: true }));
+        try {
+          const response = await api.get(`/products/subCategories`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: { subcategory },
+          });
+          set({ results: response.data.products });
+        } catch (err) {
+          console.error("Erro ao buscar por subcategoria:", err);
+        }
+        set(() => ({ loading: false }));
       },
       clearResults: () => {
         set(() => ({ results: [] }));
