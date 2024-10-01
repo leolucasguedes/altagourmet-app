@@ -4,7 +4,7 @@ import { Href, Link, useRouter } from 'expo-router';
 import useAuthStore from '../../../store/authStore';
 import { RefreshControl } from 'react-native';
 import useHomeContentStore from '../../../store/homeContentStore';
-import CategoriesDisplay from '../../../components/Categories';
+import CategoriesDisplay from '../../../components/categories';
 
 export default function HomePage() {
     const { homeData, fetchHomeData } = useHomeContentStore();
@@ -18,7 +18,7 @@ export default function HomePage() {
         const data = await fetchHomeData(token);
         if (!data) {
             logout();
-            router.push('/login')
+            router.push('/')
         }
     }
     useEffect(() => {

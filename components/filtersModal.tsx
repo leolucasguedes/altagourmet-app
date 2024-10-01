@@ -83,6 +83,7 @@ export default function FiltersModal({ close }: { close: () => void }) {
           <StyledView className="w-full p-2">
             {(modal === "Marca" ||
               modal === "Categoria" ||
+              modal === "Tamanho" ||
               modal === "Sub-Categoria") && (
               <FiltersChooser
                 modalName={filterRefs[modal]}
@@ -106,7 +107,6 @@ export default function FiltersModal({ close }: { close: () => void }) {
                 saveFilters={() => closeModal("")}
               />
             )}
-            {/* Outras opções de modais, como Marca, Ano, etc */}
           </StyledView>
         </ModalPage>
       ) : (

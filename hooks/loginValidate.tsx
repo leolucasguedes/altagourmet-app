@@ -9,7 +9,7 @@ const LoginValidator = () => {
   const { isAuthenticated } = useAuthStore();
   useEffect(() => {
     if (loaded) {
-      if (!isAuthenticated) router.push("/login")
+      if (!isAuthenticated) router.push("/")
     }
   }, [loaded])
 

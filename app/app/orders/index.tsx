@@ -127,7 +127,7 @@ export default function OrdersPage() {
                         <Link href={'/app/home'}><StyledText className='text-light-green py-3'>Adicionar mais itens</StyledText></Link>
                     </StyledView>
                 </StyledView>
-                <StyledView className='w-full'>
+                <StyledView className='w-full mb-10'>
                     <StyledView className="w-full flex px-4 py-3">
                         <StyledText className="font-bold my-4 text-xl">Peça Também</StyledText>
                         <StyledScrollView horizontal className="w-full">

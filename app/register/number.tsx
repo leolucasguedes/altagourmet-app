@@ -35,7 +35,7 @@ export default function RegisterNumber() {
           type: "primary",
         },
         {
-          action: () => router.push("/login"),
+          action: () => router.push("/"),
           label: "Voltar ao login",
           type: "secondary",
         },

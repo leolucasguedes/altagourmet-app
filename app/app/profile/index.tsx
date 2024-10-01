@@ -62,7 +62,7 @@ export default function ProfilePage() {
 
         <ProfileHead />
 
-        <StyledView className="flex flex-col w-full mt-2 px-5 mb-24">
+        <StyledView className="flex flex-col w-full mt-2 px-5 mb-12">
           <StyledPressable
             onPress={() => router.push("/app/profile/edit")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2.5"

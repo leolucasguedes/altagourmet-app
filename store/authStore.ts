@@ -17,12 +17,12 @@ interface User {
   id?: string | null;
 }
 interface RegisterDTO {
-  phone: string
-  name: string
-  email: string
-  document: string
-  address: string
-  password: string
+  phone: string;
+  name: string;
+  email: string;
+  document: string;
+  address: string;
+  password: string;
 }
 interface AuthState {
   isAuthenticated: boolean;
@@ -32,6 +32,7 @@ interface AuthState {
   register: (userInfo: any) => Promise<any>;
   logout: () => void;
   getMe: () => Promise<boolean>;
+  updateUser: (userInfo: any) => Promise<any>;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -57,8 +58,8 @@ const useAuthStore = create<AuthState>()(
       },
       register: async (userInfo: RegisterDTO) => {
         try {
-          const userJSON = await api.post('auth/register', { ...userInfo })
-          const user = userJSON.data
+          const userJSON = await api.post("auth/register", { ...userInfo });
+          const user = userJSON.data;
           if (userJSON.status === 201 || userJSON.status === 200) {
             if (user.access_token) {
               set({ token: user.access_token });
@@ -103,6 +104,36 @@ const useAuthStore = create<AuthState>()(
         } catch (err) {
           console.error("Erro ao buscar dados do usuário:", err);
           return false;
+        }
+      },
+      updateUser: async (userInfo) => {
+        try {
+          const updatedUser = await api.put(
+            "/user",
+            { ...userInfo },
+            { headers: { Authorization: "Bearer " + get().token } }
+          );
+          if (updatedUser.status === 200) {
+            const user = updatedUser.data.user;
+            set({
+              user: {
+                name: user.name,
+                email: user.email,
+                avatar: user.profile_photo_path,
+                phone: user.phone,
+                birth: user.birth,
+                document: user.document,
+                address: user.address,
+                fidelized: user.fidelized,
+                fidelityPoints: user.fidelityPoints,
+                verified_at: user.verified_at,
+                id: user.id,
+              },
+            });
+            return updatedUser;
+          }
+        } catch (err: any) {
+          return err.response;
         }
       },
     }),

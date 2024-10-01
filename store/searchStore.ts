@@ -24,6 +24,10 @@ interface SearchState {
   searchByCategory: (token: string, category: string) => Promise<any>;
   searchByBrand: (token: string, brand: string) => Promise<any>;
   searchBySubcategory: (token: string, subcategory: string) => Promise<any>;
+  brands: any[];
+  categories: any[];
+  subcategories: any[];
+  loadOptions: (token: string) => Promise<void>;
   clearResults: () => void;
   history: string[];
   addHistory: (item: string) => void;
@@ -171,6 +175,37 @@ const useSearchStore = create<SearchState>()(
           console.error("Erro ao buscar por subcategoria:", err);
         }
         set(() => ({ loading: false }));
+      },
+      brands: [],
+      categories: [],
+      subcategories: [],
+      loadOptions: async (token: string) => {
+        const { brands, categories, subcategories } = get();
+        if (brands.length && categories.length && subcategories.length) {
+          return; // Se já existem dados, não faz a requisição novamente
+        }
+
+        try {
+          const [brandRes, categoryRes, subcategoryRes] = await Promise.all([
+            api.get("/products/brands", {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            api.get("/products/categories", {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            api.get("/products/subCategories", {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+          ]);
+
+          set({
+            brands: brandRes.data,
+            categories: categoryRes.data,
+            subcategories: subcategoryRes.data,
+          });
+        } catch (error) {
+          console.error("Erro ao carregar opções:", error);
+        }
       },
       clearResults: () => {
         set(() => ({ results: [] }));

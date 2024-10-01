@@ -8,7 +8,6 @@ import {
 import { Switch } from "react-native-switch";
 import useAuthStore from "../store/authStore";
 import useSearchStore, { Filters } from "../store/searchStore";
-import api from "../utils/api";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function FiltersChooser({
@@ -23,10 +22,27 @@ export default function FiltersChooser({
   name?: string;
 }) {
   const { token } = useAuthStore();
-  const { filters } = useSearchStore();
-  const [options, setOptions] = useState<any[]>([]);
+  const { filters, brands, categories, subcategories, loadOptions } =
+    useSearchStore();
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
-  console.log(modalName, name)
+  let options: any[] = [];
+  if (modalName === "brand") options = brands;
+  if (modalName === "category") options = categories;
+  if (modalName === "subcategory") options = subcategories;
+  if (modalName === "size") {
+    options = [
+      { name: "Pequeno", value: "small" },
+      { name: "Médio", value: "medium" },
+      { name: "Grande", value: "large" },
+      { name: "Extra-Grande", value: "extra-large" },
+    ];
+  }
+
+  useEffect(() => {
+    if (token && modalName !== "size") {
+      loadOptions(token);
+    }
+  }, [token]);
 
   useEffect(() => {
     if (filters[modalName]) {
@@ -42,40 +58,12 @@ export default function FiltersChooser({
     }
   };
 
-  // Função para salvar os filtros selecionados
   const saveFilters = () => {
     if (isFilter) {
       isFilter(selectedFilters);
     }
     close();
   };
-
-  const fetchOptions = async () => {
-    let endpoint = "";
-    switch (modalName) {
-      case "brand":
-        endpoint = "/products/brands";
-        break;
-      case "category":
-        endpoint = "/products/categories";
-        break;
-      case "subcategory":
-        endpoint = "/products/subCategories";
-        break;
-      default:
-        return;
-    }
-
-    const response = await api.get(endpoint, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const { data } = response;
-    setOptions(data);
-  };
-
-  useEffect(() => {
-    fetchOptions();
-  }, []);
 
   return (
     <>
