@@ -22,7 +22,7 @@ export default function CheckoutReview() {
         if (loading) return
         setLoading(true)
         await emptyCart(token || '')
-        router.push('/app/orders')
+        router.push('/app/cart')
         setLoading(false)
     }
     return (

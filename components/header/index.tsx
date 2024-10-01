@@ -6,7 +6,7 @@ import SearchIcon from "../icons/search";
 export default function Header() {
     const pathname = usePathname()
     const showSearchPages = ['/app/home']
-    const doNotShowLocationPicker = ['/app/product/', '/app/orders']
+    const doNotShowLocationPicker = ['/app/product/', '/app/profile']
     return (
         <StyledView className="w-full bg-white pt-3">
             {!doNotShowLocationPicker.some((item) => pathname.includes(item)) && <LocationPicker />}

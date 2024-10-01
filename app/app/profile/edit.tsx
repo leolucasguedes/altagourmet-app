@@ -162,7 +162,7 @@ export default function EditProfilePage() {
         </StyledPressable>
       </StyledView>
 
-      <StyledView className="w-full px-4 mb-20">
+      <StyledView className="w-full px-4 mb-12">
         <StyledText className="text-xs font-semibold mb-2">
           Nome Completo
         </StyledText>

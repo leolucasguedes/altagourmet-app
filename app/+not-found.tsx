@@ -1,14 +1,16 @@
-import { Link, Stack, usePathname } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Link, Stack, usePathname } from "expo-router";
+import { Text, View } from "react-native";
 export default function NotFoundScreen() {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      <Stack.Screen options={{ title: "Oops!" }} />
       <View>
-        <Text>The page {pathname} doesn't exist.</Text>
+        <Text>
+          A página que você tentou acessar: {pathname} está em desenvolvimento.
+        </Text>
         <Link href="/">
-          <Text>Go to home screen!</Text>
+          <Text>Voltar ppara Home!</Text>
         </Link>
       </View>
     </>

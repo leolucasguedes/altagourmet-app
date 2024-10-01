@@ -38,7 +38,7 @@ export const OrderCard = () => {
       <StyledView className="flex flex-row justify-between items-center w-full mt-5">
         <StyledPressable
           className="flex-[1] bg-transparent border border-[#34D399] rounded-lg py-4 mr-2 justify-center items-center"
-          onPress={() => router.push("/app/orders")}
+          onPress={() => router.push("/app/cart")}
         >
           <StyledText className="text-[#34D399] font-normal">
             Cancelar
@@ -46,7 +46,7 @@ export const OrderCard = () => {
         </StyledPressable>
         <StyledPressable
           className="flex-[2] bg-[#34D399] rounded-lg py-4 justify-center items-center"
-          onPress={() => router.push("/app/orders")}
+          onPress={() => router.push("/app/cart")}
         >
           <StyledText className="text-white font-normal">
             Acompanhar Pedido

@@ -115,7 +115,7 @@ export default function ProfilePage() {
             <IconM name="chevron-right" size={20} color="#A3A3A3" />
           </StyledPressable>
 
-          <StyledPressable
+          {/* <StyledPressable
             onPress={() => router.push("/app/security")}
             className="flex flex-row items-center justify-between border-t-[1px] border-solid border-[#E8EDF2] py-2.5"
           >
@@ -126,7 +126,7 @@ export default function ProfilePage() {
               </StyledText>
             </StyledView>
             <IconM name="chevron-right" size={20} color="#A3A3A3" />
-          </StyledPressable>
+          </StyledPressable> */}
 
           <StyledPressable
             onPress={() => router.push("/app/terms")}
