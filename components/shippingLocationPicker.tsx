@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 // import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
@@ -49,8 +49,20 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
         close()
     }
     return (
-        <View style={styles.container}>
-            <View style={styles.inner}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            padding: 20,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }}>
+            <View style={{
+        backgroundColor: 'white',
+        padding: 20,
+        width: '100%',
+        borderRadius: 10,
+    }}>
                 <StyledView className='w-full flex flex-row items-center justify-between mb-2'>
                     <StyledText>Adicione um endereço</StyledText>
                     <TouchableOpacity onPress={() => { close() }}>
@@ -60,7 +72,10 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
                 {!location && <ActivityIndicator size="large" color={'#238878'} />}
                 {/* {location && (
                     <MapView
-                        style={styles.map}
+                        style={{
+                            width: '100%',
+                            height: 200,
+                        }}
                         initialRegion={{
                             latitude: location.latitude,
                             longitude: location.longitude,
@@ -97,24 +112,3 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        padding: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    inner: {
-        backgroundColor: 'white',
-        padding: 20,
-        width: '100%',
-        borderRadius: 10,
-    },
-    map: {
-        width: '100%',
-        height: 200,
-    },
-});

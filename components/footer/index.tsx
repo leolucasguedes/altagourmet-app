@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { StyledPressable, StyledText, StyledView } from "../styleds/components";
 import { HomeIcon, OrdersIcon, ProfileIcon, SearchIcon } from "./icons";
-import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Href, usePathname, useRouter } from "expo-router";
 import useCartStore from "@/store/cartStore";
 import { useEffect } from "react";
@@ -47,7 +47,12 @@ export default function Footer() {
   };
   const showCartResumeScreens = ['/app/home', '/app/product']
   return (
-    <StyledView style={styles.absoluteContainer}>
+    <StyledView style={{
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+    }}>
       {totalItems > 0 && showCartResumeScreens.some((item) => pathName.includes(item)) &&
         <StyledView className='bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3 border-[1px] border-[#dddddd] rounded-t-xl'>
           <StyledView className="w-1/2">
@@ -85,10 +90,22 @@ export default function Footer() {
           </StyledView>
         </StyledView>
       </StyledView>}
-      <StyledView style={styles.footerContainer}>
+      <StyledView style={{
+    height: 72,
+    zIndex: 100,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  }}>
         <LinearGradient
           colors={["#238878", "#5ecd81", "#238878"]}
-          style={styles.background}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+          }}
           start={[0, 1]}
           end={[1, 0]}
         />
@@ -96,7 +113,12 @@ export default function Footer() {
           <StyledPressable
             onPress={() => gotoLink(item.link)}
             key={index}
-            style={styles.pressableItem}
+            style={{
+              width: "20%",
+              height: 72,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <StyledView>
               {item.name === 'Orders' && totalItems > 0 && <StyledView className="w-3 h-3 z-20 -top-2 -right-1 absolute opacity-70 bg-dark-green rounded-full"></StyledView>}
@@ -108,32 +130,3 @@ export default function Footer() {
     </StyledView >
   );
 }
-
-const styles = StyleSheet.create({
-  absoluteContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  footerContainer: {
-    height: 72,
-    zIndex: 100,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  pressableItem: {
-    width: "20%",
-    height: 72,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-});

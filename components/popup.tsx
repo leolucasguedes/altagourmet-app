@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, Modal, StyleSheet } from "react-native";
+import { View, Text, Pressable, Modal } from "react-native";
 import { StyledText } from "./styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -33,16 +33,41 @@ const Popup: React.FC<PopupProps> = ({
       animationType="slide"
       onRequestClose={close}
     >
-      <View style={styles.overlay}>
-        <View style={styles.popupContainer}>
-          <Pressable onPress={close} style={styles.handleContainer}>
-            <View style={styles.handle} />
+      <View style={{
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  }}>
+        <View style={{
+            width: "100%",
+            height: 410,
+            backgroundColor: "#fff",
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            padding: 20,
+            alignItems: "center",
+            position: "absolute",
+            bottom: 0,
+          }}>
+          <Pressable onPress={close} style={{
+              paddingVertical: 10,
+              alignItems: "center",
+            }}>
+            <View style={{
+              width: 60,
+              height: 4,
+              backgroundColor: "#ccc",
+              borderRadius: 2,
+            }} />
           </Pressable>
           <Icon
             name={status === "error" ? "error-outline" : "highlight-remove"}
             size={108}
             color="#5ECD81"
-            style={styles.icon}
+            style={{
+              marginVertical: 10,
+            }}
           />
 
           {/* Title */}
@@ -57,10 +82,29 @@ const Popup: React.FC<PopupProps> = ({
               key={index}
               onPress={action.action}
               style={[
-                styles.actionButton,
+                {
+                  width: "100%",
+                  paddingVertical: 12,
+                  borderRadius: 8,
+                  marginTop: 12,
+                  alignItems: "center",
+                },
                 action.type === "primary"
-                  ? styles.primaryButton
-                  : styles.secondaryButton,
+                  ? {
+                    backgroundColor: "#5ECD81",
+                    maxWidth: 345,
+                    width: "100%",
+                    borderRadius: 4,
+                    marginTop: 25,
+                  }
+                  : {
+                    backgroundColor: "transparent",
+                    borderWidth: 2,
+                    borderColor: "#5ECD81",
+                    maxWidth: 345,
+                    width: "100%",
+                    borderRadius: 4,
+                  },
               ]}
             >
               <StyledText
@@ -77,60 +121,5 @@ const Popup: React.FC<PopupProps> = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  popupContainer: {
-    width: "100%",
-    height: 410,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: 20,
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
-  },
-  handleContainer: {
-    paddingVertical: 10,
-    alignItems: "center",
-  },
-  handle: {
-    width: 60,
-    height: 4,
-    backgroundColor: "#ccc",
-    borderRadius: 2,
-  },
-  icon: {
-    marginVertical: 10,
-  },
-  actionButton: {
-    width: "100%",
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 12,
-    alignItems: "center",
-  },
-  primaryButton: {
-    backgroundColor: "#5ECD81",
-    maxWidth: 345,
-    width: "100%",
-    borderRadius: 4,
-    marginTop: 25,
-  },
-  secondaryButton: {
-    backgroundColor: "transparent",
-    borderWidth: 2,
-    borderColor: "#5ECD81",
-    maxWidth: 345,
-    width: "100%",
-    borderRadius: 4,
-  },
-});
 
 export default Popup;
