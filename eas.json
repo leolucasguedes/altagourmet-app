@@ -8,7 +8,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://api.production.com",
+        "EXPO_PUBLIC_API_URL": "https://api-buyfarma-nest-production.up.railway.app",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
       }
     },
@@ -18,14 +18,14 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://api.production.com",
+        "EXPO_PUBLIC_API_URL": "https://api-buyfarma-nest-production.up.railway.app",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
       }
     },
     "production": {
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://api.production.com",
+        "EXPO_PUBLIC_API_URL": "https://api-buyfarma-nest-production.up.railway.app",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
       }
     }
