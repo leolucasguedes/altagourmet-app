@@ -84,9 +84,9 @@ export default function Footer() {
             }
           </StyledView>
           <StyledView className="w-1/2">
-            {error_message === '' && <TouchableOpacity onPress={() => { router.push('/app/orders/checkout/review') }}>
+            <TouchableOpacity onPress={() => { router.push('/app/orders/checkout/review') }}>
               <StyledText className='text-center bg-light-green rounded-lg px-4 py-3 text-white'>Continuar</StyledText>
-            </TouchableOpacity>}
+            </TouchableOpacity>
           </StyledView>
         </StyledView>
       </StyledView>}
