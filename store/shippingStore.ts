@@ -1,5 +1,5 @@
-import api from '@/utils/api'
-import zustandStorage from '@/utils/zustandStorage'
+import api from '../utils/api'
+import zustandStorage from '../utils/zustandStorage'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 export interface IAddress {

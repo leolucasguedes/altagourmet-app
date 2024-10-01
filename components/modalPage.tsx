@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, TouchableOpacity } from "react-native";
-import { StyledView } from "@/components/styleds/components";
+import { StyledView } from "../components/styleds/components";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export interface ModalPageProps {

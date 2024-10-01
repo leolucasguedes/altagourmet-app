@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 import { StyledImage, StyledText, StyledView } from "./styleds/components";
 import { TouchableOpacity } from "react-native";
-
 export default function ProductCard({ product }: { product: any }) {
     const router = useRouter()
     return (
@@ -12,7 +11,7 @@ export default function ProductCard({ product }: { product: any }) {
                         {product.images ?
                             <StyledImage className='w-20 h-20' src={product.images} alt={product.name} />
                             :
-                            <StyledImage className='w-20 h-20 object-contain' source={require('@/assets/images/medicine.png')} alt={product.name} />
+                            <StyledImage className='w-20 h-20 object-contain' source={require('../assets/images/medicine.png')} alt={product.name} />
                         }
                         <StyledText>{JSON.stringify(product.category)}</StyledText>
                     </StyledView>

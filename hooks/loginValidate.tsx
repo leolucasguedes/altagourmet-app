@@ -1,5 +1,5 @@
-import Loading from "@/components/loading";
-import useAuthStore from "@/store/authStore";
+import Loading from "../components/loading";
+import useAuthStore from "../store/authStore";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 

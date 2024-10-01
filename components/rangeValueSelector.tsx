@@ -4,7 +4,7 @@ import {
   StyledText,
   StyledTextInput,
   StyledPressable,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function RangeValueSelector({

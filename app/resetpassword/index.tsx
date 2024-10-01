@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import api from "@/utils/api";
+import api from "../../utils/api";
 import {
   StyledView,
   StyledText,
   StyledPressable,
   StyledTextInput,
-} from "@/components/styleds/components";
+} from "../../components/styleds/components";
 import { useRouter } from "expo-router";
-import LogoIcon from "@/components/icons/logo";
+import LogoIcon from "../../components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function ResetPassword() {

@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
 import {
   StyledView,
-  StyledTextInput,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
-import useAuthStore from "@/store/authStore";
+} from "../../../components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { CardCart } from "@/components/cardCart";
+import { CardCart } from "../../../components/cardCart";
 
 export default function WalletPage() {
   const router = useRouter();

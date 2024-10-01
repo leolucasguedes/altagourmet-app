@@ -3,7 +3,7 @@ import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 // import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
-import useShippingStore, { IAddress } from '@/store/shippingStore';
+import useShippingStore, { IAddress } from '../store/shippingStore';
 import { StyledText, StyledTextInput, StyledView } from './styleds/components';
 
 export default function ShippingLocationPicker({ close }: { close: () => void }) {

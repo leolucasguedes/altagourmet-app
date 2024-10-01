@@ -4,11 +4,11 @@ import {
   StyledText,
   StyledPressable,
   StyledView,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import ModalPage from "./modalPage";
 import RangeValueSelector from "./rangeValueSelector";
 import FiltersChooser from "./filtersChooser";
-import useSearchStore, { Filters } from "@/store/searchStore";
+import useSearchStore, { Filters } from "../store/searchStore";
 import { useRouter, usePathname, Href } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 

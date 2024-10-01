@@ -1,14 +1,14 @@
 import React from "react";
-import useSearchStore from "@/store/searchStore";
-import useAuthStore from "@/store/authStore";
+import useSearchStore from "../../../store/searchStore";
+import useAuthStore from "../../../store/authStore";
 import { useEffect, useState } from "react";
 import {
   StyledText,
   StyledPressable,
   StyledView,
-} from "@/components/styleds/components";
-import SearchInput from "@/components/searchInput";
-import Loading from "@/components/loading";
+} from "../../../components/styleds/components";
+import SearchInput from "../../../components/searchInput";
+import Loading from "../../../components/loading";
 import { useRouter } from "expo-router";
 
 export default function SearchPage() {

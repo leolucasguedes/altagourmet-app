@@ -1,4 +1,4 @@
-import api from '@/utils/api';
+import api from '../utils/api';
 import { create } from 'zustand'
 export interface IMainData {
     bestSellers: any[],

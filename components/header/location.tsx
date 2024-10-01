@@ -5,7 +5,7 @@ import NotificationIcon from "../icons/notification";
 import { StyledPressable, StyledText, StyledView } from "../styleds/components";
 import { useState } from "react";
 import ShippingLocationPicker from "../shippingLocationPicker";
-import useShippingStore from "@/store/shippingStore";
+import useShippingStore from "../../store/shippingStore";
 import Icon from "react-native-vector-icons/AntDesign";
 
 export default function LocationPicker() {

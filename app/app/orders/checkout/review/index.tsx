@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
-import { ActivityIndicator, TouchableOpacity, Text, RefreshControl } from 'react-native';
+import React from 'react';
+import { StyledImage, StyledScrollView, StyledText, StyledView } from '../../../../../components/styleds/components';
+import { TouchableOpacity } from 'react-native';
 import IconAnt from "react-native-vector-icons/AntDesign";
 import { Link, useRouter } from 'expo-router';
-import useCartStore from '@/store/cartStore';
-import useAuthStore from '@/store/authStore';
-import FAIcon from "react-native-vector-icons/FontAwesome5";
+import useCartStore from '../../../../../store/cartStore';
+import useAuthStore from '../../../../../store/authStore';
 import MIIcon from "react-native-vector-icons/MaterialIcons";
-import api from '@/utils/api';
-import ProductCard from '@/components/productCard';
-import useHomeContentStore from '@/store/homeContentStore';
-import PlaceHolderImage from '@/components/PlaceHolderImage';
-import useShippingStore from '@/store/shippingStore';
+import useHomeContentStore from '../../../../../store/homeContentStore';
+import useShippingStore from '../../../../../store/shippingStore';
 import FontistoIcon from "react-native-vector-icons/Fontisto";
-import MIIcons from "react-native-vector-icons/MaterialIcons";
 export default function CheckoutReview() {
     const router = useRouter()
     const { emptyCart, addToCart, removeFromCart, userCart, fetchUserCart, totalValue } = useCartStore()
@@ -50,7 +45,7 @@ export default function CheckoutReview() {
                         {homeData.mainShops[0] &&
                             <StyledView className='flex flex-row items-center justify-start w-full gap-2'>
                                 <StyledView className='w-12 h-12 bg-light-green rounded-full'>
-                                    <StyledImage className='w-full h-full' source={require('@/assets/images/icone-farmacia.png')} />
+                                    <StyledImage className='w-full h-full' source={require('../../../../../assets/images/icone-farmacia.png')} />
                                 </StyledView>
                                 <StyledView>
                                     <StyledText className='font-bold text-lg'>{homeData.mainShops[0].name}</StyledText>

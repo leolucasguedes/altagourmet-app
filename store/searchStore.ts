@@ -1,7 +1,7 @@
-import api from "@/utils/api";
+import api from "../utils/api";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import zustandStorage from "@/utils/zustandStorage";
+import zustandStorage from "../utils/zustandStorage";
 
 export interface Filters {
   name?: string[];

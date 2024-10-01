@@ -5,14 +5,14 @@ import {
   StyledScrollView,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
-import ProfileHead from "@/components/profileHead";
-import Popup from "@/components/popup";
-import useAuthStore from "@/store/authStore";
+} from "../../../components/styleds/components";
+import ProfileHead from "../../../components/profileHead";
+import Popup from "../../../components/popup";
+import useAuthStore from "../../../store/authStore";
 import IconM from "react-native-vector-icons/MaterialCommunityIcons";
 import IconE from "react-native-vector-icons/Entypo";
 import IconI from "react-native-vector-icons/MaterialIcons";
-import VersionShower from "@/components/versionShower";
+import VersionShower from "../../../components/versionShower";
 
 export default function ProfilePage() {
   const { logout, user } = useAuthStore();

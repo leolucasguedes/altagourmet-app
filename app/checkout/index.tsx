@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledScrollView, StyledText } from '@/components/styleds/components';
+import { StyledScrollView, StyledText } from '../../components/styleds/components';
 
 export default function CheckoutPage() {
     return (

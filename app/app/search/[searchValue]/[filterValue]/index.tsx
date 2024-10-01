@@ -3,18 +3,18 @@ import {
   StyledView,
   StyledText,
   StyledScrollView,
-} from "@/components/styleds/components";
-import useSearchStore, { Filters } from "@/store/searchStore";
-import useAuthStore from "@/store/authStore";
+} from "../../../../../components/styleds/components";
+import useSearchStore, { Filters } from "../../../../../store/searchStore";
+import useAuthStore from "../../../../../store/authStore";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SearchInput from "@/components/searchInput";
-import ProductList from "@/components/productList";
-import SortSelect from "@/components/sortSelect";
-import FilterButton from "@/components/filterButton";
-import FiltersModal from "@/components/filtersModal";
-import ModalPage from "@/components/modalPage";
-import Loading from "@/components/loading";
+import SearchInput from "../../../../../components/searchInput";
+import ProductList from "../../../../../components/productList";
+import SortSelect from "../../../../../components/sortSelect";
+import FilterButton from "../../../../../components/filterButton";
+import FiltersModal from "../../../../../components/filtersModal";
+import ModalPage from "../../../../../components/modalPage";
+import Loading from "../../../../../components/loading";
 import { RefreshControl } from "react-native";
 
 export default function SearchFilterPage() {

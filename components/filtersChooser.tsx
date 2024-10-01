@@ -4,11 +4,11 @@ import {
   StyledView,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import { Switch } from "react-native-switch";
-import useAuthStore from "@/store/authStore";
-import useSearchStore, { Filters } from "@/store/searchStore";
-import api from "@/utils/api";
+import useAuthStore from "../store/authStore";
+import useSearchStore, { Filters } from "../store/searchStore";
+import api from "../utils/api";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function FiltersChooser({

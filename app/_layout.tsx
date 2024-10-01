@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {
   StyledSafeAreaView,
   StyledView,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";

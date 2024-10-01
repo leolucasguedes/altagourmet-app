@@ -3,18 +3,18 @@ import {
   StyledView,
   StyledText,
   StyledScrollView,
-} from "@/components/styleds/components";
-import SearchInput from "@/components/searchInput";
+} from "../../../../components/styleds/components";
+import SearchInput from "../../../../components/searchInput";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import Loading from "@/components/loading";
-import useSearchStore from "@/store/searchStore";
-import useAuthStore from "@/store/authStore";
+import Loading from "../../../../components/loading";
+import useSearchStore from "../../../../store/searchStore";
+import useAuthStore from "../../../../store/authStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ProductList from "@/components/productList";
-import SortSelect from "@/components/sortSelect";
-import FilterButton from "@/components/filterButton";
-import FiltersModal from "@/components/filtersModal";
-import ModalPage from "@/components/modalPage";
+import ProductList from "../../../../components/productList";
+import SortSelect from "../../../../components/sortSelect";
+import FilterButton from "../../../../components/filterButton";
+import FiltersModal from "../../../../components/filtersModal";
+import ModalPage from "../../../../components/modalPage";
 import { RefreshControl } from "react-native";
 
 export default function SearchTermPage() {

@@ -3,10 +3,10 @@ import { StyledPressable, StyledText, StyledView } from "../styleds/components";
 import { HomeIcon, OrdersIcon, ProfileIcon, SearchIcon } from "./icons";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Href, usePathname, useRouter } from "expo-router";
-import useCartStore from "@/store/cartStore";
+import useCartStore from "../../store/cartStore";
 import { useEffect } from "react";
-import useAuthStore from "@/store/authStore";
-import useShippingStore from "@/store/shippingStore";
+import useAuthStore from "../../store/authStore";
+import useShippingStore from "../../store/shippingStore";
 export default function Footer() {
   const { totalItems, fetchUserCart, totalValue } = useCartStore()
   const { token } = useAuthStore()

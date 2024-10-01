@@ -1,10 +1,10 @@
-import BigText from '@/components/bigText';
-import ProductCard from '@/components/productCard';
-import { StyledImage, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
-import useAuthStore from '@/store/authStore';
-import useCartStore from '@/store/cartStore';
-import useHomeContentStore from '@/store/homeContentStore';
-import api from '@/utils/api';
+import BigText from '../../../components/bigText';
+import ProductCard from '../../../components/productCard';
+import { StyledImage, StyledScrollView, StyledText, StyledView } from '../../../components/styleds/components';
+import useAuthStore from '../../../store/authStore';
+import useCartStore from '../../../store/cartStore';
+import useHomeContentStore from '../../../store/homeContentStore';
+import api from '../../../utils/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
@@ -69,7 +69,7 @@ export default function ProductPage() {
                             {productDetails.images ?
                                 <StyledImage className='w-2/3 h-52' src={productDetails.images} alt={productDetails.name} />
                                 :
-                                <StyledImage className='w-12 h-12' source={require('@/assets/images/medicine.png')} alt={productDetails.name} />
+                                <StyledImage className='w-12 h-12' source={require('../../../assets/images/medicine.png')} alt={productDetails.name} />
                             }
                         </StyledView>
                     </StyledView>

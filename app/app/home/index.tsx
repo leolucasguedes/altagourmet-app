@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyledImage, StyledPressable, StyledScrollView, StyledText, StyledView } from '@/components/styleds/components';
+import { StyledImage, StyledScrollView, StyledText, StyledView } from '../../../components/styleds/components';
 import { Href, Link, useRouter } from 'expo-router';
-import FilterSelect from '@/components/filterSelect';
-import useAuthStore from '@/store/authStore';
-import { RefreshControl, TouchableOpacity } from 'react-native';
-import useHomeContentStore from '@/store/homeContentStore';
-import CategoriesDisplay from '@/components/categories';
+import useAuthStore from '../../../store/authStore';
+import { RefreshControl } from 'react-native';
+import useHomeContentStore from '../../../store/homeContentStore';
+import CategoriesDisplay from '../../../components/Categories';
 
 export default function HomePage() {
     const { homeData, fetchHomeData } = useHomeContentStore();
@@ -46,7 +45,7 @@ export default function HomePage() {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                 }}>
-                <StyledImage source={require('@/assets/images/home-banner.png')} />
+                <StyledImage source={require('../../../assets/images/home-banner.png')} />
                 <StyledText className='w-full text-start px-6 font-bold mt-4 mb-2'>Categorias</StyledText>
                 <CategoriesDisplay />
                 {!refreshing && homeData.mainShops.length > 0 && <StyledView className='w-full flex flex-row items-center justify-between px-6'>
@@ -57,7 +56,7 @@ export default function HomePage() {
                     {homeData.mainShops.length > 0 ? homeData.mainShops.map((shop, index) => <Link href={`/app/shop/${shop.id}` as Href} key={index}><StyledView
                         className='rounded-lg border-[1px] border-gray p-2 flex flex-col'>
                         <StyledView className='w-12 h-12 bg-light-green rounded-full'>
-                            <StyledImage className='w-full h-full' source={require('@/assets/images/icone-farmacia.png')} />
+                            <StyledImage className='w-full h-full' source={require('../../../assets/images/icone-farmacia.png')} />
                         </StyledView>
                         <StyledText className='font-bold'>{shop.name}</StyledText>
                         <StyledText>{shop.deliveryTime || '-'}</StyledText>

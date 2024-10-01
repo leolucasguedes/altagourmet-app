@@ -4,7 +4,7 @@ import {
   StyledPressable,
   StyledTextInput,
   StyledText,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 interface PasswordInputProps {

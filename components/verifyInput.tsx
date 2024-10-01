@@ -3,11 +3,11 @@ import {
   StyledView,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 import { TextInput, Keyboard, Clipboard } from "react-native";
 import { Href, useRouter } from "expo-router";
-import Popup from "@/components/popup";
-import { buttonCN } from "@/components/classnames";
+import Popup from "../components/popup";
+import { buttonCN } from "../components/classnames";
 
 type VerifyProps = {
   redirect: string;

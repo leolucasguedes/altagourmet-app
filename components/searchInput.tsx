@@ -5,13 +5,13 @@ import {
   StyledText,
   StyledPressable,
   StyledTextInput,
-} from "@/components/styleds/components";
-import api from "@/utils/api";
+} from "../components/styleds/components";
+import api from "../utils/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import Loading from "./loading";
-import useAuthStore from "@/store/authStore";
-import useSearchStore from "@/store/searchStore";
+import useAuthStore from "../store/authStore";
+import useSearchStore from "../store/searchStore";
 
 interface SearchInputProps {
   search: (e: any) => void;

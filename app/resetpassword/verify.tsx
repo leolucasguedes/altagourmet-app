@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "expo-router";
-import LogoIcon from "@/components/icons/logo";
-import PasswordInput from "@/components/passwordInput";
+import LogoIcon from "../../components/icons/logo";
+import PasswordInput from "../../components/passwordInput";
 import {
   StyledView,
   StyledText,
   StyledPressable,
   StyledTextInput,
-} from "@/components/styleds/components";
+} from "../../components/styleds/components";
 import Icon from "react-native-vector-icons/Ionicons";
 import IconM from "react-native-vector-icons/MaterialCommunityIcons";
-import Popup from "@/components/popup";
-import Loading from "@/components/loading";
+import Popup from "../../components/popup";
+import Loading from "../../components/loading";
 
 export default function ResetPasswordVerify() {
   const [step, setStep] = useState(1);

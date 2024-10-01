@@ -5,8 +5,7 @@ import {
   StyledTextInput,
   StyledText,
   StyledPressable
-} from "@/components/styleds/components";
-import useAuthStore from "@/store/authStore";
+} from "../../../components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function ChatPage() {

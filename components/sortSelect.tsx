@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { StyledPressable, StyledText, StyledView } from "./styleds/components";
 import { Modal, TouchableWithoutFeedback } from "react-native";
-import useSearchStore from "@/store/searchStore";
+import useSearchStore from "../store/searchStore";
 
 export default function SortSelect() {
   const [sortModalVisible, setSortModalVisible] = useState(false);

@@ -1,5 +1,5 @@
-import useAuthStore from "@/store/authStore";
-import { formatPhoneNumber, obterUrlBase } from "@/utils/textFormat";
+import useAuthStore from "../store/authStore";
+import { obterUrlBase } from "../utils/textFormat";
 import LogoIcon from "./icons/logo";
 import { StyledImage, StyledView, StyledText } from "./styleds/components";
 

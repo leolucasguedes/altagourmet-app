@@ -4,11 +4,11 @@ import {
   StyledText,
   StyledPressable,
   StyledTextInput,
-} from "@/components/styleds/components";
+} from "../../components/styleds/components";
 import { useRouter } from "expo-router";
-import LogoIcon from "@/components/icons/logo";
-import Popup from "@/components/popup";
-import Loading from "@/components/loading";
+import LogoIcon from "../../components/icons/logo";
+import Popup from "../../components/popup";
+import Loading from "../../components/loading";
 
 export default function RegisterVerify() {
   const [error, setError] = useState(false);

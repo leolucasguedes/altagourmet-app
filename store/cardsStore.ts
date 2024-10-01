@@ -1,4 +1,4 @@
-import zustandStorage from '@/utils/zustandStorage'
+import zustandStorage from '../utils/zustandStorage'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 export interface ICard {

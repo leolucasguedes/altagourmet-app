@@ -5,14 +5,14 @@ import {
   StyledScrollView,
   StyledPressable,
   StyledTextInput,
-} from "@/components/styleds/components";
+} from "../../components/styleds/components";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, Platform } from "react-native";
-import useAuthStore from "@/store/authStore";
-import PasswordInput from "@/components/passwordInput";
-import Popup from "@/components/popup";
-import Loading from "@/components/loading";
-import LogoIcon from "@/components/icons/logo";
+import useAuthStore from "../../store/authStore";
+import PasswordInput from "../../components/passwordInput";
+import Popup from "../../components/popup";
+import Loading from "../../components/loading";
+import LogoIcon from "../../components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconAnt from "react-native-vector-icons/AntDesign";
 import IconF from "react-native-vector-icons/Fontisto";

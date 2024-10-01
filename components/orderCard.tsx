@@ -4,7 +4,7 @@ import {
   StyledView,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
+} from "../components/styleds/components";
 
 export const OrderCard = () => {
   const router = useRouter();

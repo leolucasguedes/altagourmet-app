@@ -2,9 +2,9 @@ import {
   StyledView,
   StyledText,
   StyledPressable,
-} from "@/components/styleds/components";
+} from "../../components/styleds/components";
 import { useRouter } from "expo-router";
-import LogoIcon from "@/components/icons/logo";
+import LogoIcon from "../../components/icons/logo";
 
 export default function RegisterSuccess() {
   const router = useRouter();

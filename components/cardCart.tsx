@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledView, StyledText, StyledPressable } from "@/components/styleds/components";
+import { StyledView, StyledText, StyledPressable } from "../components/styleds/components";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
  export const CardCart = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { StyledView } from "@/components/styleds/components";
+import { StyledView } from "../components/styleds/components";
 
 const Loading = () => {
   return (

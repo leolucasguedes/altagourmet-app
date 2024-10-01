@@ -1,7 +1,7 @@
-import api from "@/utils/api";
+import api from "../utils/api";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import zustandStorage from "@/utils/zustandStorage";
+import zustandStorage from "../utils/zustandStorage";
 
 interface User {
   name: string;
