@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+// import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import useShippingStore, { IAddress } from '@/store/shippingStore';
 import { StyledText, StyledTextInput, StyledView } from './styleds/components';
@@ -58,7 +58,7 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
                     </TouchableOpacity>
                 </StyledView>
                 {!location && <ActivityIndicator size="large" color={'#238878'} />}
-                {location && (
+                {/* {location && (
                     <MapView
                         style={styles.map}
                         initialRegion={{
@@ -70,7 +70,7 @@ export default function ShippingLocationPicker({ close }: { close: () => void })
                     >
                         <Marker coordinate={{ latitude: location.latitude, longitude: location.longitude }} />
                     </MapView>
-                )}
+                )} */}
                 {address && <StyledView className='w-full flex flex-col items-start justify-center pt-3'>
                     <StyledText>Endereço</StyledText>
                     <StyledTextInput className='bg-[#f6f6f6] w-full px-2 border border-[#d4d4d4] rounded mb-2' value={address.street_address[0]}
