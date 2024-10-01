@@ -4,7 +4,7 @@ import { Href, Link, useRouter } from 'expo-router';
 import useAuthStore from '../../../store/authStore';
 import { RefreshControl } from 'react-native';
 import useHomeContentStore from '../../../store/homeContentStore';
-import CategoriesDisplay from '../../../components/categories';
+import CategoriesDisplay from '../../../components/Categories';
 
 export default function HomePage() {
     const { homeData, fetchHomeData } = useHomeContentStore();
