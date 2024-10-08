@@ -8,7 +8,7 @@ export interface IMainData {
 interface HomeContent {
     homeData: IMainData,
     setHomeData: (value: IMainData) => void,
-    fetchHomeData: (token: string, quantity?: number) => Promise<boolean>
+    fetchHomeData: (quantity?: number) => Promise<boolean>
 }
 
 const useHomeContentStore = create<HomeContent>()((set, get) => ({
@@ -18,13 +18,9 @@ const useHomeContentStore = create<HomeContent>()((set, get) => ({
         mainShops: []
     },
     setHomeData: (value) => set({ homeData: value }),
-    fetchHomeData: async (token: string, quantity?: number) => {
+    fetchHomeData: async (quantity?: number) => {
         try {
-            const res = await api.get(`/products/home/${quantity || 4}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
+            const res = await api.get(`/products/home/${quantity || 4}`);
             if (res.status === 200) {
                 get().setHomeData(res.data);
             }
