@@ -36,13 +36,10 @@ export default function LocationPicker() {
         </StyledView>
         <StyledView className="flex flex-row items-center justify-end gap-2">
           <StyledPressable
-            onPress={() => router.push("/app/cart" as Href)}
-            className="flex p-2.5 bg-[#E8EDF2] rounded-full"
+            onPress={() => router.push("/cart" as Href)}
+            className="flex p-3 bg-[#E8EDF2] rounded-full"
           >
             <Icon name="shoppingcart" size={17} color="#0A0A0A" />
-          </StyledPressable>
-          <StyledPressable>
-            <NotificationIcon />
           </StyledPressable>
         </StyledView>
       </StyledView>

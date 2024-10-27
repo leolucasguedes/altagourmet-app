@@ -7,14 +7,14 @@ import {
   StyledTextInput,
   StyledImage,
   StyledPressable,
-} from "../../../components/styleds/components";
-import Loading from "../../../components/loading";
-import Popup from "../../../components/popup";
-import LogoIcon from "../../../components/icons/logo";
-import useAuthStore from "../../../store/authStore";
+} from "../../components/styleds/components";
+import Loading from "../../components/loading";
+import Popup from "../../components/popup";
+import LogoIcon from "../../components/icons/logo";
+import useAuthStore from "../../store/authStore";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconM from "react-native-vector-icons/MaterialCommunityIcons";
-import { obterUrlBase } from "../../../utils/textFormat";
+import { obterUrlBase } from "../../utils/textFormat";
 import * as ImagePicker from "expo-image-picker";
 
 export default function EditProfilePage() {

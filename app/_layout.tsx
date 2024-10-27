@@ -3,14 +3,19 @@ import {
   StyledSafeAreaView,
   StyledView,
 } from "../components/styleds/components";
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { usePathname } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
+  const pathname = usePathname();
+  const noFooterPages = ["/login", "/register", "/resetpassword"];
   const [loaded, error] = useFonts({
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
     PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
@@ -33,8 +38,9 @@ export default function Layout() {
     >
       <StatusBar style="dark" translucent backgroundColor="transparent" />
       <StyledView className="flex-1">
-        <Slot />
+        <Stack screenOptions={{ header: () => <Header /> }} />
       </StyledView>
+      {!noFooterPages.includes(pathname) && <Footer />}
     </StyledSafeAreaView>
   );
 }

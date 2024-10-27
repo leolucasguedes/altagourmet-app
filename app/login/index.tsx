@@ -5,14 +5,15 @@ import {
   StyledScrollView,
   StyledPressable,
   StyledTextInput,
-} from "../components/styleds/components";
+  StyledImage,
+} from "../../components/styleds/components";
 import { Href, Link, useRouter, useRootNavigationState } from "expo-router";
 import { KeyboardAvoidingView, Platform } from "react-native";
-import useAuthStore from "../store/authStore";
-import PasswordInput from "../components/passwordInput";
-import Popup from "../components/popup";
-import Loading from "../components/loading";
-import LogoIcon from "../components/icons/logo";
+import useAuthStore from "../../store/authStore";
+import PasswordInput from "../../components/passwordInput";
+import Popup from "../../components/popup";
+import Loading from "../../components/loading";
+import LogoIcon from "../../components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconF from "react-native-vector-icons/Fontisto";
 import * as Yup from "yup";
@@ -36,7 +37,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (!isInitialCheckDone && navigationState?.key) {
       if (isAuthenticated) {
-        router.push("/app/home" as Href);
+        router.push("/" as Href);
       }
       setIsInitialCheckDone(true);
     }
@@ -79,7 +80,7 @@ export default function LoginPage() {
         },
       ]);
     } else {
-      router.push("/app/home");
+      router.push("/" as Href);
     }
 
     setSubmitting(false);
@@ -118,7 +119,12 @@ export default function LoginPage() {
           close={() => setError(false)}
         />
 
-        <LogoIcon fillColor="#238878" />
+        <StyledImage
+          className="w-12 h-52"
+          source={require("../../assets/images/icon.png")}
+          alt="Logo"
+        />
+        
         <StyledText className="text-2xl my-5">
           Faça seu <StyledText className="font-bold">login</StyledText>!
         </StyledText>

@@ -59,14 +59,14 @@ export default function SearchInput({
   const searchByHistory = (value: string) => {
     setIsFocused(false);
     setSearchTerm(value);
-    router.push(`/app/search/${value}`);
+    router.push(`/search/${value}`);
   };
 
   const handleClearSearch = async () => {
     if (loading) return;
     setLoading(true);
     setSearchTerm("");
-    await router.push("/app/search");
+    await router.push("/search");
     setLoading(false);
   };
 
@@ -79,7 +79,7 @@ export default function SearchInput({
       try {
         addHistory(searchTerm);
         await searchForResults(token, searchTerm);
-        router.push(`/app/search/${searchTerm}`);
+        router.push(`/search/${searchTerm}`);
       } catch {
         console.log("Erro ao buscar produtos");
       }
@@ -94,9 +94,9 @@ export default function SearchInput({
         addHistory(value);
         const searched = await searchByCategory(token, value);
         if (searched) {
-          router.push(`/app/search/${value}`);
+          router.push(`/search/${value}`);
         } else {
-          router.push("/app/search");
+          router.push("/search");
         }
       } catch {
         console.log("Erro ao buscar produtos");

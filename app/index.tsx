@@ -5,37 +5,36 @@ import {
   StyledText,
   StyledView,
 } from "../components/styleds/components";
-import { Href, Link, useRouter } from "expo-router";
+import { Href, Link } from "expo-router";
 import useAuthStore from "../store/authStore";
 import { RefreshControl } from "react-native";
 import useHomeContentStore from "../store/homeContentStore";
 import CategoriesDisplay from "../components/Categories";
+import MainOffersSlider from "../components/mainOffersSlider";
 
 export default function HomePage() {
   const { homeData, fetchHomeData } = useHomeContentStore();
   const [refreshing, setRefreshing] = useState(false);
-  const { token, logout } = useAuthStore();
-  const router = useRouter();
+  const { token } = useAuthStore();
+
   const homeFetch = async () => {
-    if (token) {
-      return;
-    }
-    const data = await fetchHomeData(80);
+    const data = await fetchHomeData();
     if (!data) {
       console.log("Error fetching home data");
     }
   };
+
   useEffect(() => {
-    if (token) {
-      homeFetch();
+    if (!homeData) {
+      fetchHomeData();
     }
   }, [token]);
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    if (token) {
-      homeFetch();
-    }
+
+    homeFetch();
+
     setRefreshing(false);
   }, []);
 
@@ -53,36 +52,47 @@ export default function HomePage() {
           justifyContent: "flex-start",
         }}
       >
-        <StyledImage
-          source={require("../../../assets/images/home-banner.png")}
-        />
+        <StyledView className="w-[350px] h-[200px] flex items-center justify-center border border-[#E8EDF2] mt-4">
+          <StyledText className="text-start font-bold">
+            Vídeo/Foto de apresentação
+          </StyledText>
+        </StyledView>
         <StyledText className="w-full text-start px-6 font-bold mt-4 mb-2">
           Categorias
         </StyledText>
         <CategoriesDisplay />
-        {!refreshing && homeData.mainShops.length > 0 && (
+        {!refreshing && homeData.offers.length > 0 && (
           <StyledView className="w-full flex flex-row items-center justify-between px-6">
             <StyledText className="text-start font-bold">
-              Principais Farmácias
+              Principais Ofertas
             </StyledText>
-            <Link href={"/app/shops" as Href}>
+            <Link href={"/offers" as Href}>
               <StyledText className="text-light-green">Ver mais</StyledText>
             </Link>
           </StyledView>
         )}
         <StyledView className="w-full flex flex-row items-center justify-start gap-3 mt-2 px-4">
-          {homeData.mainShops.length > 0
-            ? homeData.mainShops.map((shop, index) => (
-                <Link href={`/app/shop/${shop.id}` as Href} key={index}>
-                  <StyledView className="rounded-lg border-[1px] border-gray p-2 flex flex-col">
-                    <StyledView className="w-12 h-12 bg-light-green rounded-full">
+          {!refreshing && homeData.offers.length > 0
+            ? homeData.offers.map((offer, index) => (
+                <Link
+                  href={`/product/${offer.id}` as Href}
+                  key={index}
+                  className="rounded-lg p-2 flex flex-row w-full max-h-[80px] items-center"
+                >
+                  <StyledView className="w-14 h-14 bg-light-green rounded-lg overflow-hidden flex-shrink-0">
+                    {offer.imageUrl && (
                       <StyledImage
-                        className="w-full h-full"
-                        source={require("../../../assets/images/icone-farmacia.png")}
+                        className="w-full h-full object-cover"
+                        src={offer.images}
+                        alt={offer.name}
                       />
-                    </StyledView>
-                    <StyledText className="font-bold">{shop.name}</StyledText>
-                    <StyledText>{shop.deliveryTime || "-"}</StyledText>
+                    )}
+                  </StyledView>
+                  <StyledView className="pl-3 flex-1 flex flex-col justify-center max-w-[99%]">
+                    <StyledText className="font-bold">{offer.name}</StyledText>
+                    <StyledText className="text-xs">
+                      {offer.description || "-"}
+                    </StyledText>
                   </StyledView>
                 </Link>
               ))
@@ -93,73 +103,83 @@ export default function HomePage() {
             <StyledText className="text-start font-bold">
               Mais Pedidos
             </StyledText>
-            <Link href={"/app/products/?order=popular" as Href}>
+            <Link href={"/trends" as Href}>
               <StyledText className="text-light-green">Ver mais</StyledText>
             </Link>
           </StyledView>
         )}
-        <StyledView className="w-full flex flex-col items-start justify-start gap-3 mt-2 px-4">
+        <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-2 px-4">
           {!refreshing && homeData.bestSellers.length > 0
             ? homeData.bestSellers.map((product, index) => (
                 <Link
-                  href={`/app/product/${product.id}` as Href}
+                  href={`/product/${product.id}` as Href}
                   key={index}
-                  className="rounded-lg border-[1px] border-gray p-2 flex flex-row w-full items-center"
+                  className="rounded-lg p-2 flex flex-row w-full max-h-[80px] items-center"
                 >
-                  <StyledView className="w-12 h-12 bg-light-green rounded-lg overflow-hidden flex items-center justify-center">
-                    {product.images && (
+                  <StyledView className="w-14 h-14 bg-light-green rounded-lg overflow-hidden flex-shrink-0">
+                    {product.imageUrl && (
                       <StyledImage
-                        className="w-12 h-12"
+                        className="w-full h-full object-cover"
                         src={product.images}
                         alt={product.name}
                       />
                     )}
                   </StyledView>
-                  <StyledView className="pl-3">
+                  <StyledView className="pl-3 flex-1 flex flex-col justify-center max-w-[99%]">
                     <StyledText className="font-bold">
                       {product.name}
                     </StyledText>
-                    <StyledText>{product.deliveryTime || "-"}</StyledText>
+                    <StyledText className="text-xs">
+                      {product.description || "-"}
+                    </StyledText>
                   </StyledView>
                 </Link>
               ))
             : null}
         </StyledView>
-        {homeData.bestDiscounts.length > 0 && (
-          <StyledView className="w-full flex flex-row items-center justify-between px-6 mt-4">
-            <StyledText className="text-start font-bold">
-              Descontos Imperdíveis
-            </StyledText>
-            <Link href={"/app/products/?order=discount" as Href}>
-              <StyledText className="text-light-green">Ver mais</StyledText>
-            </Link>
-          </StyledView>
-        )}
-        <StyledView className="w-full flex flex-col items-start justify-start gap-3 mt-2 px-4">
-          {homeData.bestDiscounts.length > 0
-            ? homeData.bestDiscounts.map((product, index) => (
-                <StyledView
-                  key={index}
-                  className="rounded-lg border-[1px] border-gray p-2 flex flex-row w-full"
-                >
-                  {product.images ? (
-                    <StyledImage
-                      className="w-12 h-12 rounded-lg"
-                      src={product.images?.replace("localhost", "10.0.2.2")}
-                      alt={product.name}
-                    />
-                  ) : (
-                    <StyledView className="w-12 h-12 bg-light-green rounded-lg overflow-hidden"></StyledView>
-                  )}
-                  <StyledView className="ml-3">
-                    <Link href={`/app/product/${product.id}` as Href}>
-                      <StyledText className="font-bold">
-                        {product.name}
-                        {"\n"}
-                      </StyledText>
-                      <StyledText>{product.deliveryTime || "-"}</StyledText>
-                    </Link>
-                  </StyledView>
+        <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-2 px-4">
+          {homeData.products.length > 0
+            ? homeData.products.map((category, index) => (
+                <StyledView key={index} className="w-full">
+                  <StyledText className="font-bold text-lg mb-2">
+                    {category.name}
+                  </StyledText>
+                  {category.foods.map((product: any, productIndex: any) => (
+                    <StyledView
+                      key={productIndex}
+                      className="rounded-lg border-t-[1px] border-gray p-2 flex flex-row items-center w-full"
+                    >
+                      {product.imageUrl ? (
+                        <StyledImage
+                          className="w-14 h-14 rounded-lg"
+                          src={product.imageUrl}
+                          alt={product.name}
+                        />
+                      ) : (
+                        <StyledView className="w-14 h-14 bg-light-green rounded-lg overflow-hidden"></StyledView>
+                      )}
+                      <StyledView className="ml-3">
+                        <Link
+                          href={`/product/${product.id}` as Href}
+                          className="max-w-[95%]"
+                        >
+                          <StyledText className="font-bold">
+                            {product.name}
+                            {"\n"}
+                          </StyledText>
+                          <StyledText className="text-xs">
+                            {product.description || "-"}
+                            {"\n"}
+                          </StyledText>
+                          <StyledText>R${product.price || "-"} -</StyledText>
+                          <StyledText>
+                            {" "}
+                            {product.estimatedPreparationTime || "-"} min
+                          </StyledText>
+                        </Link>
+                      </StyledView>
+                    </StyledView>
+                  ))}
                 </StyledView>
               ))
             : null}

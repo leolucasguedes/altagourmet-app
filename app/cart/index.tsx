@@ -4,7 +4,8 @@ import {
   StyledScrollView,
   StyledText,
   StyledView,
-} from "../../../components/styleds/components";
+  StyledTouchableOpacity,
+} from "../../components/styleds/components";
 import {
   ActivityIndicator,
   TouchableOpacity,
@@ -13,31 +14,28 @@ import {
 } from "react-native";
 import IconAnt from "react-native-vector-icons/AntDesign";
 import { Link, useRouter } from "expo-router";
-import useCartStore from "../../../store/cartStore";
-import useAuthStore from "../../../store/authStore";
+import useCartStore from "../../store/cartStore";
+import useAuthStore from "../../store/authStore";
 import FAIcon from "react-native-vector-icons/FontAwesome5";
 import MIIcon from "react-native-vector-icons/MaterialIcons";
-import api from "../../../utils/api";
-import ProductCard from "../../../components/productCard";
-import useHomeContentStore from "../../../store/homeContentStore";
-import PlaceHolderImage from "../../../components/PlaceHolderImage";
-import useShippingStore from "../../../store/shippingStore";
+import api from "../../utils/api";
+import ProductCard from "../../components/productCard";
+import useHomeContentStore from "../../store/homeContentStore";
+import PlaceHolderImage from "../../components/PlaceHolderImage";
 
 export default function CartPage() {
   const router = useRouter();
-  const { emptyCart, addToCart, removeFromCart, userCart, fetchUserCart } =
+  const { emptyCart, addToCart, removeFromCart, userCart, totalValue } =
     useCartStore();
-  const { calculateShipping } = useShippingStore();
   const { homeData } = useHomeContentStore();
   const { token } = useAuthStore();
   const [loading, setLoading] = React.useState(false);
   const [buyMore, setBuyMore] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    if (token) {
-      fetchUserCart(token);
-    }
+    await fetchMoreProducts();
     setRefreshing(false);
   }, []);
 
@@ -51,32 +49,30 @@ export default function CartPage() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (token) {
       fetchMoreProducts();
     }
   }, [token]);
 
-  useEffect(() => {
-    if (token && homeData.mainShops) {
-      calculateShipping(token, homeData.mainShops[0].id);
+  const handleQuantityChange = (foodId: number, action: "add" | "remove") => {
+    const item = userCart.find((cartItem) => cartItem.foodId === foodId);
+    if (item) {
+      if (action === "add") {
+        addToCart({ ...item, quantity: 1 });
+      } else if (action === "remove" && item.quantity > 1) {
+        addToCart({ ...item, quantity: -1 });
+      } else {
+        removeFromCart(foodId);
+      }
     }
-  }, [token, homeData]);
-
-  const changeQuantity = async (id: string, action: "add" | "remove") => {
-    if (loading) return;
-    setLoading(true);
-    if (action === "add") {
-      await addToCart(token || "", id, 1);
-    } else {
-      await removeFromCart(token || "", id, 1);
-    }
-    setLoading(false);
   };
+
   const cleanCart = async () => {
     if (loading) return;
     setLoading(true);
-    await emptyCart(token || "");
+    await emptyCart();
     setLoading(false);
   };
   return (
@@ -120,111 +116,89 @@ export default function CartPage() {
       >
         <StyledView className="flex flex-col gap-y-2 px-4 w-full">
           <StyledView className="w-full pt-4 pb-2">
-            {homeData.mainShops.length > 0 && (
-              <StyledView className="flex flex-row items-center justify-start w-full gap-2">
-                <StyledView className="w-12 h-12 bg-light-green rounded-full">
-                  <StyledImage
-                    className="w-full h-full"
-                    source={require("../../../assets/images/icone-farmacia.png")}
-                  />
-                </StyledView>
-                <StyledView>
-                  <StyledText className="font-bold text-lg">
-                    {homeData.mainShops[0].name}
-                  </StyledText>
-                  <Link href={`/app/shop/${homeData.mainShops[0]?.id}`}>
-                    <StyledText className="text-light-green pt-3">
-                      Adicionar mais itens
-                    </StyledText>
-                  </Link>
-                </StyledView>
-              </StyledView>
-            )}
+            <StyledText className="text-lg font-bold">Produtos</StyledText>
           </StyledView>
-          {userCart && userCart.length === 0 && (
+          {userCart.length === 0 ? (
             <StyledText className="w-full text-center">
               Carrinho vazio
             </StyledText>
-          )}
-          {userCart && userCart.length > 0 && (
-            <StyledView>
-              {userCart?.map((item: any, key: number) => (
-                <StyledView
-                  key={key}
-                  className="w-full flex flex-row items-center justify-between"
-                >
-                  <StyledView className="flex flex-row items-center justify-between gap-3">
-                    <StyledView className="p-1 w-14 h-14 rounded border-[1px] border-[#E8EDF2]">
-                      {item.product.images ? (
-                        <StyledImage
-                          className="w-full h-full"
-                          src={item.product.images}
-                          alt={item.product.name}
-                        />
-                      ) : (
-                        <PlaceHolderImage category={"remedios"} />
-                      )}
-                    </StyledView>
-                    <StyledView>
-                      <Text style={{ fontWeight: "bold", width: "70%" }}>
-                        {item.product.name}
-                      </Text>
-                      <StyledText>
-                        R${item.product.price.replace(".", ",")}
-                      </StyledText>
-                    </StyledView>
-                  </StyledView>
-                  <StyledView className="flex flex-row items-center justify-between rounded border-[1px] gap-2 border-[#E8EDF2] bg-[#F8F8F8] pb-2">
-                    <TouchableOpacity
-                      disabled={loading}
-                      style={{ paddingHorizontal: 5 }}
-                      onPress={() => {
-                        changeQuantity(item.product.id, "remove");
-                      }}
-                    >
-                      <FAIcon
-                        name="minus"
-                        size={18}
-                        color="#5ECD81"
-                        style={{ width: 18, height: 18 }}
+          ) : (
+            userCart.map((item, index) => (
+              <StyledView
+                key={index}
+                className="w-full flex flex-row items-center justify-between mb-4"
+              >
+                <StyledView className="flex flex-row items-center justify-between gap-3">
+                  <StyledView className="p-1 w-14 h-14 rounded border-[1px] border-[#E8EDF2]">
+                    {item.foodImage ? (
+                      <StyledImage
+                        className="w-full h-full"
+                        src={item.foodImage}
+                        alt={item.foodName}
                       />
-                    </TouchableOpacity>
-                    {loading ? (
-                      <ActivityIndicator
-                        size={"small"}
-                        color={"#000"}
-                      ></ActivityIndicator>
                     ) : (
-                      <StyledText className="font-bold">
-                        {item.quantity}
-                      </StyledText>
+                      <PlaceHolderImage category={"food"} />
                     )}
-                    <TouchableOpacity
-                      disabled={loading}
-                      style={{ paddingHorizontal: 5 }}
-                      onPress={() => {
-                        changeQuantity(item.product.id, "add");
-                      }}
-                    >
-                      <FAIcon
-                        name="plus"
-                        size={18}
-                        color="#5ECD81"
-                        style={{ width: 18, height: 18 }}
-                      />
-                    </TouchableOpacity>
+                  </StyledView>
+                  <StyledView>
+                    <StyledText className="font-bold text-base">
+                      {item.foodName}
+                    </StyledText>
+                    <StyledText className="text-sm text-gray-700">
+                      R${item.foodPrice.toFixed(2).replace(".", ",")}
+                    </StyledText>
                   </StyledView>
                 </StyledView>
-              ))}
-            </StyledView>
+                <StyledView className="flex flex-row items-center justify-between rounded border-[1px] gap-2 border-[#E8EDF2] bg-[#F8F8F8] pb-2">
+                  <TouchableOpacity
+                    disabled={loading}
+                    style={{ paddingHorizontal: 5 }}
+                    onPress={() => handleQuantityChange(item.foodId, "remove")}
+                  >
+                    <FAIcon
+                      name="minus"
+                      size={18}
+                      color="#5ECD81"
+                      style={{ width: 18, height: 18 }}
+                    />
+                  </TouchableOpacity>
+                  <StyledText className="font-bold">{item.quantity}</StyledText>
+                  <TouchableOpacity
+                    disabled={loading}
+                    style={{ paddingHorizontal: 5 }}
+                    onPress={() => handleQuantityChange(item.foodId, "add")}
+                  >
+                    <FAIcon
+                      name="plus"
+                      size={18}
+                      color="#5ECD81"
+                      style={{ width: 18, height: 18 }}
+                    />
+                  </TouchableOpacity>
+                </StyledView>
+              </StyledView>
+            ))
           )}
-          <StyledView className="w-full flex items-center justify-center">
-            <Link href={"/app/home"}>
+          <StyledView className="w-full flex items-center justify-center mt-4">
+            <Link href={"/"}>
               <StyledText className="text-light-green py-3">
                 Adicionar mais itens
               </StyledText>
             </Link>
           </StyledView>
+        </StyledView>
+        <StyledView className="w-full px-4 py-6 bg-white border-t border-gray-200">
+          <StyledText className="font-bold text-xl mb-2">
+            Total: R${totalValue.toFixed(2).replace(".", ",")}
+          </StyledText>
+          <StyledTouchableOpacity
+            className="w-full bg-[#5ECD81] py-4 rounded-lg mt-4"
+            onPress={cleanCart}
+          >
+            <StyledText className="text-white text-center font-bold">
+              Finalizar Compra
+            </StyledText>
+          </StyledTouchableOpacity>
         </StyledView>
         <StyledView className="w-full mb-24">
           <StyledView className="w-full flex px-4 py-3">
@@ -244,35 +218,6 @@ export default function CartPage() {
                   </StyledView>
                 ))}
             </StyledScrollView>
-          </StyledView>
-          <StyledView className="w-full flex flex-row items-center justify-between px-4 mt-4 mb-48">
-            <StyledView className="flex flex-row items-center gap-3">
-              <MIIcon
-                name="discount"
-                size={25}
-                color="#238878"
-                style={{ transform: [{ scaleX: -1 }], width: 25, height: 25 }}
-              />
-              <StyledView>
-                <StyledText className="text-lg font-bold text-black">
-                  Cupom
-                </StyledText>
-                <StyledText className="text-xs text-gray">
-                  {8} disponíveis nessa loja
-                </StyledText>
-              </StyledView>
-            </StyledView>
-            <TouchableOpacity
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <StyledText className="text-lg font-bold text-dark-green">
-                Adicionar
-              </StyledText>
-            </TouchableOpacity>
           </StyledView>
         </StyledView>
       </StyledScrollView>

@@ -1,2 +1,0 @@
-checkout:
-- agendar entrega

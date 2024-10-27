@@ -4,34 +4,34 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import zustandStorage from "../utils/zustandStorage";
 
 interface User {
-  name: string;
+  name?: string;
   address: string;
-  fidelized?: boolean;
-  fidelityPoints?: number;
-  email: string;
-  verified_at?: string | null;
-  phone?: string | null;
-  document?: string | null;
-  avatar?: string | null;
-  birth?: string | null;
+  number: number;
+  complement?: string | null;
+  email?: string;
+  password?: string;
+  phone: string | null;
   id?: string | null;
 }
 interface RegisterDTO {
   phone: string;
   name: string;
   email: string;
-  document: string;
   address: string;
+  number: number;
+  complement?: string | null;
   password: string;
 }
 interface AuthState {
   isAuthenticated: boolean;
   user: null | User;
   token: null | string;
+  userOrders: any[];
   login: (login: string, password: string) => Promise<any>;
   register: (userInfo: any) => Promise<any>;
   logout: () => void;
   getMe: () => Promise<boolean>;
+  fetchOrders: () => Promise<void>;
   updateUser: (userInfo: any) => Promise<any>;
 }
 
@@ -41,11 +41,12 @@ const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       user: null,
       token: null,
+      userOrders: [],
       login: async (login, password) => {
         try {
-          const loggedJSON = await api.post("/auth/login", { login, password });
-          if (loggedJSON.data.access_token) {
-            set({ token: loggedJSON.data.access_token });
+          const response = await api.post("auth/login", { login, password });
+          if (response.data.access_token) {
+            set({ token: response.data.access_token });
             set({ isAuthenticated: true });
             await get().getMe();
             return true;
@@ -58,17 +59,15 @@ const useAuthStore = create<AuthState>()(
       },
       register: async (userInfo: RegisterDTO) => {
         try {
-          const userJSON = await api.post("auth/register", { ...userInfo });
-          const user = userJSON.data;
-          if (userJSON.status === 201 || userJSON.status === 200) {
-            if (user.access_token) {
-              set({ token: user.access_token });
-              set({ isAuthenticated: true });
-              get().getMe();
-              return true;
-            } else {
-              return false;
-            }
+          const response = await api.post("auth/register", { ...userInfo });
+          if (response.status === 201 || response.status === 200) {
+            const success = await get().login(
+              userInfo.email,
+              userInfo.password
+            );
+            return success;
+          } else {
+            return false;
           }
         } catch (err: any) {
           console.log("erro", err);
@@ -84,19 +83,18 @@ const useAuthStore = create<AuthState>()(
       },
       getMe: async () => {
         try {
-          const userJSON = await api.get("/auth/me", {
+          const response = await api.get("auth/me", {
             headers: { Authorization: "Bearer " + get().token },
           });
-          const user = userJSON.data;
+          const user = response.data;
           set({
             user: {
               name: user.name,
               email: user.email,
-              phone: user.phone,
+              phone: user.whatsapp,
               address: user.address,
-              fidelized: user.fidelized,
-              fidelityPoints: user.fidelityPoints,
-              verified_at: user.verified_at,
+              number: user.number,
+              complement: user.complement || null,
               id: user.id,
             },
           });
@@ -108,43 +106,50 @@ const useAuthStore = create<AuthState>()(
       },
       updateUser: async (userInfo) => {
         try {
-          const updatedUser = await api.put(
+          const response = await api.put(
             "/user",
             { ...userInfo },
             { headers: { Authorization: "Bearer " + get().token } }
           );
-          if (updatedUser.status === 200) {
-            const user = updatedUser.data.user;
+          if (response.status === 200) {
+            const user = response.data.user;
             set({
               user: {
                 name: user.name,
                 email: user.email,
-                avatar: user.profile_photo_path,
-                phone: user.phone,
-                birth: user.birth,
-                document: user.document,
+                password: user.password,
+                phone: user.whatsapp,
                 address: user.address,
-                fidelized: user.fidelized,
-                fidelityPoints: user.fidelityPoints,
-                verified_at: user.verified_at,
+                number: user.number,
+                complement: user.complement || null,
                 id: user.id,
               },
             });
-            return updatedUser;
+            return response.data;
           }
         } catch (err: any) {
           return err.response;
+        }
+      },
+      fetchOrders: async () => {
+        try {
+          const response = await api.get("orders", {
+            headers: { Authorization: `Bearer ${get().token}` },
+          });
+          set({ userOrders: response.data });
+        } catch (err) {
+          console.error("Erro ao buscar pedidos do usuário:", err);
         }
       },
     }),
     {
       name: "costumer-auth",
       storage: createJSONStorage(() => zustandStorage),
-      // partialize: (state) => ({
-      //   isAuthenticated: state.isAuthenticated,
-      //   user: state.user,
-      //   token: state.token,
-      // }),
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        token: state.token,
+      }),
     }
   )
 );

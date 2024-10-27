@@ -21,7 +21,7 @@ export default function RegisterSuccess() {
       </StyledText>
       <StyledPressable
         className="bg-[#5ECD81] rounded-md py-4 mb-5 w-full flex justify-center items-center absolute bottom-10"
-        onPress={() => router.push("/app/home")}
+        onPress={() => router.push("/")}
       >
         <StyledText className="text-white">Continuar</StyledText>
       </StyledPressable>

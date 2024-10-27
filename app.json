@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Buy Farma",
-    "slug": "buy-farma",
+    "name": "Alta Gourmet",
+    "slug": "alta-gourmet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "altagourmet",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -15,18 +15,16 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "audio"
-        ]
+        "UIBackgroundModes": ["audio"]
       },
-      "bundleIdentifier": "br.com.buyfarma"
+      "bundleIdentifier": "br.com.altagourmet"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "br.com.buyfarma"
+      "package": "br.com.altagourmet"
     },
     "web": {
       "bundler": "metro",
@@ -58,9 +56,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "aef5f9c6-e68f-40ec-817b-f308ad1cf970"
+        "projectId": "e1b91a4a-a329-42ec-baa4-a465836c1ff0"
       }
     },
-    "owner": "apps-agencia"
+    "owner": "leolucasguedes"
   }
 }

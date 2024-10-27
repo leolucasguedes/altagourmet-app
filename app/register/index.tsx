@@ -5,6 +5,7 @@ import {
   StyledScrollView,
   StyledPressable,
   StyledTextInput,
+  StyledImage,
 } from "../../components/styleds/components";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, Platform } from "react-native";
@@ -86,7 +87,7 @@ export default function RegisterPage() {
         {
           action: () => {
             setError(false);
-            router.push("/");
+            router.push("/login");
           },
           label: "Ir para Login",
           type: "secondary",
@@ -126,7 +127,11 @@ export default function RegisterPage() {
           close={() => setError(false)}
         />
         <StyledView className="w-full flex flex-col items-center justify-center">
-          <LogoIcon fillColor="#238878" />
+          <StyledImage
+            className="w-12 h-52"
+            source={require("../../assets/images/icon.png")}
+            alt="Logo"
+          />
           <StyledText className="text-2xl my-5">
             Crie sua <StyledText className="font-bold">conta</StyledText>!
           </StyledText>
@@ -339,7 +344,10 @@ export default function RegisterPage() {
           <StyledText className="text-[#A3A3A3] text-xs">
             Já tem uma conta?{" "}
           </StyledText>
-          <StyledPressable className="m-0" onPress={() => router.push("/")}>
+          <StyledPressable
+            className="m-0"
+            onPress={() => router.push("/login")}
+          >
             <StyledText className="font-semibold">Faça login!</StyledText>
           </StyledPressable>
         </StyledView>

@@ -1,4 +1,4 @@
-import { StyledText } from '../../../components/styleds/components';
+import { StyledText } from '../../components/styleds/components';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function ShopPage() {
