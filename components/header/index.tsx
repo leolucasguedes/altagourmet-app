@@ -42,7 +42,7 @@ export default function Header() {
       {!doNotShowLocationPicker.some((item) => pathname.includes(item)) && (
         <LocationPicker />
       )}
-      <StyledView className="w-full px-4 mt-6">
+      <StyledView className="w-full px-4 mt-6 pb-2">
         <StyledView className="w-full flex flex-row items-center justify-start gap-2 pb-2 text-black rounded-lg px-3 border-[1px] border-[#E8EDF2] ">
           <SearchIcon />
           <StyledTextInput

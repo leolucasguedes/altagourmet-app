@@ -1,6 +1,7 @@
 import zustandStorage from '../utils/zustandStorage'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+
 export interface ICard {
     number: string,
     due_to: string,

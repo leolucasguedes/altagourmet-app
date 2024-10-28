@@ -1,39 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  StyledImage,
   StyledScrollView,
   StyledText,
   StyledView,
+  StyledTouchableOpacity,
+  StyledTextInput,
 } from "../../../../components/styleds/components";
 import { TouchableOpacity } from "react-native";
 import IconAnt from "react-native-vector-icons/AntDesign";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import useCartStore from "../../../../store/cartStore";
 import useAuthStore from "../../../../store/authStore";
 import MIIcon from "react-native-vector-icons/MaterialIcons";
-import useHomeContentStore from "../../../../store/homeContentStore";
-import useShippingStore from "../../../../store/shippingStore";
-import FontistoIcon from "react-native-vector-icons/Fontisto";
+
 export default function CheckoutReview() {
   const router = useRouter();
-  const {
-    emptyCart,
-    addToCart,
-    removeFromCart,
-    userCart,
-    fetchUserCart,
-    totalValue,
-  } = useCartStore();
-  const { shipping_fee } = useShippingStore();
-  const { homeData } = useHomeContentStore();
-  const { token } = useAuthStore();
+  const { emptyCart, checkout, removeFromCart, userCart, totalValue } =
+    useCartStore();
+  const { token, isAuthenticated, user } = useAuthStore();
   const [loading, setLoading] = React.useState(false);
-  const [method, setMethod] = React.useState("");
+  const [method, setMethod] = React.useState("pix");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [address, setAddress] = useState("");
+  const [number, setNumber] = useState<number>(0);
+  const [complement, setComplement] = useState("");
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setWhatsapp(user.phone);
+      setAddress(user.address);
+      setNumber(user.number as number);
+      setComplement(user.complement || "");
+    }
+  }, [isAuthenticated, user]);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    const success = await checkout({
+      userId: isAuthenticated ? user?.id : "",
+      whatsapp,
+      address,
+      number: typeof number === "string" ? parseInt(number, 10) : number,
+      complement,
+    });
+    setLoading(false);
+
+    if (success) {
+      router.push("/"); // Redireciona para a página do QR Code
+    } else {
+      alert("Falha ao finalizar o pedido. Tente novamente.");
+    }
+  };
 
   const cleanCart = async () => {
     if (loading) return;
     setLoading(true);
-    await emptyCart(token || "");
+    await emptyCart();
     router.push("/cart");
     setLoading(false);
   };
@@ -76,37 +98,8 @@ export default function CheckoutReview() {
         <StyledView className="flex flex-col px-4 w-full gap-y-2">
           <StyledView className="w-full pt-4 pb-2">
             <StyledText className="text-lg font-bold">
-              Resumo da Compra
+              Informe seu whatsapp
             </StyledText>
-          </StyledView>
-          <StyledView className="w-full flex flex-row items-center justify-between my-3">
-            <StyledView className="flex flex-row items-center gap-3">
-              <MIIcon
-                name="discount"
-                size={25}
-                color="#238878"
-                style={{ transform: [{ scaleX: -1 }], width: 25, height: 25 }}
-              />
-              <StyledView>
-                <StyledText className="text-lg font-bold text-black">
-                  Cupom
-                </StyledText>
-                <StyledText className="text-xs text-gray">
-                  {8} disponíveis nessa loja
-                </StyledText>
-              </StyledView>
-            </StyledView>
-            <TouchableOpacity
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <StyledText className="text-lg font-bold text-dark-green">
-                Adicionar
-              </StyledText>
-            </TouchableOpacity>
           </StyledView>
           <StyledText className="text-lg font-bold ">
             Resumo da Compra
@@ -121,9 +114,7 @@ export default function CheckoutReview() {
             <StyledText className="text-sm text-gray">
               Taxa de Entrega
             </StyledText>
-            <StyledText className="text-sm text-gray">
-              R$ {shipping_fee.toFixed(2).replace(".", ",")}
-            </StyledText>
+            <StyledText className="text-sm text-gray">R$ 7,99</StyledText>
           </StyledView>
           <StyledView className="w-full flex flex-row items-center justify-between">
             <StyledText className="text-sm text-gray">
@@ -133,52 +124,51 @@ export default function CheckoutReview() {
               - R$ 0,00
             </StyledText>
           </StyledView>
-          <StyledView className="w-full flex flex-row items-center justify-between">
+          <StyledView className="w-full flex flex-row items-center justify-between mb-4">
             <StyledText className="text-lg font-bold">Total</StyledText>
             <StyledText className="text-dark-green font-bold text-lg">
-              R$ {(totalValue + shipping_fee).toFixed(2).replace(".", ",")}
+              R$ {totalValue + 7.99}
             </StyledText>
           </StyledView>
-          <StyledText className="font-bold text-lg w-full text-start my-2">
+
+          <StyledText className="text-lg font-bold mt-4">
+            Informações de Contato
+          </StyledText>
+          <StyledTextInput
+            placeholder="Whatsapp"
+            keyboardType="numeric"
+            placeholderTextColor={"#A3A3A3"}
+            maxLength={11}
+            value={whatsapp}
+            onChangeText={setWhatsapp}
+            className="w-full border border-gray rounded-md p-3"
+          />
+          <StyledTextInput
+            placeholder="Endereço"
+            placeholderTextColor={"#A3A3A3"}
+            value={address}
+            onChangeText={setAddress}
+            className="w-full border border-gray rounded-md p-3 mt-2"
+          />
+          <StyledTextInput
+            placeholder="Número"
+            placeholderTextColor={"#A3A3A3"}
+            value={String(number)}
+            onChangeText={(text) => setNumber(parseInt(text))}
+            keyboardType="numeric"
+            className="w-full border border-gray rounded-md p-3 mt-2"
+          />
+          <StyledTextInput
+            placeholder="Complemento (Opcional)"
+            placeholderTextColor={"#A3A3A3"}
+            value={complement}
+            onChangeText={setComplement}
+            className="w-full border border-gray rounded-md p-3 mt-2 mb-4"
+          />
+
+          <StyledText className="font-bold text-lg w-full text-start mt-4">
             Forma de Pagamento
           </StyledText>
-          <StyledView
-            className="rounded-lg w-full border-[1px] px-3 py-2 border-[#dadada] flex flex-row items-start justify-between min-h-12"
-            style={{
-              backgroundColor: method === "card1" ? "#acfec6" : "transparent",
-            }}
-          >
-            <TouchableOpacity onPress={() => setMethod("card1")}>
-              <StyledView className="flex flex-row items-center gap-x-4">
-                <FontistoIcon
-                  name="wallet"
-                  size={30}
-                  color="#238878"
-                  style={{ width: 30, height: 30 }}
-                />
-                <StyledView className="flex flex-col items-start justify-center">
-                  <StyledText className="font-bold text-lg">
-                    MasterCard • Crédito
-                  </StyledText>
-                  <StyledText>**** 9843 • Diogo Archanjo</StyledText>
-                </StyledView>
-              </StyledView>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                gap: 3,
-                paddingTop: 8,
-              }}
-            >
-              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
-              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
-              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
-            </TouchableOpacity>
-          </StyledView>
           <StyledView
             className="rounded-lg w-full border-[1px] px-3 py-4 border-[#dadada] flex flex-row items-start justify-between"
             style={{
@@ -213,25 +203,41 @@ export default function CheckoutReview() {
               <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
             </TouchableOpacity>
           </StyledView>
-          {/* <StyledView className='rounded-lg w-full border-[1px] px-3 py-4 border-[#dadada] flex flex-row items-start justify-between'>
-                        <StyledView className='flex flex-row items-center gap-x-4'>
-                            <MIIcon name="pix" size={25} color="#238878" style={{ width: 25, height: 25 }} />
-                            <StyledText className='font-bold text-lg'>Dinheiro</StyledText>
-                        </StyledView>
-                        <TouchableOpacity style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 3, paddingTop: 8 }}>
-                            <StyledView className='bg-dark-green rounded-full w-[5px] h-[5px]'></StyledView>
-                            <StyledView className='bg-dark-green rounded-full w-[5px] h-[5px]'></StyledView>
-                            <StyledView className='bg-dark-green rounded-full w-[5px] h-[5px]'></StyledView>
-                        </TouchableOpacity>
-                    </StyledView> */}
-          <StyledView className="w-full flex items-center justify-center">
-            <TouchableOpacity>
-              <StyledText className="text-light-green w-full">
-                Adicionar novo cartão
-              </StyledText>
+          <StyledView className="rounded-lg w-full border-[1px] px-3 py-4 border-[#dadada] flex flex-row items-start justify-between">
+            <StyledView className="flex flex-row items-center gap-x-4">
+              <MIIcon
+                name="attach-money"
+                size={25}
+                color="#238878"
+                style={{ width: 25, height: 25 }}
+              />
+              <StyledText className="font-bold text-lg">Dinheiro</StyledText>
+            </StyledView>
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+                gap: 3,
+                paddingTop: 8,
+              }}
+            >
+              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
+              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
+              <StyledView className="bg-dark-green rounded-full w-[5px] h-[5px]"></StyledView>
             </TouchableOpacity>
           </StyledView>
         </StyledView>
+        <StyledTouchableOpacity
+          className="w-full bg-[#5ECD81] py-4 rounded-lg mt-4 mb-32"
+          onPress={cleanCart}
+        >
+          <StyledText className="text-white text-center font-bold">
+            Finalizar Compra
+          </StyledText>
+        </StyledTouchableOpacity>
+        <StyledView className="mb-32"></StyledView>
       </StyledScrollView>
     </>
   );

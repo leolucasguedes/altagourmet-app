@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import {
@@ -7,39 +7,41 @@ import {
   StyledText,
 } from "../components/styleds/components";
 import { Link } from "expo-router";
-import useHomeContentStore from "../store/homeContentStore";
+import { formatPrice } from "../utils/textFormat";
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const MainOffersSlider = () => {
-  const { fetchBestSellers, allBestSellers } = useHomeContentStore();
-
-  useEffect(() => {
-    if (allBestSellers.length === 0) {
-      fetchBestSellers();
-    }
-  }, []);
-
+const MainOffersSlider = ({ bestSellers }: any) => {
   const renderOfferItem = ({ item }: any) => (
-    <StyledView className="flex flex-col items-center justify-center rounded-lg border border-gray-200 p-2 mr-4 w-40">
+    <StyledView className="flex flex-col items-center justify-center rounded-lg border border-gray p-2 w-40">
       <Link
         href={`/product/${item.id}`}
         className="flex items-center justify-center overflow-hidden rounded-lg w-full h-32"
       >
-        <StyledImage
-          className="w-full h-full object-cover"
-          src={item.imageUrl || "/placeholder.jpg"}
-          alt={item.name}
-        />
+        {item.imageUrl ? (
+          <StyledImage
+            className="w-full h-full object-cover"
+            src={item.imageUrl}
+            alt={item.name}
+          />
+        ) : (
+          <StyledImage
+            className="w-full h-full object-cover"
+            source={require("../assets/images/placeholder.png")}
+            alt={item.name}
+          />
+        )}
       </Link>
-      <StyledText className="font-bold mt-2 text-center">
-        {item.name}
+      <StyledView style={{ maxHeight: 40, overflow: "hidden" }}>
+        <StyledText className="font-bold mt-2 text-center">
+          {item.name}
+        </StyledText>
+      </StyledView>
+      <StyledText className="text-base font-semibold mt-1">
+        {formatPrice(item.price)}
       </StyledText>
-      <StyledText className="text-xs text-center text-gray-600">
-        {item.description || "-"}
-      </StyledText>
-      <StyledText className="text-base text-ascents font-semibold mt-1">
-        R$ {item.price}
+      <StyledText className="text-base text-light-green font-semibold mt-1">
+        {item.estimatedPreparationTime || "-"} min
       </StyledText>
     </StyledView>
   );
@@ -47,14 +49,15 @@ const MainOffersSlider = () => {
   return (
     <StyledView className="w-full">
       <Carousel
-        data={allBestSellers}
+        layout="default"
+        data={bestSellers || []}
         renderItem={renderOfferItem}
         sliderWidth={screenWidth}
-        itemWidth={screenWidth * 0.6}
-        inactiveSlideScale={0.9}
-        inactiveSlideOpacity={0.8}
-        containerCustomStyle={{ marginTop: 10 }}
-        contentContainerCustomStyle={{ paddingLeft: 16 }}
+        itemWidth={screenWidth / 1.8}
+        inactiveSlideScale={1}
+        inactiveSlideOpacity={1}
+        slideStyle={{ paddingRight: 0, marginHorizontal: 0 }}
+        vertical={false}
       />
     </StyledView>
   );

@@ -72,6 +72,7 @@ export default function OffersPage() {
                 <StyledText className="text-xs">
                   {offer.description || "-"}
                 </StyledText>
+                <StyledText className="font-bold">R${offer.price}</StyledText>
               </StyledView>
             </Link>
           ))
@@ -81,6 +82,7 @@ export default function OffersPage() {
           </StyledText>
         )}
       </StyledView>
+      <StyledView className="mb-32"></StyledView>
     </StyledScrollView>
   );
 }

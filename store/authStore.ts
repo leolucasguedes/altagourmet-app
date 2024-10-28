@@ -10,7 +10,7 @@ interface User {
   complement?: string | null;
   email?: string;
   password?: string;
-  phone: string | null;
+  phone: string;
   id?: string | null;
 }
 interface RegisterDTO {

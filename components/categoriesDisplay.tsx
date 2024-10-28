@@ -26,8 +26,15 @@ export default function CategoriesDisplay() {
           className="w-1/4 p-2"
           onPress={() => router.push(`/category/${category.id}` as Href)}
         >
-          <StyledImage source={category.image} className="w-16 h-16" />
-          <StyledText className="text-center text-xs text-nowrap mt-1">{`${category.name}`}</StyledText>
+          {category.image ? (
+            <StyledImage source={category.image} className="w-16 h-16" />
+          ) : (
+            <StyledImage
+              source={require("../assets/images/placeholder.png")}
+              className="w-16 h-16"
+            />
+          )}
+          <StyledText className="text-center text-xs mt-1">{`${category.name}`}</StyledText>
         </StyledPressable>
       ))}
     </StyledView>

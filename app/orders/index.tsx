@@ -28,24 +28,22 @@ export default function OrdersPage() {
 
   return (
     <StyledView className="flex flex-col items-center justify-start w-full p-2">
-      <StyledView className="w-full flex flex-row items-center justify-start gap-x-3 px-2 py-4">
+      <StyledView className="w-full flex flex-row items-center justify-start gap-x-3 px-2 pb-4">
         <StyledPressable onPress={() => router.back()} className="min-w-16">
           <Icon name="arrow-back" size={25} color="#8B8B93" />
         </StyledPressable>
-        <StyledText className="font-semibold text-lg pl-6">
+        <StyledText className="font-semibold text-lg text-center pl-10">
           Meus Pedidos
         </StyledText>
       </StyledView>
 
       {isAuthenticated ? (
-        // Exibe os pedidos do usuário logado
         <StyledView className="w-full px-4 py-2">
           {userOrders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
         </StyledView>
       ) : (
-        // Interface de busca por pedidos usando WhatsApp
         <StyledView className="w-full px-4 py-2">
           <StyledText className="text-lg font-bold mb-2">
             Busque pedidos por WhatsApp

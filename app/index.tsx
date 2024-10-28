@@ -9,8 +9,9 @@ import { Href, Link } from "expo-router";
 import useAuthStore from "../store/authStore";
 import { RefreshControl } from "react-native";
 import useHomeContentStore from "../store/homeContentStore";
-import CategoriesDisplay from "../components/Categories";
+import CategoriesDisplay from "../components/categoriesDisplay";
 import MainOffersSlider from "../components/mainOffersSlider";
+import { formatPrice } from "../utils/textFormat";
 
 export default function HomePage() {
   const { homeData, fetchHomeData } = useHomeContentStore();
@@ -57,13 +58,13 @@ export default function HomePage() {
             Vídeo/Foto de apresentação
           </StyledText>
         </StyledView>
-        <StyledText className="w-full text-start px-6 font-bold mt-4 mb-2">
+        <StyledText className="w-full text-start text-lg px-6 font-bold mt-4 mb-2">
           Categorias
         </StyledText>
         <CategoriesDisplay />
         {!refreshing && homeData.offers.length > 0 && (
-          <StyledView className="w-full flex flex-row items-center justify-between px-6">
-            <StyledText className="text-start font-bold">
+          <StyledView className="w-full flex flex-row items-center justify-between px-6 mt-6">
+            <StyledText className="text-start font-bold text-lg">
               Principais Ofertas
             </StyledText>
             <Link href={"/offers" as Href}>
@@ -71,7 +72,7 @@ export default function HomePage() {
             </Link>
           </StyledView>
         )}
-        <StyledView className="w-full flex flex-row items-center justify-start gap-3 mt-2 px-4">
+        <StyledView className="w-full flex flex-row items-center justify-start gap-y-3 mt-1 px-4">
           {!refreshing && homeData.offers.length > 0
             ? homeData.offers.map((offer, index) => (
                 <Link
@@ -79,7 +80,7 @@ export default function HomePage() {
                   key={index}
                   className="rounded-lg p-2 flex flex-row w-full max-h-[80px] items-center"
                 >
-                  <StyledView className="w-14 h-14 bg-light-green rounded-lg overflow-hidden flex-shrink-0">
+                  <StyledView className="w-20 h-20 bg-light-green rounded-lg overflow-hidden flex-shrink-0">
                     {offer.imageUrl && (
                       <StyledImage
                         className="w-full h-full object-cover"
@@ -88,10 +89,10 @@ export default function HomePage() {
                       />
                     )}
                   </StyledView>
-                  <StyledView className="pl-3 flex-1 flex flex-col justify-center max-w-[99%]">
-                    <StyledText className="font-bold">{offer.name}</StyledText>
-                    <StyledText className="text-xs">
-                      {offer.description || "-"}
+                  <StyledView className="pl-3 flex flex-col justify-center">
+                    <StyledText className="font-semibold text-lg">{offer.name}</StyledText>
+                    <StyledText className="font-bold text-lg">
+                      {formatPrice(offer.price)}
                     </StyledText>
                   </StyledView>
                 </Link>
@@ -100,7 +101,7 @@ export default function HomePage() {
         </StyledView>
         {!refreshing && homeData.bestSellers.length > 0 && (
           <StyledView className="w-full flex flex-row items-center justify-between px-6 mt-4">
-            <StyledText className="text-start font-bold">
+            <StyledText className="text-start font-bold text-lg">
               Mais Pedidos
             </StyledText>
             <Link href={"/trends" as Href}>
@@ -108,36 +109,14 @@ export default function HomePage() {
             </Link>
           </StyledView>
         )}
-        <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-2 px-4">
-          {!refreshing && homeData.bestSellers.length > 0
-            ? homeData.bestSellers.map((product, index) => (
-                <Link
-                  href={`/product/${product.id}` as Href}
-                  key={index}
-                  className="rounded-lg p-2 flex flex-row w-full max-h-[80px] items-center"
-                >
-                  <StyledView className="w-14 h-14 bg-light-green rounded-lg overflow-hidden flex-shrink-0">
-                    {product.imageUrl && (
-                      <StyledImage
-                        className="w-full h-full object-cover"
-                        src={product.images}
-                        alt={product.name}
-                      />
-                    )}
-                  </StyledView>
-                  <StyledView className="pl-3 flex-1 flex flex-col justify-center max-w-[99%]">
-                    <StyledText className="font-bold">
-                      {product.name}
-                    </StyledText>
-                    <StyledText className="text-xs">
-                      {product.description || "-"}
-                    </StyledText>
-                  </StyledView>
-                </Link>
-              ))
-            : null}
-        </StyledView>
-        <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-2 px-4">
+        {!refreshing &&
+          homeData.bestSellers &&
+          homeData.bestSellers.length > 0 && (
+            <StyledView className="w-full flex flex-col items-start justify-start mt-2">
+              <MainOffersSlider bestSellers={homeData.bestSellers} />
+            </StyledView>
+          )}
+        <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-8 px-4">
           {homeData.products.length > 0
             ? homeData.products.map((category, index) => (
                 <StyledView key={index} className="w-full">
@@ -171,7 +150,9 @@ export default function HomePage() {
                             {product.description || "-"}
                             {"\n"}
                           </StyledText>
-                          <StyledText>R${product.price || "-"} -</StyledText>
+                          <StyledText>
+                            {formatPrice(product.price) || "-"} -
+                          </StyledText>
                           <StyledText>
                             {" "}
                             {product.estimatedPreparationTime || "-"} min

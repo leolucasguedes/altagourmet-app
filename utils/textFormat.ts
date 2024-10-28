@@ -1,6 +1,14 @@
 export const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.substring(1, text.length);
 };
+export function formatPrice(value: string) {
+  const numericValue = parseFloat(value);
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+  }).format(numericValue);
+}
 export const fixPrice = (price: string) => {
   let priceStr = String(price);
   priceStr = priceStr.replace(/\D/g, "");

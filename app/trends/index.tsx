@@ -23,8 +23,8 @@ export default function TrendsPage() {
   };
 
   useEffect(() => {
-    if (allBestSellers.length === 0){
-    fetchBestSellers();
+    if (allBestSellers.length === 0) {
+      fetchBestSellers();
     }
   }, []);
 
@@ -52,7 +52,7 @@ export default function TrendsPage() {
         </StyledText>
       </StyledView>
 
-      <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-2 px-4">
+      <StyledView className="w-full flex flex-col items-start justify-start gap-y-3 mt-4 px-4">
         {allBestSellers.length > 0 ? (
           allBestSellers.map((product, index) => (
             <Link
@@ -74,6 +74,7 @@ export default function TrendsPage() {
                 <StyledText className="text-xs">
                   {product.description || "-"}
                 </StyledText>
+                <StyledText className="font-bold">R${product.price}</StyledText>
               </StyledView>
             </Link>
           ))
@@ -83,6 +84,7 @@ export default function TrendsPage() {
           </StyledText>
         )}
       </StyledView>
+      <StyledView className="mb-32"></StyledView>
     </StyledScrollView>
   );
 }

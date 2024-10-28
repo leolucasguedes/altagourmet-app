@@ -26,8 +26,10 @@ interface CartState {
   emptyCart: () => void;
   updateTotals: () => void;
   checkout: (userData: {
-    userId?: number;
+    userId?: string | null;
     address: string;
+    number: number | undefined;
+    complement?: string | null;
     whatsapp: string;
     name?: string;
     email?: string;

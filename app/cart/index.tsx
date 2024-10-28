@@ -9,7 +9,6 @@ import {
 import {
   ActivityIndicator,
   TouchableOpacity,
-  Text,
   RefreshControl,
 } from "react-native";
 import IconAnt from "react-native-vector-icons/AntDesign";
@@ -17,7 +16,7 @@ import { Link, useRouter } from "expo-router";
 import useCartStore from "../../store/cartStore";
 import useAuthStore from "../../store/authStore";
 import FAIcon from "react-native-vector-icons/FontAwesome5";
-import MIIcon from "react-native-vector-icons/MaterialIcons";
+import MainOffersSlider from "../../components/mainOffersSlider";
 import api from "../../utils/api";
 import ProductCard from "../../components/productCard";
 import useHomeContentStore from "../../store/homeContentStore";
@@ -30,31 +29,13 @@ export default function CartPage() {
   const { homeData } = useHomeContentStore();
   const { token } = useAuthStore();
   const [loading, setLoading] = React.useState(false);
-  const [buyMore, setBuyMore] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    await fetchMoreProducts();
+
     setRefreshing(false);
   }, []);
-
-  const fetchMoreProducts = async () => {
-    try {
-      const prods = await api.get("/products/page/1/20", {
-        headers: { Authorization: "Bearer " + token },
-      });
-      setBuyMore(prods.data.products);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-      fetchMoreProducts();
-    }
-  }, [token]);
 
   const handleQuantityChange = (foodId: number, action: "add" | "remove") => {
     const item = userCart.find((cartItem) => cartItem.foodId === foodId);
@@ -144,7 +125,7 @@ export default function CartPage() {
                     <StyledText className="font-bold text-base">
                       {item.foodName}
                     </StyledText>
-                    <StyledText className="text-sm text-gray-700">
+                    <StyledText className="text-sm text-gray">
                       R${item.foodPrice.toFixed(2).replace(".", ",")}
                     </StyledText>
                   </StyledView>
@@ -179,7 +160,7 @@ export default function CartPage() {
               </StyledView>
             ))
           )}
-          <StyledView className="w-full flex items-center justify-center mt-4">
+          <StyledView className="w-full flex items-center justify-center my-4">
             <Link href={"/"}>
               <StyledText className="text-light-green py-3">
                 Adicionar mais itens
@@ -187,39 +168,26 @@ export default function CartPage() {
             </Link>
           </StyledView>
         </StyledView>
-        <StyledView className="w-full px-4 py-6 bg-white border-t border-gray-200">
+        <StyledView className="w-full px-4 py-6 bg-white border-y border-gray">
           <StyledText className="font-bold text-xl mb-2">
             Total: R${totalValue.toFixed(2).replace(".", ",")}
           </StyledText>
-          <StyledTouchableOpacity
-            className="w-full bg-[#5ECD81] py-4 rounded-lg mt-4"
-            onPress={cleanCart}
-          >
-            <StyledText className="text-white text-center font-bold">
-              Finalizar Compra
-            </StyledText>
-          </StyledTouchableOpacity>
         </StyledView>
         <StyledView className="w-full mb-24">
-          <StyledView className="w-full flex px-4 py-3">
+          <StyledView className="w-full flex px-4">
             <StyledText className="font-bold my-4 text-xl">
               Peça Também
             </StyledText>
-            <StyledScrollView horizontal className="w-full">
-              {buyMore.length === 0 && (
-                <StyledView className="w-full flex items-center justify-center">
-                  <ActivityIndicator color={"#7a7a7a"} size={20} />
+            {!refreshing &&
+              homeData.bestSellers &&
+              homeData.bestSellers.length > 0 && (
+                <StyledView className="w-full flex flex-col items-start justify-start mt-2">
+                  <MainOffersSlider bestSellers={homeData.bestSellers} />
                 </StyledView>
               )}
-              {buyMore.length > 0 &&
-                buyMore.map((item, key) => (
-                  <StyledView key={key} className="mx-2 w-40">
-                    <ProductCard product={item} />
-                  </StyledView>
-                ))}
-            </StyledScrollView>
           </StyledView>
         </StyledView>
+        <StyledView className="mb-64"></StyledView>
       </StyledScrollView>
     </>
   );

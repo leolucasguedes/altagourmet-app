@@ -73,7 +73,7 @@ export default function Footer() {
             </StyledView>
           </StyledView>
         )}
-      {pathName.includes("/cart") && (
+      {pathName === "/cart" && (
         <StyledView className="w-full bg-white">
           <StyledView className="bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3 border-[1px] border-[#dddddd] rounded-t-xl">
             <StyledView className="w-1/2">

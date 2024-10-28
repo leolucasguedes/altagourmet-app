@@ -41,7 +41,7 @@ export default function RangeValueSelector({
           </StyledPressable>
         </StyledView>
 
-        <StyledView className="h-[1px] bg-gray-400 my-4" />
+        <StyledView className="h-[1px] bg-gray my-4" />
       </StyledView>
 
       <StyledView className="flex flex-col w-full">
@@ -54,7 +54,7 @@ export default function RangeValueSelector({
           value={from}
           onChangeText={setFrom}
           keyboardType="numeric"
-          className="py-3 px-4 text-sm border border-gray-300 rounded-[4px] mb-4"
+          className="py-3 px-4 text-sm border border-gray rounded-[4px] mb-4"
         />
 
         {/* Input para valor "to" */}
@@ -66,7 +66,7 @@ export default function RangeValueSelector({
           value={to}
           onChangeText={setTo}
           keyboardType="numeric"
-          className="py-3 px-4 text-sm border border-gray-300 rounded-[4px]"
+          className="py-3 px-4 text-sm border border-gray rounded-[4px]"
         />
       </StyledView>
     </>

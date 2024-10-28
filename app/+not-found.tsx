@@ -10,7 +10,7 @@ export default function NotFoundScreen() {
           A página que você tentou acessar: {pathname} está em desenvolvimento.
         </Text>
         <Link href="/">
-          <Text>Voltar ppara Home!</Text>
+          <Text>Voltar para Home!</Text>
         </Link>
       </View>
     </>
