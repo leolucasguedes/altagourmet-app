@@ -46,7 +46,7 @@ export default function Footer() {
         right: 0,
       }}
     >
-      {totalItems > 0 &&
+      {totalItems > 0 && pathName != "/cart" &&
         showCartResumeScreens.some((item) => pathName.includes(item)) && (
           <StyledView className="bottom-0 left-0 right-0 bg-white flex flex-row items-center justify-between px-4 py-3 border-[1px] border-[#dddddd] rounded-t-xl">
             <StyledView className="w-1/2">
@@ -137,12 +137,7 @@ export default function Footer() {
               alignItems: "center",
             }}
           >
-            <StyledView>
-              {item.name === "Orders" && totalItems > 0 && (
-                <StyledView className="w-3 h-3 z-20 -top-2 -right-1 absolute opacity-70 bg-dark-green rounded-full"></StyledView>
-              )}
-              {item.Icon}
-            </StyledView>
+            {item.Icon}
           </StyledPressable>
         ))}
       </StyledView>

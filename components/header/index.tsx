@@ -14,7 +14,7 @@ import useHomeContentStore from "@/store/homeContentStore";
 
 export default function Header() {
   const pathname = usePathname();
-  const doNotShowLocationPicker = ["/product/", "/profile"];
+  const doNotShowLocationPicker = ["/product/", "/profile", "/profile/edit", "/register", "/login", "/resetpassword"];
   const { homeData } = useHomeContentStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
@@ -24,7 +24,7 @@ export default function Header() {
     setSearchQuery(query);
     if (query.length > 2) {
       const results = homeData.products
-        .flatMap((category) => category.foods) // Acessa os produtos dentro de cada categoria
+        .flatMap((category) => category.foods)
         .filter((product) =>
           product.name.toLowerCase().includes(query.toLowerCase())
         )

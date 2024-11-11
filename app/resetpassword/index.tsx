@@ -5,9 +5,9 @@ import {
   StyledText,
   StyledPressable,
   StyledTextInput,
+  StyledImage
 } from "../../components/styleds/components";
 import { useRouter } from "expo-router";
-import LogoIcon from "../../components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function ResetPassword() {
@@ -33,8 +33,12 @@ export default function ResetPassword() {
   };
 
   return (
-    <StyledView className="flex flex-1 items-center px-10 pt-16">
-      <LogoIcon fillColor="#238878" />
+    <StyledView className="flex flex-1 items-center px-10 pt-5">
+      <StyledImage
+            className="w-52 h-52"
+            source={require("../../assets/images/icon.png")}
+            alt="Logo"
+          />
       <StyledText className="text-2xl mt-5 mb-2">
         Recuperar <StyledText className="font-bold">senha</StyledText>
       </StyledText>

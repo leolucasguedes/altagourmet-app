@@ -13,10 +13,7 @@ import useAuthStore from "../../store/authStore";
 import PasswordInput from "../../components/passwordInput";
 import Popup from "../../components/popup";
 import Loading from "../../components/loading";
-import LogoIcon from "../../components/icons/logo";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import IconAnt from "react-native-vector-icons/AntDesign";
-import IconF from "react-native-vector-icons/Fontisto";
 import * as Yup from "yup";
 import { Formik, FormikHelpers } from "formik";
 
@@ -24,7 +21,6 @@ interface FormValues {
   name: string;
   email: string;
   phone: string;
-  document: string;
   password: string;
   confirmPassword: string;
 }
@@ -46,9 +42,6 @@ export default function RegisterPage() {
     phone: Yup.string()
       .matches(/^\d{10,11}$/, "Telefone inválido.")
       .required("O telefone é obrigatório."),
-    document: Yup.string()
-      .matches(/^\d{11}$/, "CPF inválido.")
-      .required("O CPF é obrigatório."),
     password: Yup.string()
       .min(6, "A senha deve ter no mínimo 6 caracteres.")
       .required("A senha é obrigatória."),
@@ -61,13 +54,12 @@ export default function RegisterPage() {
     values: FormValues,
     { setSubmitting }: FormikHelpers<FormValues>
   ) => {
-    const { name, email, phone, document, password, confirmPassword } = values;
+    const { name, email, phone, password, confirmPassword } = values;
 
     const userCreated = await register({
       name,
       email,
       phone,
-      document,
       address: "definir",
       password,
     });
@@ -110,7 +102,6 @@ export default function RegisterPage() {
           alignItems: "center",
           justifyContent: "center",
           flexGrow: 1,
-          marginTop: 20,
         }}
       >
         {/* Exibir Popup de erro quando `error` for true */}
@@ -128,11 +119,11 @@ export default function RegisterPage() {
         />
         <StyledView className="w-full flex flex-col items-center justify-center">
           <StyledImage
-            className="w-12 h-52"
+            className="w-52 h-52"
             source={require("../../assets/images/icon.png")}
             alt="Logo"
           />
-          <StyledText className="text-2xl my-5">
+          <StyledText className="text-2xl mb-5">
             Crie sua <StyledText className="font-bold">conta</StyledText>!
           </StyledText>
         </StyledView>
@@ -142,7 +133,6 @@ export default function RegisterPage() {
             name: "",
             email: "",
             phone: "",
-            document: "",
             password: "",
             confirmPassword: "",
           }}
@@ -242,7 +232,7 @@ export default function RegisterPage() {
                 </StyledText>
               )}
 
-              {/* Campo CPF */}
+              {/* Campo CPF 
               <StyledText className="text-xs font-bold mb-1.5">CPF</StyledText>
               <StyledView
                 className={`border rounded-md px-3 py-2 flex-row items-center ${
@@ -265,6 +255,7 @@ export default function RegisterPage() {
                   {errors.document}
                 </StyledText>
               )}
+              */}
 
               {/* Campo Senha */}
               <StyledText className="text-xs font-bold mb-1.5">
@@ -309,37 +300,6 @@ export default function RegisterPage() {
           )}
         </Formik>
 
-        {/* Redes sociais */}
-        <StyledView className="flex-row items-center my-1.5 w-full px-4">
-          <StyledView className="flex-1 h-[1px] bg-[#D4D4D4]"></StyledView>
-          <StyledText className="text-[#737373] mx-3 text-sm">
-            Ou continue com
-          </StyledText>
-          <StyledView className="flex-1 h-[1px] bg-[#D4D4D4]"></StyledView>
-        </StyledView>
-
-        <StyledView className="flex-row justify-center my-4 space-x-4">
-          <StyledPressable
-            onPress={() => console.log("Login com Facebook")}
-            className="flex items-center justify-center border border-[#D4D4D4] rounded-full py-[3px] px-[15px]"
-          >
-            <IconF name="facebook" size={20} color="#0078F6" />
-          </StyledPressable>
-
-          <StyledPressable
-            onPress={() => console.log("Login com Google")}
-            className="flex items-center justify-center border border-[#D4D4D4] rounded-full py-[3px] px-[11px]"
-          >
-            <IconF name="google" size={20} color="#DB4437" />
-          </StyledPressable>
-
-          <StyledPressable
-            onPress={() => console.log("Login com Apple")}
-            className="flex items-center justify-center border border-[#D4D4D4] rounded-full p-2"
-          >
-            <Icon name="apple" size={26} color="black" />
-          </StyledPressable>
-        </StyledView>
         <StyledView className="flex items-center justify-center flex-row mb-16">
           <StyledText className="text-[#A3A3A3] text-xs">
             Já tem uma conta?{" "}

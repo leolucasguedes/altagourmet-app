@@ -1,5 +1,5 @@
 {
-  "name": "alta-gourmet",
+  "name": "alta-gourmet-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -20,6 +20,7 @@
     "@react-native-community/slider": "4.5.2",
     "@react-navigation/native": "^6.0.2",
     "alta-gourmet": "file:",
+    "alta-gourmet-app": "file:",
     "axios": "^1.7.7",
     "expo": "~51.0.35",
     "expo-av": "^14.0.7",

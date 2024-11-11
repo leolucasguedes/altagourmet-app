@@ -1,21 +1,26 @@
 import { Modal, TouchableOpacity } from "react-native";
 import ArrowDown from "../icons/arrow-down";
 import LocationPin from "../icons/locationPin";
-import NotificationIcon from "../icons/notification";
 import { StyledPressable, StyledText, StyledView } from "../styleds/components";
 import { useState } from "react";
 import ShippingLocationPicker from "../shippingLocationPicker";
 import useShippingStore from "../../store/shippingStore";
+import useCartStore from "../../store/cartStore";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useRouter, Href } from "expo-router";
 
 export default function LocationPicker() {
   const [showLocationPicker, setShowLocationPicker] = useState(false);
+  const { totalPlates } = useCartStore();
   const [step, setStep] = useState(1);
   const { removeAddress, selectAddress, selectedAddress, addresses } =
     useShippingStore();
-
   const router = useRouter();
+
+  const handleSelectAddress = (address: any) => {
+    selectAddress(address);
+    setShowLocationPicker(false);
+  };
 
   return (
     <>
@@ -26,7 +31,7 @@ export default function LocationPicker() {
             onPress={() => setShowLocationPicker(!showLocationPicker)}
             style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
           >
-            <StyledText>
+            <StyledText className="truncate overflow-hidden overflow-ellipsis whitespace-nowrap">
               {selectedAddress?.street_address
                 ? selectedAddress.street_address[0]
                 : "Selecione um endereço"}
@@ -40,6 +45,13 @@ export default function LocationPicker() {
             className="flex p-3 bg-[#E8EDF2] rounded-full"
           >
             <Icon name="shoppingcart" size={17} color="#0A0A0A" />
+            {totalPlates > 0 && (
+              <StyledView className="absolute -top-1 -right-1 bg-light-green rounded-full h-4 w-4 pl-0.5 items-center justify-center">
+                <StyledText className="text-white text-xs font-bold">
+                  {totalPlates}
+                </StyledText>
+              </StyledView>
+            )}
           </StyledPressable>
         </StyledView>
       </StyledView>
@@ -70,9 +82,7 @@ export default function LocationPicker() {
                   className="w-full flex flex-row items-center justify-between py-2"
                 >
                   <TouchableOpacity
-                    onPress={() => {
-                      selectAddress(item), setShowLocationPicker(false);
-                    }}
+                    onPress={() => handleSelectAddress(item)}
                   >
                     <StyledText className="w-full">
                       {item.street_address[0]}

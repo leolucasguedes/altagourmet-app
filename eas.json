@@ -10,7 +10,8 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://altagourmet-back.onrender.com",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
-      }
+      },
+      "node": "18.x"
     },
     "preview": {
       "distribution": "internal",
@@ -20,14 +21,16 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://altagourmet-back.onrender.com",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
-      }
+      },
+      "node": "18.x"
     },
     "production": {
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_API_URL": "https://altagourmet-back.onrender.com",
         "EXPO_PUBLIC_GOOGLE_API_KEY":"AIzaSyC39P2HJm3Cg53NJJ2azxjVYTAbD_-7NVs"
-      }
+      },
+      "node": "18.x"
     }
   },
   "submit": {

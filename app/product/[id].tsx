@@ -20,6 +20,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import IconAnt from "react-native-vector-icons/AntDesign";
+import { formatPrice } from "@/utils/textFormat";
 
 export default function ProductPage() {
   const { id } = useLocalSearchParams();
@@ -182,7 +183,8 @@ export default function ProductPage() {
               key={complement.id}
               className="flex flex-row justify-between items-center mb-3"
             >
-              <StyledText className="text-base">{complement.name}</StyledText>
+              <StyledText className="text-base w-1/2">{complement.name}</StyledText>
+              <StyledText className="text-base">{ formatPrice(complement.price) }</StyledText>
               <StyledView className="flex flex-row items-center">
                 <TouchableOpacity
                   onPress={() =>
@@ -252,7 +254,18 @@ export default function ProductPage() {
                   </StyledText>
                 </StyledTouchableOpacity>
                 <StyledText className="font-bold text-lg">{`R$${(
-                  productDetails.price * mainQuantity
+                  productDetails.price * mainQuantity +
+                  Object.entries(complementQuantities).reduce(
+                    (total, [complementId, quantity]) => {
+                      const complement = complements.find(
+                        (c) => c.id === parseInt(complementId, 10)
+                      );
+                      return (
+                        total + (complement ? complement.price * quantity : 0)
+                      );
+                    },
+                    0
+                  )
                 )
                   .toFixed(2)
                   .replace(".", ",")}`}</StyledText>

@@ -11,6 +11,7 @@ import Popup from "../../components/popup";
 import useAuthStore from "../../store/authStore";
 import IconM from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/MaterialIcons";
+import IconZ from "react-native-vector-icons/Zocial";
 import VersionShower from "../../components/versionShower";
 
 export default function ProfilePage() {
@@ -127,6 +128,10 @@ export default function ProfilePage() {
         </StyledScrollView>
       ) : (
         <StyledView className="w-full h-full flex flex-col items-center justify-center">
+          <IconZ name="guest" size={50} color="#5ECD81" />
+          <StyledText className="font-semibold text-2xl mt-4">
+            Olá, Visitante!
+          </StyledText>
           <StyledPressable
             onPress={() => router.push("/register")}
             className="bg-[#5ECD81] rounded-md py-3 my-5 px-32"

@@ -20,7 +20,6 @@ import MainOffersSlider from "../../components/mainOffersSlider";
 import api from "../../utils/api";
 import ProductCard from "../../components/productCard";
 import useHomeContentStore from "../../store/homeContentStore";
-import PlaceHolderImage from "../../components/PlaceHolderImage";
 
 export default function CartPage() {
   const router = useRouter();
@@ -111,14 +110,12 @@ export default function CartPage() {
               >
                 <StyledView className="flex flex-row items-center justify-between gap-3">
                   <StyledView className="p-1 w-14 h-14 rounded border-[1px] border-[#E8EDF2]">
-                    {item.foodImage ? (
+                    {item.foodImage && (
                       <StyledImage
                         className="w-full h-full"
                         src={item.foodImage}
                         alt={item.foodName}
                       />
-                    ) : (
-                      <PlaceHolderImage category={"food"} />
                     )}
                   </StyledView>
                   <StyledView>
